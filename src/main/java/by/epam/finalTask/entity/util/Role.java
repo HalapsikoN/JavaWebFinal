@@ -4,7 +4,7 @@ public enum Role {
     USER,
     ADMIN;
 
-    public static Role getRoleFromString(String element) {
+    public static Role getRoleFromString(String element) throws EnumConstantNotPresentException {
         switch (element) {
             case "user": {
                 return USER;
@@ -14,6 +14,18 @@ public enum Role {
             }
             default: {
                 throw new EnumConstantNotPresentException(Role.class, element);
+            }
+        }
+    }
+
+    public static boolean isRole(String element){
+        switch (element) {
+            case "user":
+            case "admin": {
+                return true;
+            }
+            default: {
+                return false;
             }
         }
     }

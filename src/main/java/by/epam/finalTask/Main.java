@@ -7,6 +7,9 @@ import by.epam.finalTask.dao.UserDAO;
 import by.epam.finalTask.entity.Album;
 import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.pool.ConnectionPool;
+import by.epam.finalTask.service.ServiceException;
+import by.epam.finalTask.service.ServiceFactory;
+import by.epam.finalTask.service.UserService;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -32,13 +35,23 @@ public class Main {
         UserDAO userDAO=daoFactory.getSqlUserDAO();
         TrackDAO trackDAO=daoFactory.getSqlTrackDAO();
         AlbumDAO albumDAO=daoFactory.getSqlAlbumDAO();
+//        try {
+//            System.out.println(userDAO.updateUserLoginById(1, "DOPDOP"));
+////            System.out.println(userDAO.updateUserPasswordById(1, "aaaaaa"));
+////            Track track=userDAO.getUserTracksById(1).get(2);
+////            System.out.println(albumDAO.addAlbumWithOutTracks(album));
+////            System.out.println(albumDAO.getAlbumById(1));
+////            System.out.println(albumDAO.addTrackToAlbum(album, track));
+//            //System.out.println(trackDAO.getTrackById(3));
+//        } catch (DAOException e) {
+//            e.printStackTrace();
+//        }
+
+        UserService userService=ServiceFactory.getInstance().getUserService();
+
         try {
-            //Track track=userDAO.getUserTracksById(1).get(2);
-            //System.out.println(albumDAO.addAlbumWithOutTracks(album));
-            System.out.println(albumDAO.getAlbumById(1));
-            //System.out.println(albumDAO.addTrackToAlbum(album, track));
-            //System.out.println(trackDAO.getTrackById(3));
-        } catch (DAOException e) {
+            System.out.println(userService.signIn("DOPDOP", "aaaaaa"));
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
     }
