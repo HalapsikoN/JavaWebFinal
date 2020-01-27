@@ -1,6 +1,7 @@
 package by.epam.finalTask.controller.command;
 
 import by.epam.finalTask.controller.command.Impl.NoSuchCommand;
+import by.epam.finalTask.controller.command.Impl.RegistrataionPage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +18,7 @@ public class CommandProvider {
     private final NoSuchCommand noSuchCommand=new NoSuchCommand();
 
     private CommandProvider(){
-
+        repository.put(CommandName.REGISTRATION_PAGE, new RegistrataionPage());
     }
 
     public static CommandProvider getInstance(){
@@ -29,7 +30,7 @@ public class CommandProvider {
         Command command;
 
         try {
-            commandName=CommandName.valueOf(name);
+            commandName=CommandName.valueOf(name.toUpperCase());
             command=repository.get(commandName);
         }catch (IllegalArgumentException | NullPointerException e){
             logger.warn("No such command: " + name);

@@ -19,22 +19,32 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("WORKS!!!");
+        if(req.getParameter(RequestParameterName.COMMAND_NAME)==null){
+            req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
+        }else{
+            System.out.println("asdasdadsadasddas");
+            doPost(req, resp);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        CommandProvider commandProvider=CommandProvider.getInstance();
-//
-//        String commandName=req.getParameter(RequestParameterName.COMMAND_NAME);
-//
-//        Command command=commandProvider.getCommand(commandName);
-//        try{
-//            command.execute(req, resp);
-//        } catch (CommandException e) {
-//            logger.error(e);
-//            //перенаправление на страницу ошибки
-//        }
-        doPost(req, resp);
+        CommandProvider commandProvider=CommandProvider.getInstance();
+
+        String commandName=req.getParameter(RequestParameterName.COMMAND_NAME);
+
+        System.out.println(commandName);
+
+        Command command=commandProvider.getCommand(commandName);
+        System.out.println(command);
+        try{
+            command.execute(req, resp);
+        } catch (CommandException e) {
+            logger.error(e);
+            //перенаправление на страницу ошибки
+
+        }
+
+
     }
 }
