@@ -19,6 +19,7 @@ public enum Role {
     }
 
     public static boolean isRole(String element){
+        element.toLowerCase();
         switch (element) {
             case "user":
             case "admin": {

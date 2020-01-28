@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
                 userDAO.addUser(user, password);
                 result=true;
             }
+
         } catch (DAOException e) {
             throw new ServiceException("Cannot perform action with data source", e);
         }
@@ -72,6 +73,7 @@ public class UserServiceImpl implements UserService {
     private boolean isValidData(User user, String password){
         boolean validUser= UserDataValidator.isUserValid(user);
         boolean validPassword=UserDataValidator.isValidPassword(password);
+
 
         return (validUser&&validPassword);
     }

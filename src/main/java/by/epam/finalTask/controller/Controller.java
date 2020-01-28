@@ -3,6 +3,8 @@ package by.epam.finalTask.controller;
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandProvider;
+import by.epam.finalTask.controller.util.DispatchAssistant;
+import by.epam.finalTask.controller.util.JspPageName;
 import by.epam.finalTask.controller.util.RequestParameterName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,34 +17,36 @@ import java.io.IOException;
 
 public class Controller extends HttpServlet {
 
-    private final static Logger logger= LogManager.getLogger(Controller.class);
+    private final static Logger logger = LogManager.getLogger(Controller.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(req.getParameter(RequestParameterName.COMMAND_NAME)==null){
-            req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
-        }else{
-            System.out.println("asdasdadsadasddas");
-            doPost(req, resp);
-        }
+        doPost(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CommandProvider commandProvider=CommandProvider.getInstance();
+        CommandProvider commandProvider = CommandProvider.getInstance();
 
-        String commandName=req.getParameter(RequestParameterName.COMMAND_NAME);
+        logger.info("Works");
+
+        String commandName = req.getParameter(RequestParameterName.COMMAND_NAME);
+
+        if (commandName == null) {
+            DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
+            //req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
+        }
 
         System.out.println(commandName);
 
-        Command command=commandProvider.getCommand(commandName);
+        Command command = commandProvider.getCommand(commandName);
         System.out.println(command);
-        try{
+        try {
             command.execute(req, resp);
         } catch (CommandException e) {
             logger.error(e);
             //перенаправление на страницу ошибки
-
+            System.out.println(e);
         }
 
 

@@ -9,7 +9,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>sds</title>
+    <title>ATrack</title>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>

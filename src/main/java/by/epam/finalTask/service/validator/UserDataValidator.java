@@ -41,8 +41,9 @@ public class UserDataValidator {
         boolean validName=isNameValid(user.getName());
         boolean validLogin=isValidLogin(user.getLogin());
         boolean validWallet=isWalletValid(user.getWallet());
-        boolean validRole=isRoleValid(user.getRole().name());
-        return (validLogin && validName && validWallet && validRole);
+
+
+        return (validLogin && validName && validWallet);
     }
 
 }

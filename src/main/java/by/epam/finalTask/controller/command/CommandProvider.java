@@ -1,7 +1,6 @@
 package by.epam.finalTask.controller.command;
 
-import by.epam.finalTask.controller.command.Impl.NoSuchCommand;
-import by.epam.finalTask.controller.command.Impl.RegistrataionPage;
+import by.epam.finalTask.controller.command.Impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +17,10 @@ public class CommandProvider {
     private final NoSuchCommand noSuchCommand=new NoSuchCommand();
 
     private CommandProvider(){
-        repository.put(CommandName.REGISTRATION_PAGE, new RegistrataionPage());
+        repository.put(CommandName.REGISTRATION_PAGE, new RegistrationPage());
+        repository.put(CommandName.REGISTRATION, new Registration());
+        repository.put(CommandName.SIGN_IN_PAGE, new SignInPage());
+        repository.put(CommandName.SIGN_IN, new SignIn());
     }
 
     public static CommandProvider getInstance(){
