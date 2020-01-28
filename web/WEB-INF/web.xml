@@ -11,7 +11,7 @@
 
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <url-pattern>/atrack</url-pattern>
     </servlet-mapping>
 
 </web-app>

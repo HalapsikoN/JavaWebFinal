@@ -16,7 +16,7 @@
 
     <c:if test="${sessionScope.user.id==null}">
         <a id="ends" href="header.jsp"> Sign in </a>
-        <a href="${pageContext.request.contextPath}/controller?command=registration_page" methods="post"> Register </a>
+        <a href="${pageContext.request.contextPath}/atrack?command=registration_page" methods="post"> Register </a>
     </c:if>
 
     <c:if test="${sessionScope.user.id!=null}">
