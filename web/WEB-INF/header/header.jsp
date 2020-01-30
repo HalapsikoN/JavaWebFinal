@@ -12,9 +12,9 @@
 <c:set var="path" value="${pageContext.request.contextPath}" scope="request"/>
 
 <nav>
-    <a href="header.jsp"> Songs </a>
-    <a href="header.jsp"> Albums </a>
-    <a id="starts" href="header.jsp"> Playlists </a>
+    <a href="${path}/atrack?command=main_page"> Songs </a>
+    <a href="${path}/atrack?command=albums_page"> Albums </a>
+    <a id="" href="${path}/atrack?command=playlists_page"> Playlists </a>
 
     <c:if test="${sessionScope.id==null}">
         <a id="ends" href="${path}/atrack?command=sign_in_page"> Sign in </a>

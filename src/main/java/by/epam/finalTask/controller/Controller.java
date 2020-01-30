@@ -2,6 +2,7 @@ package by.epam.finalTask.controller;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
+import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.DispatchAssistant;
 import by.epam.finalTask.controller.util.JspPageName;
@@ -33,7 +34,8 @@ public class Controller extends HttpServlet {
         String commandName = req.getParameter(RequestParameterName.COMMAND_NAME);
 
         if (commandName == null) {
-            DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
+            commandName= CommandName.MAIN_PAGE.name();
+            //DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
             //req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
         }
 

@@ -3,6 +3,8 @@ package by.epam.finalTask.dao;
 import by.epam.finalTask.entity.Album;
 import by.epam.finalTask.entity.Track;
 
+import java.util.List;
+
 public interface AlbumDAO {
     boolean addAlbumWithOutTracks(Album album) throws DAOException;
     boolean addTrackToAlbum(Album album, Track track) throws DAOException;
@@ -13,4 +15,6 @@ public interface AlbumDAO {
     boolean updateAlbumById(int id, Album album) throws DAOException;
 
     boolean deleteAlbumBId(int id) throws DAOException;
+
+    List<Album> getAllAlbums() throws DAOException;
 }

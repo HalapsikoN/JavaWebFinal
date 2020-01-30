@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class SQLAlbumDAO implements AlbumDAO {
     private String sqlGetAllAlbumTracks = "SELECT tracks.* FROM albums INNER JOIN tr_al ON albums.id=tr_al.album_id INNER JOIN tracks ON tr_al.album_id=tracks.id WHERE albums.id=?";
     private String sqlUpdateAlbumById = "UPDATE albums SET name=?, artist=?, date=? where id=?";
     private String sqlDeleteAlbumById = "DELETE FROM albums where id=?";
+    private String sqlGetAllAlbums = "SELECT * FROM albums";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -45,8 +47,9 @@ public class SQLAlbumDAO implements AlbumDAO {
         prepareStatement(connection, sqlGetAllAlbumTracks);
         prepareStatement(connection, sqlUpdateAlbumById);
         prepareStatement(connection, sqlDeleteAlbumById);
+        prepareStatement(connection, sqlGetAllAlbums);
 
-        if(connection!=null) {
+        if (connection != null) {
             connectionPool.closeConnection(connection);
         }
     }
@@ -234,5 +237,33 @@ public class SQLAlbumDAO implements AlbumDAO {
             result = false;
         }
         return result;
+    }
+
+    @Override
+    public List<Album> getAllAlbums() throws DAOException {
+        ResultSet resultSet = null;
+        List<Album> albumList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllAlbums);
+
+            if (preparedStatement != null) {
+
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Album album = converterFromResultSet.getEmptyAlbumFromResultSet(resultSet);
+                    if (album != null) {
+                        albumList.add(album);
+                    }
+                }
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return albumList;
     }
 }

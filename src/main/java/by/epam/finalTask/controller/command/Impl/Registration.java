@@ -2,10 +2,7 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
-import by.epam.finalTask.controller.util.DispatchAssistant;
-import by.epam.finalTask.controller.util.JspPageName;
-import by.epam.finalTask.controller.util.RequestDataExecutor;
-import by.epam.finalTask.controller.util.RequestParameterName;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.User;
 import by.epam.finalTask.entity.util.Role;
 import by.epam.finalTask.service.ServiceException;
@@ -49,9 +46,9 @@ public class Registration implements Command {
             System.out.println(isSuccess);
 
             if(isSuccess){
-                req.setAttribute(RequestParameterName.MESSAGE, SUCCESS_REGISTRATION);
+                req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_REGISTRATION);
             }else{
-                req.setAttribute(RequestParameterName.MESSAGE, LOGIN_TAKEN);
+                req.setAttribute(RequestAttributeName.MESSAGE, LOGIN_TAKEN);
             }
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.REGISTRATION_PAGE);

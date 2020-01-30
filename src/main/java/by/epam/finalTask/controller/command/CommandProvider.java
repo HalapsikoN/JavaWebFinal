@@ -21,6 +21,9 @@ public class CommandProvider {
         repository.put(CommandName.REGISTRATION, new Registration());
         repository.put(CommandName.SIGN_IN_PAGE, new SignInPage());
         repository.put(CommandName.SIGN_IN, new SignIn());
+        repository.put(CommandName.MAIN_PAGE, new MainPage());
+        repository.put(CommandName.ALBUMS_PAGE, new AlbumsPage());
+        repository.put(CommandName.PLAYLISTS_PAGE, new PlaylistsPage());
     }
 
     public static CommandProvider getInstance(){

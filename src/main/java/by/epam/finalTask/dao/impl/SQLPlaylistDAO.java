@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class SQLPlaylistDAO implements PlaylistDAO {
     private String sqlGetAllPlaylistTracks="SELECT tracks.* FROM playlists INNER JOIN tr_pl ON playlists.id=tr_pl.playlist_id INNER JOIN tracks ON tr_pl.playlist_id=tracks.id WHERE albums.id=?";
     private String sqlUpdatePlaylistById ="UPDATE playlists SET name=?, date=? where id=?";
     private String sqlDeletePlaylistById ="DELETE FROM playlists where id=?";
+    private String sqlGetAllPlaylists ="SELECT * FROM playlists";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -45,6 +47,7 @@ public class SQLPlaylistDAO implements PlaylistDAO {
         prepareStatement(connection, sqlGetAllPlaylistTracks);
         prepareStatement(connection, sqlUpdatePlaylistById);
         prepareStatement(connection, sqlDeletePlaylistById);
+        prepareStatement(connection, sqlGetAllPlaylists);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -231,5 +234,34 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             result=false;
         }
         return result;
+    }
+
+    @Override
+    public List<Playlist> getAllAlbums() throws DAOException {
+        ResultSet resultSet=null;
+        List<Playlist> playlistList=new ArrayList<>();
+
+        try{
+            PreparedStatement preparedStatement=preparedStatementMap.get(sqlGetAllPlaylists);
+
+            if (preparedStatement != null) {
+
+                resultSet=preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Playlist playlist=converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
+                    if(playlist!=null) {
+                        playlistList.add(playlist);
+                    }
+
+                }
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return playlistList;
     }
 }

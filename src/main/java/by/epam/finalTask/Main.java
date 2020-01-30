@@ -11,7 +11,10 @@ import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import by.epam.finalTask.service.UserService;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Main {
@@ -49,10 +52,26 @@ public class Main {
 
         UserService userService=ServiceFactory.getInstance().getUserService();
 
-        try {
-            System.out.println(userService.signIn("DOPDOP", "aaaaaa"));
-        } catch (ServiceException e) {
-            e.printStackTrace();
+//        try {
+//            System.out.println(userService.signIn("DOPDOP", "aaaaaa"));
+//        } catch (ServiceException e) {
+//            e.printStackTrace();
+//        }
+
+//        Date date=new Date();
+//        System.out.println(date);
+//
+//        System.out.println(date.getYear());
+//
+//        SimpleDateFormat dateFormat=new SimpleDateFormat();
+//
+//        System.out.println(date);
+//
+//        System.out.println(date.getTime());
+
+        //System.out.println(calendar.get(Calendar.));
+        for(int i=1; i<=17; ++i){
+            //System.out.println(calendar.get(Calendar.));
         }
     }
 }

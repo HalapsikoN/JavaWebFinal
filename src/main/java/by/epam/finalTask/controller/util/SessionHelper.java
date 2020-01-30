@@ -23,5 +23,6 @@ public class SessionHelper {
         session.setAttribute(SessionAttributeName.LOGIN, user.getLogin());
         session.setAttribute(SessionAttributeName.USERNAME, user.getName());
         session.setAttribute(SessionAttributeName.ROLE, user.getRole());
+        session.setAttribute(SessionAttributeName.WALLET, user.getWallet());
     }
 }

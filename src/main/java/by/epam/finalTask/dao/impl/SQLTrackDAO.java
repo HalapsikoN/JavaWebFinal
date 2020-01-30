@@ -10,7 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SQLTrackDAO implements TrackDAO {
@@ -25,6 +27,7 @@ public class SQLTrackDAO implements TrackDAO {
     private String sqlGetTrackByName = "SELECT * FROM tracks WHERE name=?";
     private String sqlUpdateTrackById = "UPDATE tracks SET name=?, artist=?, date=?, price=? where id=?";
     private String sqlDeleteTrackById = "DELETE FROM tracks where id=?";
+    private String sqlGetAllTracks = "SELECT * FROM tracks";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -41,6 +44,7 @@ public class SQLTrackDAO implements TrackDAO {
         prepareStatement(connection, sqlGetTrackByName);
         prepareStatement(connection, sqlUpdateTrackById);
         prepareStatement(connection, sqlDeleteTrackById);
+        prepareStatement(connection, sqlGetAllTracks);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -194,6 +198,31 @@ public class SQLTrackDAO implements TrackDAO {
         if (resultRow == 0) {
             result = false;
         }
+        return result;
+    }
+
+    @Override
+    public List<Track> getAllTracks() throws DAOException {
+        List<Track> result = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllTracks);
+
+            if (preparedStatement != null) {
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Track track = converterFromResultSet.getTrackFromResultSet(resultSet);
+                result.add(track);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
         return result;
     }
 }
