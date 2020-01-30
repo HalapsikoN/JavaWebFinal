@@ -7,5 +7,10 @@ public enum  CommandName {
     SIGN_IN_PAGE,
     MAIN_PAGE,
     ALBUMS_PAGE,
-    PLAYLISTS_PAGE
+    PLAYLISTS_PAGE,
+    USER_TRACKS,
+    ALBUM_INFO,
+    USER_ALBUMS,
+    PLAYLIST_INFO,
+    USER_PLAYLISTS
 }

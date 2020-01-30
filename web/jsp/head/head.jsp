@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <meta charset="UTF-8" content="text/html">
-
+<title>ATrack</title>
+<link href="${pageContext.request.contextPath}/jsp/css/head.css" rel="stylesheet">
+<!--iconky zapixnyt'-->
 <!--Styles-->
-<link href="<c:url value="/jsp/css/header.css"/>" rel="stylesheet">
+

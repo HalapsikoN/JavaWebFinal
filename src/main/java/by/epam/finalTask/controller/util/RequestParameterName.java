@@ -7,6 +7,8 @@ public class RequestParameterName {
     public static final String LOGIN="login";
     public static final String ROLE="role";
     public static final String PASSWORD="password";
+    public static final String ALBUM_ID="album_id";
+    public static final String PLAYLIST_ID="playlist_id";
 
     private RequestParameterName(){
     }

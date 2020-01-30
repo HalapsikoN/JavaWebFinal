@@ -14,9 +14,10 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="<c:url value="/jsp/css/header.css"/>">
+<link rel="stylesheet" href="${path}/jsp/css/header.css">
 
 <nav class="navbar">
+
     <a href="${path}/atrack?command=main_page"> Songs </a>
     <a href="${path}/atrack?command=albums_page"> Albums </a>
     <a id="" href="${path}/atrack?command=playlists_page"> Playlists </a>
@@ -35,13 +36,13 @@
                 </div>
             </c:when>
             <c:when test="${sessionScope.role eq 'USER'}">
-                <a id="ends" href="header.jsp"> My songs </a>
-                <a href="header.jsp"> My albums </a>
-                <a href="header.jsp"> My playlists </a>
+                <a id="ends" href="${path}/atrack?command=user_tracks"> My songs </a>
+                <a href="${path}/atrack?command=user_albums"> My albums </a>
+                <a href="${path}/atrack?command=user_playlists"> My playlists </a>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink1" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
-                <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink1" style="right: 0; margin-right: 20px; left: auto">
+                <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink1" id="dropdownMenu1" style="left: auto">
                     <a class="dropdown-item" href="#">My profile</a>
-                    <a class="dropdown-item" href="#">My wallet ${sessionScope.wallet}</a>
+                    <a class="dropdown-item" href="#">My wallet (<strong>${sessionScope.wallet}</strong>)</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Sign out</a>
                 </div>

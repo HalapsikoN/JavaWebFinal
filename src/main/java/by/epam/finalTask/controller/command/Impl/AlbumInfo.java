@@ -5,8 +5,9 @@ import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.util.DispatchAssistant;
 import by.epam.finalTask.controller.util.JspPageName;
 import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.dao.DAOFactory;
+import by.epam.finalTask.controller.util.RequestParameterName;
 import by.epam.finalTask.entity.Album;
+import by.epam.finalTask.entity.logic.AlbumLogic;
 import by.epam.finalTask.service.AlbumService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
@@ -17,26 +18,29 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-public class AlbumsPage implements Command {
+public class AlbumInfo implements Command {
 
-    private static final Logger logger = LogManager.getLogger(AlbumsPage.class);
+    private final static Logger logger= LogManager.getLogger(AlbumInfo.class);
 
-    private static final AlbumService albumService= ServiceFactory.getInstance().getAlbumService();
+    private final static AlbumService albumService= ServiceFactory.getInstance().getAlbumService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
+
         try {
-            List<Album> albumsList;
+            int albumId=Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
 
-            albumsList=albumService.getAllAlbums();
+            Album album=albumService.getAlbum(albumId);
 
-            req.setAttribute(RequestAttributeName.ALBUM_LIST, albumsList);
+            req.setAttribute(RequestAttributeName.ALBUM, album);
 
-            DispatchAssistant.forwardToJsp(req, resp, JspPageName.ALBUMS_PAGE);
-        } catch (ServiceException|IOException|ServletException e) {
+            double albumPrice= AlbumLogic.getAlbumPrice(album);
+
+            req.setAttribute(RequestAttributeName.ALBUM_PRICE, albumPrice);
+
+            DispatchAssistant.forwardToJsp(req, resp, JspPageName.ALBUM_INFO);
+        } catch (ServiceException | IOException | ServletException e) {
             logger.error(e);
             throw new CommandException(e);
         }

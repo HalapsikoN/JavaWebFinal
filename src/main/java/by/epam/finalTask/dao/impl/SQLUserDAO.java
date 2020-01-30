@@ -37,6 +37,8 @@ public class SQLUserDAO implements UserDAO {
     private String sqlUpdateUserRoleById = "UPDATE users SET role=? where id=?";
     private String sqlDeleteUserById = "DELETE FROM users where id=?";
     private String sqlGetUserTracksById = "SELECT tracks.* FROM users INNER JOIN us_tr ON users.id=us_tr.user_id INNER JOIN tracks ON us_tr.track_id=tracks.id WHERE users.id=?";
+    private String sqlGetUserAlbumsById = "SELECT albums.* FROM users INNER JOIN us_al ON users.id=us_al.user_id INNER JOIN albums ON us_al.album_id=albums.id WHERE users.id=?";
+    private String sqlGetUserPlaylistsById = "SELECT playlists.* FROM users INNER JOIN us_pl ON users.id=us_pl.user_id INNER JOIN playlists ON us_pl.playlist_id=playlists.id WHERE users.id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -58,6 +60,8 @@ public class SQLUserDAO implements UserDAO {
         prepareStatement(connection, sqlUpdateUserRoleById);
         prepareStatement(connection, sqlDeleteUserById);
         prepareStatement(connection, sqlGetUserTracksById);
+        prepareStatement(connection, sqlGetUserAlbumsById);
+        prepareStatement(connection, sqlGetUserPlaylistsById);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -327,12 +331,56 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public List<Album> getUserAlbumsById(int id) throws DAOException {
-        return null;
+        List<Album> result=new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetUserAlbumsById);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Album album = converterFromResultSet.getEmptyAlbumFromResultSet(resultSet);
+                result.add(album);
+            }
+        }catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
     }
 
     @Override
     public List<Playlist> getUserPlayListsById(int id) throws DAOException {
-        return null;
+        List<Playlist> result=new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetUserPlaylistsById);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Playlist album = converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
+                result.add(album);
+            }
+        }catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
     }
 
     @Override

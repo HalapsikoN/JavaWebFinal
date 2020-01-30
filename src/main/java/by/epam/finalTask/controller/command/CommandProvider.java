@@ -24,6 +24,11 @@ public class CommandProvider {
         repository.put(CommandName.MAIN_PAGE, new MainPage());
         repository.put(CommandName.ALBUMS_PAGE, new AlbumsPage());
         repository.put(CommandName.PLAYLISTS_PAGE, new PlaylistsPage());
+        repository.put(CommandName.USER_TRACKS, new UserTracks());
+        repository.put(CommandName.ALBUM_INFO, new AlbumInfo());
+        repository.put(CommandName.USER_ALBUMS, new UserAlbums());
+        repository.put(CommandName.PLAYLIST_INFO, new PlaylistInfo());
+        repository.put(CommandName.USER_PLAYLISTS, new UserPlaylists());
     }
 
     public static CommandProvider getInstance(){

@@ -16,5 +16,5 @@ public interface PlaylistDAO {
 
     boolean deletePlaylistBId(int id) throws DAOException;
 
-    List<Playlist> getAllAlbums() throws DAOException;
+    List<Playlist> getAllPlaylists() throws DAOException;
 }

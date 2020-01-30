@@ -19,6 +19,19 @@ public class AlbumServiceImpl implements AlbumService {
     private AlbumDAO albumDAO = DAOFactory.getInstance().getSqlAlbumDAO();
 
     @Override
+    public Album getAlbum(int id) throws ServiceException {
+        Album album;
+
+        try {
+            album=albumDAO.getAlbumById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return album;
+    }
+
+    @Override
     public List<Album> getAllAlbums() throws ServiceException {
         List<Album> albumList;
 

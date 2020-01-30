@@ -15,14 +15,27 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     public static final Logger logger= LogManager.getLogger(TrackServiceImpl.class);
 
-    private PlaylistDAO albumDAO = DAOFactory.getInstance().getSqlPlaylistDAO();
+    private PlaylistDAO playlistDAO = DAOFactory.getInstance().getSqlPlaylistDAO();
+
+    @Override
+    public Playlist getPlaylist(int id) throws ServiceException {
+        Playlist playlist;
+
+        try{
+            playlist=playlistDAO.getPlaylistById(id);
+        }catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return playlist;
+    }
 
     @Override
     public List<Playlist> getAllPlaylists() throws ServiceException {
         List<Playlist> playlistList;
 
         try {
-            playlistList= albumDAO.getAllAlbums();
+            playlistList= playlistDAO.getAllPlaylists();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

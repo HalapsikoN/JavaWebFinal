@@ -9,12 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:set var="path" value="../" scope="request"/>
-
 <html>
 <head>
     <title>Registration</title>
-    <c:import url="${path}WEB-INF/head/head.jsp" charEncoding="UTF-8"/>
+    <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
 <form method="post" id="form" action="atrack">
@@ -31,7 +29,7 @@
     </section>
 
     <input type="button" value="Register" onclick="regForm(this)">
-    <input type="button" value="Cancel" onclick="window.location='${path}WEB-INF/main.jsp'"/>
+    <input type="button" value="Cancel" onclick="window.location='${pageContext.request.contextPath}/jsp/main.jsp'"/>
 </form>
 
     <p>
