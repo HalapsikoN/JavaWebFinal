@@ -12,11 +12,11 @@
     <title>ATrack</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
-    <link href="<c:url value="/jsp/css/table.css"/> " rel="stylesheet">
+
 </head>
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
-
+<link href="<c:url value="/jsp/css/table.css"/> " rel="stylesheet">
 <div>
     <br>
     <br>
@@ -46,7 +46,9 @@
                             <form id="form1" method="post" action="atrack">
                                 <input type="hidden" name="command" value="buy_song">
                                 <input type="hidden" name="song_id" value="${playlists.id}">
+                                <a href="#">
                                 <img src="${pageContext.request.contextPath}/jsp/icons/buy.png" onclick="submitById('form1')">
+                                </a>
                             </form>
                         </td>
                     </c:if>
