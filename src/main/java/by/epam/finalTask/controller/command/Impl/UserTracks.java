@@ -38,10 +38,6 @@ public class UserTracks implements Command {
 
             List<Track> trackList=userService.getUserTracks(userId);
 
-            if(trackList.isEmpty()){
-                trackList=null;
-            }
-
             req.setAttribute(RequestAttributeName.SONG_LIST, trackList);
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.USER_TRACKS);

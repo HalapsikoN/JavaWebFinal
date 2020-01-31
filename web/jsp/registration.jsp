@@ -11,33 +11,40 @@
 
 <html>
 <head>
-    <title>Registration</title>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
+<c:import url="header/header.jsp" charEncoding="utf-8"/>
+<link href="${pageContext.request.contextPath}/jsp/css/reg_sig.css" rel="stylesheet">
 <form method="post" id="form" action="atrack">
-    <input type="hidden" name="command" value="registration">
-    <section id="section" class="form-fields">
-        <label for="username">Name:</label>
-        <input type="text" name="username" id="username" placeholder="Enter your name" required minlength="2" />
-        <label for="login">Login:</label>
-        <input type="text" name="login" id="login" placeholder="Enter login" required minlength="4"/>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" placeholder="Enter password" required minlength="6"/>
-        <label for="re_pass">Repeat password:</label>
-        <input type="password" name="re_pass" id="re_pass" placeholder="Repeat password" required minlength="6"/>
-    </section>
+    <div class="form-group" id="main">
+        <input type="hidden" name="command" value="registration">
+        <section id="section" class="form-fields">
+            <label for="username">Name:</label>
+            <input type="text" name="username"  class="form-control" id="username" placeholder="Enter your name" required minlength="2"/>
 
-    <input type="button" value="Register" onclick="regForm(this)">
-    <input type="button" value="Cancel" onclick="window.location='${pageContext.request.contextPath}/jsp/main.jsp'"/>
+            <label for="login">Login:</label>
+            <input type="text" name="login" id="login" class="form-control" placeholder="Enter login" required minlength="4"/>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required minlength="6"/>
+
+            <label for="re_pass">Repeat password:</label>
+            <input type="password" name="re_pass" id="re_pass" class="form-control" placeholder="Repeat password" required minlength="6"/>
+
+        </section>
+
+        <input type="button" class="btn btn-primary" value="Register" onclick="regForm(this)">
+        <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/atrack?command=main_page">Cancel</a>
+    </div>
 </form>
 
-    <p>
-        <c:if test="${requestScope.get('message')!=null}">
-            <c:out value="${requestScope.get('message')}"/>
-        </c:if>
-    </p>
+<p>
+    <c:if test="${requestScope.get('message')!=null}">
+        <c:out value="${requestScope.get('message')}"/>
+    </c:if>
+</p>
 
-    <script src="${pageContext.request.contextPath}/jsp/js/registration.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/js/registration.js"></script>
 </body>
 </html>

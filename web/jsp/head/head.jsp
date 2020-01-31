@@ -11,7 +11,13 @@
 
 <meta charset="UTF-8" content="text/html">
 <title>ATrack</title>
-<link href="${pageContext.request.contextPath}/jsp/css/head.css" rel="stylesheet">
-<!--iconky zapixnyt'-->
+
 <!--Styles-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link href="${pageContext.request.contextPath}/jsp/css/head.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
+<!--iconky zapixnyt'-->
+<!--Bootstrap js-->
 

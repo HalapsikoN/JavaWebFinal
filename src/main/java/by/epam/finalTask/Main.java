@@ -71,7 +71,7 @@ public class Main {
 
         //System.out.println(calendar.get(Calendar.));
         for(int i=1; i<=17; ++i){
-            //System.out.println(calendar.get(Calendar.));
+           // System.out.println(calendar.get(Calendar.SE));
         }
     }
 }

@@ -39,6 +39,7 @@ public class SQLUserDAO implements UserDAO {
     private String sqlGetUserTracksById = "SELECT tracks.* FROM users INNER JOIN us_tr ON users.id=us_tr.user_id INNER JOIN tracks ON us_tr.track_id=tracks.id WHERE users.id=?";
     private String sqlGetUserAlbumsById = "SELECT albums.* FROM users INNER JOIN us_al ON users.id=us_al.user_id INNER JOIN albums ON us_al.album_id=albums.id WHERE users.id=?";
     private String sqlGetUserPlaylistsById = "SELECT playlists.* FROM users INNER JOIN us_pl ON users.id=us_pl.user_id INNER JOIN playlists ON us_pl.playlist_id=playlists.id WHERE users.id=?";
+    private String sqlGetUserBonusesById = "SELECT bonuses.* FROM users INNER JOIN us_bon ON users.id=us_bon.user_id INNER JOIN bonuses ON us_bon.bonus_id=bonuses.id WHERE users.id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -62,6 +63,7 @@ public class SQLUserDAO implements UserDAO {
         prepareStatement(connection, sqlGetUserTracksById);
         prepareStatement(connection, sqlGetUserAlbumsById);
         prepareStatement(connection, sqlGetUserPlaylistsById);
+        prepareStatement(connection, sqlGetUserBonusesById);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -385,7 +387,29 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public List<Bonus> getUserBonusesById(int id) throws DAOException {
-        return null;
+        List<Bonus> result=new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetUserBonusesById);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Bonus bonus = converterFromResultSet.getBonusFromResultSet(resultSet);
+                result.add(bonus);
+            }
+        }catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
     }
 }
 

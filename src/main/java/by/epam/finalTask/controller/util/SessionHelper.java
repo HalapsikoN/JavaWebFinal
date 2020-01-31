@@ -25,4 +25,12 @@ public class SessionHelper {
         session.setAttribute(SessionAttributeName.ROLE, user.getRole());
         session.setAttribute(SessionAttributeName.WALLET, user.getWallet());
     }
+
+    public static void deleteUserFromSession(HttpSession session){
+        session.removeAttribute(SessionAttributeName.ID);
+        session.removeAttribute(SessionAttributeName.LOGIN);
+        session.removeAttribute(SessionAttributeName.USERNAME);
+        session.removeAttribute(SessionAttributeName.ROLE);
+        session.removeAttribute(SessionAttributeName.WALLET);
+    }
 }

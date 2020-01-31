@@ -12,6 +12,8 @@ public class JspPageName {
     public final static String USER_ALBUMS="/jsp/userAlbums.jsp";
     public final static String PLAYLIST_INFO="/jsp/playlistInfo.jsp";
     public final static String USER_PLAYLIST="/jsp/userPlaylist.jsp";
+    public final static String USER_WALLET="/jsp/userWallet.jsp";
+    public final static String USER_PROFILE ="/jsp/userProfile.jsp";
 
     private JspPageName(){
     }

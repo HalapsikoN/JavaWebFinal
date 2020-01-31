@@ -3,10 +3,7 @@ package by.epam.finalTask.service.impl;
 import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.DAOFactory;
 import by.epam.finalTask.dao.UserDAO;
-import by.epam.finalTask.entity.Album;
-import by.epam.finalTask.entity.Playlist;
-import by.epam.finalTask.entity.Track;
-import by.epam.finalTask.entity.User;
+import by.epam.finalTask.entity.*;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.UserService;
 import by.epam.finalTask.service.validator.UserDataValidator;
@@ -106,6 +103,61 @@ public class UserServiceImpl implements UserService {
         }
 
         return playlistList;
+    }
+
+    @Override
+    public List<Bonus> getUserBonuses(int id) throws ServiceException {
+        List<Bonus> bonusList;
+
+        try {
+            bonusList=userDAO.getUserBonusesById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return bonusList;
+    }
+
+    @Override
+    public boolean updateUserWallet(int id, double wallet) throws ServiceException {
+        boolean result=true;
+
+        try {
+            result=userDAO.updateUserWalletById(id, wallet);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updateUserUsername(int id, String username) throws ServiceException {
+        boolean result=true;
+
+        try {
+            result=userDAO.updateUserNameById(id, username);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updateUserPassword(int id, String password) throws ServiceException {
+        boolean result=true;
+
+        try {
+
+            //закодировать пароль
+
+            result=userDAO.updateUserPasswordById(id, password);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     private boolean isValidData(String login, String password){

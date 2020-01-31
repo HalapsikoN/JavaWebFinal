@@ -1,9 +1,6 @@
 package by.epam.finalTask.service;
 
-import by.epam.finalTask.entity.Album;
-import by.epam.finalTask.entity.Playlist;
-import by.epam.finalTask.entity.Track;
-import by.epam.finalTask.entity.User;
+import by.epam.finalTask.entity.*;
 
 import java.util.List;
 
@@ -18,4 +15,12 @@ public interface UserService {
     List<Album> getUserAlbums(int id) throws ServiceException;
 
     List<Playlist> getUserPlaylists(int id) throws ServiceException;
+
+    List<Bonus> getUserBonuses(int id) throws ServiceException;
+
+    boolean updateUserWallet(int id, double wallet) throws ServiceException;
+
+    boolean updateUserUsername(int id, String username) throws ServiceException;
+
+    boolean updateUserPassword(int id, String password) throws ServiceException;
 }

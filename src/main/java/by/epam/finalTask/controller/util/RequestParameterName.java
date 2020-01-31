@@ -9,6 +9,9 @@ public class RequestParameterName {
     public static final String PASSWORD="password";
     public static final String ALBUM_ID="album_id";
     public static final String PLAYLIST_ID="playlist_id";
+    public static final String AMOUNT="amount";
+    public static final String NEW_USERNAME="new_username";
+    public static final String NEW_PASSWORD="new_password";
 
     private RequestParameterName(){
     }

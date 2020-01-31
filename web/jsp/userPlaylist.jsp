@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="playlistList" class="java.util.ArrayList" scope="request"/>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -17,13 +18,13 @@
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <br>
-<c:if test="${requestScope.get('playlistList')==null}">
+<c:if test="${requestScope.get('playlistList').isEmpty()}">
     <p>There are not any playlists yet. You can correct this: </p>
     <a href="${pageContext.request.contextPath}/atrack?command=playlists_page">
         Click here.
     </a>
 </c:if>
-<c:if test="${requestScope.get('playlistList')!=null}">
+<c:if test="${!requestScope.get('playlistList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
         <thead class="thead-dark">
         <tr>

@@ -13,6 +13,9 @@ public class Track {
     private Calendar date;
     private double price;
 
+    public Track() {
+    }
+
     public Track(String name, String artist, int date, double price) {
         this.name = name;
         this.artist = artist;

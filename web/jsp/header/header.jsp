@@ -41,10 +41,10 @@
                 <a href="${path}/atrack?command=user_playlists"> My playlists </a>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink1" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
                 <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink1" id="dropdownMenu1" style="left: auto">
-                    <a class="dropdown-item" href="#">My profile</a>
-                    <a class="dropdown-item" href="#">My wallet (<strong>${sessionScope.wallet}</strong>)</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=user_profile">My profile</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=user_wallet">My wallet (<strong>${sessionScope.wallet}</strong>)</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Sign out</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=sign_out">Sign out</a>
                 </div>
             </c:when>
         </c:choose>

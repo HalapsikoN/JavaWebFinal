@@ -12,6 +12,9 @@ public class User {
     private Role role;
     private double wallet;
 
+    public User() {
+    }
+
     public User(String name, String login, double wallet) {
         this.name = name;
         this.login = login;

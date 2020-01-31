@@ -10,6 +10,9 @@ public class Comment {
     private int trackId;
     private String text;
 
+    public Comment() {
+    }
+
     public Comment(int id, int userId, Calendar date, int trackId, String text) {
         this.id = id;
         this.userId = userId;

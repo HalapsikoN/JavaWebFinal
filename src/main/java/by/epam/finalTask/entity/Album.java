@@ -12,6 +12,9 @@ public class Album {
     private Calendar date;
     private List<Track> trackList;
 
+    public Album() {
+    }
+
     public Album(String name, String artist, Calendar date) {
         this.name = name;
         this.artist = artist;

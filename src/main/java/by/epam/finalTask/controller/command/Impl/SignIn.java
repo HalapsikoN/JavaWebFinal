@@ -2,6 +2,8 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
+import by.epam.finalTask.controller.command.CommandName;
+import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.User;
 import by.epam.finalTask.service.ServiceException;
@@ -21,19 +23,19 @@ public class SignIn implements Command {
 
     private static final Logger logger = LogManager.getLogger(SignIn.class);
 
-    private static final UserService userService= ServiceFactory.getInstance().getUserService();
+    private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
-        String login= RequestDataExecutor.getStringByName(RequestParameterName.LOGIN, req);
-        String password= RequestDataExecutor.getStringByName(RequestParameterName.PASSWORD, req);
+        String login = RequestDataExecutor.getStringByName(RequestParameterName.LOGIN, req);
+        String password = RequestDataExecutor.getStringByName(RequestParameterName.PASSWORD, req);
 
-        if((login==null) || (password==null)){
+        if ((login == null) || (password == null)) {
             throw new CommandException("Invalid request");
         }
 
-        User user=null;
+        User user = null;
         try {
             user = userService.signIn(login, password);
         } catch (ServiceException e) {
@@ -41,19 +43,15 @@ public class SignIn implements Command {
             throw new CommandException(e);
         }
 
-        if(user==null){
+        if (user == null) {
             throw new CommandException("Invalid password or username");
         }
 
-        HttpSession session= SessionHelper.createOrGetSession(req);
+        HttpSession session = SessionHelper.createOrGetSession(req);
         SessionHelper.saveUserToSession(session, user);
 
-        try{
-            DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
-        } catch (ServletException | IOException e) {
-            logger.error(e);
-            throw new CommandException(e);
-        }
 
+        Command command = CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
+        command.execute(req, resp);
     }
 }

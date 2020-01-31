@@ -12,15 +12,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class SignInPage implements Command {
+public class UserProfile implements Command {
 
-    private static final Logger logger = LogManager.getLogger(SignInPage.class);
+    private static final Logger logger= LogManager.getLogger(UserProfile.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
-            DispatchAssistant.forwardToJsp(req, resp, JspPageName.SIGN_IN_PAGE);
+            DispatchAssistant.forwardToJsp(req, resp, JspPageName.USER_PROFILE);
         } catch (ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);

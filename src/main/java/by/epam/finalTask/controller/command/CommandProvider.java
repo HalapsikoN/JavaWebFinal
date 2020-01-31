@@ -29,6 +29,12 @@ public class CommandProvider {
         repository.put(CommandName.USER_ALBUMS, new UserAlbums());
         repository.put(CommandName.PLAYLIST_INFO, new PlaylistInfo());
         repository.put(CommandName.USER_PLAYLISTS, new UserPlaylists());
+        repository.put(CommandName.USER_WALLET, new UserWallet());
+        repository.put(CommandName.ADD_USER_WALLET, new UpdateUserWallet());
+        repository.put(CommandName.USER_PROFILE, new UserProfile());
+        repository.put(CommandName.UPDATE_USERNAME, new UpdateUsername());
+        repository.put(CommandName.UPDATE_PASSWORD, new UpdatePassword());
+        repository.put(CommandName.SIGN_OUT, new SignOut());
     }
 
     public static CommandProvider getInstance(){

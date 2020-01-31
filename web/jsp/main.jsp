@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -18,7 +19,7 @@
 <link href="${pageContext.request.contextPath}/jsp/css/table.css " rel="stylesheet">
 <div>
     <br>
-    <c:if test="${requestScope.get('songList')!=null}">
+    <c:if test="${!requestScope.get('songList').isEmpty()}">
         <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
             <thead class="thead-dark">
             <tr>

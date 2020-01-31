@@ -10,6 +10,9 @@ public class Bonus {
     private Calendar startDate;
     private Calendar endDate;
 
+    public Bonus() {
+    }
+
     public Bonus(int id, String name, String description, Calendar startDate, Calendar endDate) {
         this.id = id;
         this.name = name;

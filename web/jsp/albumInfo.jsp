@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<jsp:useBean id="album" class="by.epam.finalTask.entity.Album" scope="request"/>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -16,9 +17,9 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/jsp/css/album_and_playlist_info.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <br>
-<div id="album_and_playlist_div">
+<div id="center_div">
     <h2>Album information</h2>
     <br>
     <p>Name: <strong>${album.name}</strong></p>

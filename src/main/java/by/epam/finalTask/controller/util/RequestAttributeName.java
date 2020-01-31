@@ -10,6 +10,7 @@ public class RequestAttributeName {
     public static final String ALBUM_PRICE="albumPrice";
     public static final String PLAYLIST="playlist";
     public static final String PLAYLIST_PRICE="playlistPrice";
+    public static final String BONUS_LIST ="bonusList";
 
     private RequestAttributeName(){
     }

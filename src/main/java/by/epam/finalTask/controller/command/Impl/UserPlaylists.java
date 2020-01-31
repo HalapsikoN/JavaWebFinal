@@ -38,10 +38,6 @@ public class UserPlaylists implements Command {
 
             List<Playlist> playlistList = userService.getUserPlaylists(userId);
 
-            if (playlistList.isEmpty()) {
-                playlistList = null;
-            }
-
             req.setAttribute(RequestAttributeName.PLAYLIST_LIST, playlistList);
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.USER_PLAYLIST);

@@ -10,6 +10,9 @@ public class Playlist {
     private Calendar date;
     private List<Track> trackList;
 
+    public Playlist() {
+    }
+
     public Playlist(String name, Calendar date) {
         this.name = name;
         this.date = date;
