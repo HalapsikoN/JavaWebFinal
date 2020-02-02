@@ -72,8 +72,8 @@ public class SQLCommentDAO implements CommentDAO {
 
             if (preparedStatement != null) {
                 preparedStatement.setInt(1, comment.getUserId());
-                java.sql.Date date = new Date(comment.getDate().getTimeInMillis());
-                preparedStatement.setDate(2, date);
+                java.sql.Timestamp date = new Timestamp(comment.getDate().getTimeInMillis());
+                preparedStatement.setTimestamp(2, date);
                 preparedStatement.setInt(3, comment.getTrackId());
                 preparedStatement.setString(4, comment.getText());
 
@@ -127,8 +127,8 @@ public class SQLCommentDAO implements CommentDAO {
 
             if (preparedStatement != null) {
                 preparedStatement.setInt(1, comment.getUserId());
-                java.sql.Date date = new Date(comment.getDate().getTimeInMillis());
-                preparedStatement.setDate(2, date);
+                java.sql.Timestamp date = new Timestamp(comment.getDate().getTimeInMillis());
+                preparedStatement.setTimestamp(2, date);
                 preparedStatement.setInt(3, comment.getTrackId());
                 preparedStatement.setString(4, comment.getText());
                 preparedStatement.setInt(5, id);

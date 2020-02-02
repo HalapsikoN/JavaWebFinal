@@ -17,7 +17,10 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class AddComment implements Command {
@@ -39,6 +42,8 @@ public class AddComment implements Command {
         int trackId=Integer.valueOf(req.getParameter(RequestParameterName.TRACK_ID));
 
         GregorianCalendar date=new GregorianCalendar();
+
+        System.out.println("    sss   "+date);
 
         String text=req.getParameter(RequestParameterName.TEXT);
 

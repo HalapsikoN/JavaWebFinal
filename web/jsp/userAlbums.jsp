@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="albumList" class="java.util.ArrayList" scope="request"/>
+<%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -39,7 +40,7 @@
             <tr>
                 <td>${album.name}</td>
                 <td>${album.artist}</td>
-                <td>${album.date.get(1)}</td>
+                <td><outputTag:date format="yyyy" item="${album.date}"/></td>
                 <td>
                     <form id="info_album${album.id}" method="post" action="atrack">
                         <input type="hidden" name="command" value="album_info">

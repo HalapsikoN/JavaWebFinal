@@ -4,3 +4,9 @@
     font-family: Arial;
     font-size: 18px;
 }
+
+#input_form{
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}

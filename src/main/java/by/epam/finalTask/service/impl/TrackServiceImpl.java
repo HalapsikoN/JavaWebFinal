@@ -19,8 +19,59 @@ public class TrackServiceImpl implements TrackService {
     private TrackDAO trackDAO= DAOFactory.getInstance().getSqlTrackDAO();
 
     @Override
-    public List<Track> getAllTracks() throws ServiceException {
+    public boolean addTrack(Track track) throws ServiceException {
+        boolean result;
 
+        try {
+            result=trackDAO.addTrack(track);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public Track getTrack(int id) throws ServiceException {
+        Track track;
+
+        try {
+            track=trackDAO.getTrackById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return track;
+    }
+
+    @Override
+    public boolean updateTrack(int id,Track track) throws ServiceException {
+        boolean result;
+
+        try {
+            result=trackDAO.updateTrackById(id, track);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deleteTrack(int id) throws ServiceException {
+        boolean result;
+
+        try {
+            result=trackDAO.deleteTrackById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Track> getAllTracks() throws ServiceException {
         List<Track> trackList;
 
         try {

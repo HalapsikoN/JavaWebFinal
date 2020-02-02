@@ -14,6 +14,11 @@ public class RequestParameterName {
     public static final String NEW_PASSWORD="new_password";
     public static final String TRACK_ID="track_id";
     public static final String TEXT="text";
+    public static final String USER_ID="user_id";
+    public static final String NAME="name";
+    public static final String ARTIST="artist";
+    public static final String DATE="date";
+    public static final String PRICE="price";
 
     private RequestParameterName(){
     }

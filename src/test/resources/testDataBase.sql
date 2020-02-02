@@ -51,9 +51,9 @@ CREATE TABLE comments
     `trackId` INT         NOT NULL,
     `text`     VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (userId)
+    CONSTRAINT FOREIGN KEY (userId)
         REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (trackId)
+    CONSTRAINT FOREIGN KEY (trackId)
         REFERENCES tracks (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -74,9 +74,9 @@ create table us_tr
     userId  INT NOT NULL,
     trackId INT NOT NULL,
     PRIMARY KEY (userId, trackId),
-    FOREIGN KEY (userId)
+    CONSTRAINT FOREIGN KEY (userId)
         REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (trackId)
+    CONSTRAINT FOREIGN KEY (trackId)
         REFERENCES tracks (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -86,9 +86,9 @@ create table us_al
     userId  INT NOT NULL,
     album_id INT NOT NULL,
     PRIMARY KEY (userId, album_id),
-    FOREIGN KEY (userId)
+    CONSTRAINT FOREIGN KEY (userId)
         REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (album_id)
+    CONSTRAINT FOREIGN KEY (album_id)
         REFERENCES albums (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -98,9 +98,9 @@ create table us_pl
     userId     INT NOT NULL,
     playlist_id INT NOT NULL,
     PRIMARY KEY (userId, playlist_id),
-    FOREIGN KEY (userId)
+    CONSTRAINT FOREIGN KEY (userId)
         REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (playlist_id)
+    CONSTRAINT FOREIGN KEY (playlist_id)
         REFERENCES playlists (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -110,9 +110,9 @@ create table us_bon
     userId  INT NOT NULL,
     bonus_id INT NOT NULL,
     PRIMARY KEY (userId, bonus_id),
-    FOREIGN KEY (userId)
+    CONSTRAINT FOREIGN KEY (userId)
         REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (bonus_id)
+    CONSTRAINT FOREIGN KEY (bonus_id)
         REFERENCES bonuses (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -122,9 +122,9 @@ create table tr_al
     trackId INT NOT NULL,
     album_id INT NOT NULL,
     PRIMARY KEY (trackId, album_id),
-    FOREIGN KEY (trackId)
+    CONSTRAINT FOREIGN KEY (trackId)
         REFERENCES tracks (id) ON DELETE CASCADE,
-    FOREIGN KEY (album_id)
+    CONSTRAINT FOREIGN KEY (album_id)
         REFERENCES albums (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -134,9 +134,9 @@ create table tr_com
     trackId   INT NOT NULL,
     comment_id INT NOT NULL,
     PRIMARY KEY (trackId, comment_id),
-    FOREIGN KEY (trackId)
+    CONSTRAINT FOREIGN KEY (trackId)
         REFERENCES tracks (id) ON DELETE CASCADE,
-    FOREIGN KEY (comment_id)
+    CONSTRAINT FOREIGN KEY (comment_id)
         REFERENCES comments (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
@@ -146,9 +146,9 @@ create table tr_pl
     playlist_id INT NOT NULL,
     trackId    INT NOT NULL,
     PRIMARY KEY (playlist_id, trackId),
-    FOREIGN KEY (playlist_id)
+    CONSTRAINT FOREIGN KEY (playlist_id)
         REFERENCES playlists (id) ON DELETE CASCADE,
-    FOREIGN KEY (trackId)
+    CONSTRAINT FOREIGN KEY (trackId)
         REFERENCES tracks (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;

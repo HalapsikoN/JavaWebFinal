@@ -26,7 +26,7 @@ public class SQLAlbumDAO implements AlbumDAO {
     private String sqlAddAlbum = "INSERT INTO albums (name, artist, date) values (?,?,?)";
     private String sqlAddTrackToAlbum = "INSERT INTO tr_al (track_id, album_id) values (?,?)";
     private String sqlGetAlbumById = "SELECT * FROM albums WHERE id=?";
-    private String sqlGetAllAlbumTracks = "SELECT tracks.* FROM albums INNER JOIN tr_al ON albums.id=tr_al.album_id INNER JOIN tracks ON tr_al.album_id=tracks.id WHERE albums.id=?";
+    private String sqlGetAllAlbumTracks = "SELECT tracks.* FROM albums INNER JOIN tr_al ON albums.id=tr_al.album_id INNER JOIN tracks ON tr_al.track_id=tracks.id WHERE albums.id=?";
     private String sqlUpdateAlbumById = "UPDATE albums SET name=?, artist=?, date=? where id=?";
     private String sqlDeleteAlbumById = "DELETE FROM albums where id=?";
     private String sqlGetAllAlbums = "SELECT * FROM albums";

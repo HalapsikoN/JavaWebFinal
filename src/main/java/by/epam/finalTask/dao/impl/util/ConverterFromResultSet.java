@@ -143,9 +143,9 @@ public class ConverterFromResultSet {
         try {
             int id = resultSet.getInt(CommentFields.ID.name());
             int userId = resultSet.getInt(CommentFields.USER_ID.name());
-            java.sql.Date dateSql = resultSet.getDate(CommentFields.DATE.name());
+            java.sql.Timestamp time=resultSet.getTimestamp(CommentFields.DATE.name());
             Calendar date = new GregorianCalendar();
-            date.setTimeInMillis(dateSql.getTime());
+            date.setTimeInMillis(time.getTime());
             int trackId = resultSet.getInt(CommentFields.TRACK_ID.name());
             String text = resultSet.getString(CommentFields.TEXT.name());
             String username= DAOFactory.getInstance().getSqlUserDAO().getUserById(userId).getName();

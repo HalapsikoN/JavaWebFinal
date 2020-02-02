@@ -14,6 +14,10 @@ public class JspPageName {
     public final static String USER_PLAYLIST="/jsp/userPlaylist.jsp";
     public final static String USER_WALLET="/jsp/userWallet.jsp";
     public final static String USER_PROFILE ="/jsp/userProfile.jsp";
+    public final static String USER_LIST ="/jsp/userList.jsp";
+    public final static String EDIT_USER_PAGE ="/jsp/editUser.jsp";
+    public final static String ADD_TRACK_PAGE ="/jsp/addTrack.jsp";
+    public final static String EDIT_TRACK_PAGE ="/jsp/editTrack.jsp";
 
     private JspPageName(){
     }

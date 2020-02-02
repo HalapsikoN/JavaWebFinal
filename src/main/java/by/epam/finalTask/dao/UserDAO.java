@@ -24,4 +24,5 @@ public interface UserDAO {
     List<Album> getUserAlbumsById(int id) throws DAOException;
     List<Playlist> getUserPlayListsById(int id) throws DAOException;
     List<Bonus> getUserBonusesById(int id) throws DAOException;
+    List<User> getAllUsers() throws DAOException;
 }

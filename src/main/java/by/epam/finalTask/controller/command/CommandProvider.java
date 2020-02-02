@@ -36,6 +36,15 @@ public class CommandProvider {
         repository.put(CommandName.UPDATE_PASSWORD, new UpdatePassword());
         repository.put(CommandName.SIGN_OUT, new SignOut());
         repository.put(CommandName.ADD_COMMENT, new AddComment());
+        repository.put(CommandName.USER_LIST, new UserList());
+        repository.put(CommandName.EDIT_USER_PAGE, new EditUserPage());
+        repository.put(CommandName.CHANGE_ROLE, new ChangeRole());
+        repository.put(CommandName.DELETE_USER, new DeleteUser());
+        repository.put(CommandName.ADD_TRACK_PAGE, new AddTrackPage());
+        repository.put(CommandName.ADD_TRACK, new AddTrack());
+        repository.put(CommandName.EDIT_TRACK_PAGE, new EditTrackPage());
+        repository.put(CommandName.EDIT_TRACK, new EditTrack());
+        repository.put(CommandName.DELETE_TRACK, new DeleteTrack());
     }
 
     public static CommandProvider getInstance(){

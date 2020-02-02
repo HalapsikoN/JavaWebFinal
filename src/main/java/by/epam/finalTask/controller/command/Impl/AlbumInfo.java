@@ -7,8 +7,10 @@ import by.epam.finalTask.controller.util.JspPageName;
 import by.epam.finalTask.controller.util.RequestAttributeName;
 import by.epam.finalTask.controller.util.RequestParameterName;
 import by.epam.finalTask.entity.Album;
+import by.epam.finalTask.entity.Comment;
 import by.epam.finalTask.entity.logic.AlbumLogic;
 import by.epam.finalTask.service.AlbumService;
+import by.epam.finalTask.service.CommentService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -18,12 +20,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public class AlbumInfo implements Command {
 
     private final static Logger logger= LogManager.getLogger(AlbumInfo.class);
 
     private final static AlbumService albumService= ServiceFactory.getInstance().getAlbumService();
+    private static final CommentService commentService= ServiceFactory.getInstance().getCommentService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -33,11 +37,17 @@ public class AlbumInfo implements Command {
 
             Album album=albumService.getAlbum(albumId);
 
+            System.out.println(album);
+
             req.setAttribute(RequestAttributeName.ALBUM, album);
 
             double albumPrice= AlbumLogic.getAlbumPrice(album);
 
             req.setAttribute(RequestAttributeName.ALBUM_PRICE, albumPrice);
+
+            List<Comment> commentList=commentService.getAllComments();
+
+            req.setAttribute(RequestAttributeName.COMMENT_LIST, commentList);
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.ALBUM_INFO);
         } catch (ServiceException | IOException | ServletException e) {

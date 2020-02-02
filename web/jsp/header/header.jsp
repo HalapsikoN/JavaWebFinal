@@ -30,9 +30,12 @@
     <c:if test="${sessionScope.id!=null}">
         <c:choose>
             <c:when test="${sessionScope.role eq 'ADMIN'}">
-                <a id="ends" href="header.jsp"> List of users </a>
-                <div class="dropdown">
-                <a href="header.jsp" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
+                <a id="ends" href="${path}/atrack?command=user_list"> List of users </a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink2" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
+                <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink2" id="dropdownMenu1" style="left: auto">
+                    <a class="dropdown-item" href="${path}/atrack?command=user_profile">My profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="${path}/atrack?command=sign_out">Sign out</a>
                 </div>
             </c:when>
             <c:when test="${sessionScope.role eq 'USER'}">

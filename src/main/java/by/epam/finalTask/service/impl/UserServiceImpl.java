@@ -4,6 +4,7 @@ import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.DAOFactory;
 import by.epam.finalTask.dao.UserDAO;
 import by.epam.finalTask.entity.*;
+import by.epam.finalTask.entity.util.Role;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.UserService;
 import by.epam.finalTask.service.validator.UserDataValidator;
@@ -67,6 +68,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(int id) throws ServiceException {
+        User user;
+
+        try {
+            user=userDAO.getUserById(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return user;
+    }
+
+    @Override
     public List<Track> getUserTracks(int id) throws ServiceException {
         List<Track> trackList;
 
@@ -119,6 +133,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllUsers() throws ServiceException {
+        List<User> userList;
+
+        try {
+            userList=userDAO.getAllUsers();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return userList;
+    }
+
+    @Override
     public boolean updateUserWallet(int id, double wallet) throws ServiceException {
         boolean result=true;
 
@@ -153,6 +180,32 @@ public class UserServiceImpl implements UserService {
             //закодировать пароль
 
             result=userDAO.updateUserPasswordById(id, password);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updateUserRole(int id, Role role) throws ServiceException {
+        boolean result=true;
+
+        try {
+            result=userDAO.updateUserRoleById(id, role);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deleteUser(int id) throws ServiceException {
+        boolean result;
+
+        try {
+            result=userDAO.deleteUserById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

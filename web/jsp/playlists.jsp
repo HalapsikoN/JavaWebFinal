@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="playlistList" class="java.util.ArrayList" scope="request"/>
+<%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -30,7 +31,7 @@
         <c:forEach var="playlist" items="${playlistList}">
             <tr>
                 <td >${playlist.name}</td>
-                <td>${playlist.date.get(5)}.${playlist.date.get(2)}.${playlist.date.get(1)}</td>
+                <td><outputTag:date format="dd_mm_yyyy" item="${playlist.date}"/></td>
                 <td>
                     <form id="info_playlist${playlist.id}" method="post" action="atrack">
                         <input type="hidden" name="command" value="playlist_info">

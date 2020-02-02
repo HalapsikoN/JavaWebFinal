@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
 
@@ -23,6 +24,13 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css " rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/center_info.css " rel="stylesheet">
+<c:if test="${sessionScope.role eq 'ADMIN'}">
+    <br>
+    <div id="center_div">
+        <a href="${pageContext.request.contextPath}/atrack?command=add_track_page" class="btn btn-primary">Add new track</a>
+    </div>
+</c:if>
 <div>
     <br>
     <c:if test="${!requestScope.get('songList').isEmpty()}">
@@ -36,16 +44,18 @@
                 <c:if test="${sessionScope.role eq 'USER'}">
                     <th>Buy</th>
                 </c:if>
+                <c:if test="${sessionScope.role eq 'ADMIN'}">
+                    <th>Edit</th>
+                </c:if>
             </tr>
             </thead>
             <tbody>
             <c:forEach var="song" items="${songList}">
 
                 <tr>
-
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>
-                    <td onclick="hideAndSick('hiddenRow${song.id}')">${song.date.get(1)}</td>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy" item="${song.date}"/></td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.price}</td>
                     <c:if test="${sessionScope.role eq 'USER'}">
                         <td>
@@ -59,18 +69,30 @@
                             </form>
                         </td>
                     </c:if>
+                    <c:if test="${sessionScope.role eq 'ADMIN'}">
+                        <td>
+                            <form id="form2${song.id}" method="post" action="atrack">
+                                <input type="hidden" name="command" value="edit_track_page">
+                                <input type="hidden" name="track_id" value="${song.id}">
+                                <a href="#">
+                                    <img src="${pageContext.request.contextPath}/jsp/icons/edit.png"
+                                         onclick="submitById('form2${song.id}')">
+                                </a>
+                            </form>
+                        </td>
+                    </c:if>
                 </tr>
 
                 <tr id="hiddenRow${song.id}" style="display: none">
                     <td colspan="10" class="comment" style="text-align: left; margin: 0">
                         <div class="card card-body">
-                            <div class="container-fluid" >
+                            <div class="container-fluid">
                                 <c:forEach var="comment" items="${commentList}">
                                     <c:if test="${comment.trackId == song.id}">
                                         <div class="row">
                                             <div class="col-2">
                                                 <p><strong>${comment.username}</strong></p>
-                                                <p>${comment.date.get(5)}.${comment.date.get(2)}.${comment.date.get(1)}</p>
+                                                <p><outputTag:date format="hh_mm_ss_dd_mm_yyyy" item="${comment.date}"/></p>
                                             </div>
 
                                             <div class="col">
@@ -107,6 +129,7 @@
         </table>
     </c:if>
 </div>
+<br>
 
 
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>

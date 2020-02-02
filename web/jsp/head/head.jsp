@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 
 <meta charset="UTF-8" content="text/html">
 <title>ATrack</title>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/icons/appIcon2.png">
 
 <!--Styles-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"

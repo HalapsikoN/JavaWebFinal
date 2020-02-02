@@ -40,6 +40,7 @@ public class SQLUserDAO implements UserDAO {
     private String sqlGetUserAlbumsById = "SELECT albums.* FROM users INNER JOIN us_al ON users.id=us_al.user_id INNER JOIN albums ON us_al.album_id=albums.id WHERE users.id=?";
     private String sqlGetUserPlaylistsById = "SELECT playlists.* FROM users INNER JOIN us_pl ON users.id=us_pl.user_id INNER JOIN playlists ON us_pl.playlist_id=playlists.id WHERE users.id=?";
     private String sqlGetUserBonusesById = "SELECT bonuses.* FROM users INNER JOIN us_bon ON users.id=us_bon.user_id INNER JOIN bonuses ON us_bon.bonus_id=bonuses.id WHERE users.id=?";
+    private String sqlGetAllUsers = "SELECT * FROM users";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -64,6 +65,7 @@ public class SQLUserDAO implements UserDAO {
         prepareStatement(connection, sqlGetUserAlbumsById);
         prepareStatement(connection, sqlGetUserPlaylistsById);
         prepareStatement(connection, sqlGetUserBonusesById);
+        prepareStatement(connection, sqlGetAllUsers);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -403,6 +405,31 @@ public class SQLUserDAO implements UserDAO {
             while (resultSet.next()) {
                 Bonus bonus = converterFromResultSet.getBonusFromResultSet(resultSet);
                 result.add(bonus);
+            }
+        }catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<User> getAllUsers() throws DAOException {
+        List<User> result=new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllUsers);
+
+            if (preparedStatement != null) {
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                User user = converterFromResultSet.getUserFromResultSet(resultSet);
+                result.add(user);
             }
         }catch (SQLException e) {
             logger.error(e);
