@@ -1,6 +1,8 @@
 package by.epam.finalTask.dao.impl;
 
 import by.epam.finalTask.dao.CommentDAO;
+import by.epam.finalTask.dao.DAOFactory;
+import by.epam.finalTask.dao.UserDAO;
 import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
 import by.epam.finalTask.entity.Comment;
 import by.epam.finalTask.dao.pool.ConnectionPoolException;
@@ -10,7 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SQLCommentDAO implements CommentDAO {
@@ -24,6 +28,7 @@ public class SQLCommentDAO implements CommentDAO {
     private String sqlGetCommentById = "SELECT * FROM comments WHERE id=?";
     private String sqlUpdateCommentById = "UPDATE comments SET user_id=?, date=?, track_id=?, text=? where id=?";
     private String sqlDeleteCommentById = "DELETE FROM comments where id=?";
+    private String sqlGetAllComments = "SELECT * FROM comments";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -39,6 +44,7 @@ public class SQLCommentDAO implements CommentDAO {
         prepareStatement(connection, sqlGetCommentById);
         prepareStatement(connection, sqlUpdateCommentById);
         prepareStatement(connection, sqlDeleteCommentById);
+        prepareStatement(connection, sqlGetAllComments);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -57,7 +63,7 @@ public class SQLCommentDAO implements CommentDAO {
     }
 
     @Override
-    public boolean addCommentWithOutTracks(Comment comment) throws DAOException {
+    public boolean addComment(Comment comment) throws DAOException {
         boolean result = true;
         int resultRow;
 
@@ -166,5 +172,33 @@ public class SQLCommentDAO implements CommentDAO {
             result = false;
         }
         return result;
+    }
+
+    @Override
+    public List<Comment> getAllComments() throws DAOException {
+        ResultSet resultSet = null;
+        List<Comment> commentList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllComments);
+
+            if (preparedStatement != null) {
+
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Comment comment = converterFromResultSet.getCommentFromResultSet(resultSet);
+                    if (comment != null) {
+                        commentList.add(comment);
+                    }
+                }
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return commentList;
     }
 }

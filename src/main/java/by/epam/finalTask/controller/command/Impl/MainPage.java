@@ -5,7 +5,9 @@ import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.util.DispatchAssistant;
 import by.epam.finalTask.controller.util.JspPageName;
 import by.epam.finalTask.controller.util.RequestAttributeName;
+import by.epam.finalTask.entity.Comment;
 import by.epam.finalTask.entity.Track;
+import by.epam.finalTask.service.CommentService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import by.epam.finalTask.service.TrackService;
@@ -23,6 +25,7 @@ public class MainPage implements Command {
     private static final Logger logger = LogManager.getLogger(MainPage.class);
 
     private static final TrackService trackService= ServiceFactory.getInstance().getTrackService();
+    private static final CommentService commentService= ServiceFactory.getInstance().getCommentService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -31,6 +34,10 @@ public class MainPage implements Command {
             List<Track> trackList=trackService.getAllTracks();
 
             req.setAttribute(RequestAttributeName.SONG_LIST, trackList);
+
+            List<Comment> commentList=commentService.getAllComments();
+
+            req.setAttribute(RequestAttributeName.COMMENT_LIST, commentList);
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
         } catch (ServletException | IOException | ServiceException e) {

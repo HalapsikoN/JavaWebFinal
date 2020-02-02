@@ -1,9 +1,6 @@
 package by.epam.finalTask.service;
 
-import by.epam.finalTask.service.impl.AlbumServiceImpl;
-import by.epam.finalTask.service.impl.PlaylistServiceImpl;
-import by.epam.finalTask.service.impl.TrackServiceImpl;
-import by.epam.finalTask.service.impl.UserServiceImpl;
+import by.epam.finalTask.service.impl.*;
 
 public class ServiceFactory {
 
@@ -13,6 +10,7 @@ public class ServiceFactory {
     private final TrackService trackService=new TrackServiceImpl();
     private final AlbumService albumService=new AlbumServiceImpl();
     private final PlaylistService playlistService=new PlaylistServiceImpl();
+    private final CommentService commentService=new CommentServiceImpl();
 
     private ServiceFactory(){
     }
@@ -35,5 +33,9 @@ public class ServiceFactory {
 
     public PlaylistService getPlaylistService() {
         return playlistService;
+    }
+
+    public CommentService getCommentService() {
+        return commentService;
     }
 }

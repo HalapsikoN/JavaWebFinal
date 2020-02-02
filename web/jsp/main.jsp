@@ -7,10 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
+
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 
 </head>
@@ -34,23 +40,68 @@
             </thead>
             <tbody>
             <c:forEach var="song" items="${songList}">
+
                 <tr>
-                    <td >${song.name}</td>
-                    <td>${song.artist}</td>
-                    <td>${song.date.get(1)}</td>
-                    <td>${song.price}</td>
+
+                    <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')">${song.date.get(1)}</td>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')">${song.price}</td>
                     <c:if test="${sessionScope.role eq 'USER'}">
                         <td>
                             <form id="form1${song.id}" method="post" action="atrack">
                                 <input type="hidden" name="command" value="buy_song">
                                 <input type="hidden" name="song_id" value="${song.id}">
                                 <a href="#">
-                                <img src="${pageContext.request.contextPath}/jsp/icons/buy.png" onclick="submitById('form1${song.id}')">
+                                    <img src="${pageContext.request.contextPath}/jsp/icons/buy.png"
+                                         onclick="submitById('form1${song.id}')">
                                 </a>
                             </form>
                         </td>
                     </c:if>
                 </tr>
+
+                <tr id="hiddenRow${song.id}" style="display: none">
+                    <td colspan="10" class="comment" style="text-align: left; margin: 0">
+                        <div class="card card-body">
+                            <div class="container-fluid" >
+                                <c:forEach var="comment" items="${commentList}">
+                                    <c:if test="${comment.trackId == song.id}">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <p><strong>${comment.username}</strong></p>
+                                                <p>${comment.date.get(5)}.${comment.date.get(2)}.${comment.date.get(1)}</p>
+                                            </div>
+
+                                            <div class="col">
+                                                <p>${comment.text}</p>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                            <c:if test="${sessionScope.role==null}">
+                                <p>Sign in to comment!</p>
+                            </c:if>
+                            <c:if test="${sessionScope.role eq 'USER'}">
+                                <form action="atrack" method="post">
+                                    <div class="form-group">
+                                        <input type="hidden" name="command" value="add_comment">
+                                        <input type="hidden" name="track_id" value="${song.id}">
+                                        <label for="textComment${song.id}">Add your comment</label>
+                                        <textarea class="form-control" name="text" id="textComment${song.id}"
+                                                  rows="1" required></textarea>
+                                        <br>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </div>
+                                </form>
+                            </c:if>
+                        </div>
+
+                    </td>
+                </tr>
+
             </c:forEach>
             </tbody>
         </table>
@@ -59,5 +110,6 @@
 
 
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/js/comment.js"></script>
 </body>
 </html>

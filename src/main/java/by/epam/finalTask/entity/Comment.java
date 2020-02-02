@@ -6,6 +6,7 @@ public class Comment {
 
     private int id;
     private int userId;
+    private String username;
     private Calendar date;
     private int trackId;
     private String text;
@@ -13,9 +14,17 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int id, int userId, Calendar date, int trackId, String text) {
+    public Comment(int userId, Calendar date, int trackId, String text) {
+        this.userId = userId;
+        this.date = date;
+        this.trackId = trackId;
+        this.text = text;
+    }
+
+    public Comment(int id, int userId, String username, Calendar date, int trackId, String text) {
         this.id = id;
         this.userId = userId;
+        this.username = username;
         this.date = date;
         this.trackId = trackId;
         this.text = text;
@@ -61,6 +70,14 @@ public class Comment {
         this.text = text;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -71,6 +88,7 @@ public class Comment {
         if (id != comment.id) return false;
         if (userId != comment.userId) return false;
         if (trackId != comment.trackId) return false;
+        if (!username.equals(comment.username)) return false;
         if (!date.equals(comment.date)) return false;
         return text.equals(comment.text);
 
@@ -80,6 +98,7 @@ public class Comment {
     public int hashCode() {
         int result = id;
         result = 31 * result + userId;
+        result = 31 * result + username.hashCode();
         result = 31 * result + date.hashCode();
         result = 31 * result + trackId;
         result = 31 * result + text.hashCode();
@@ -91,6 +110,7 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", date=" + date +
                 ", trackId=" + trackId +
                 ", text='" + text + '\'' +

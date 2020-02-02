@@ -18,5 +18,6 @@ public enum  CommandName {
     USER_PROFILE,
     UPDATE_USERNAME,
     UPDATE_PASSWORD,
-    SIGN_OUT
+    SIGN_OUT,
+    ADD_COMMENT
 }

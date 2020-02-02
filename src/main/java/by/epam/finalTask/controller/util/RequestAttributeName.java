@@ -11,6 +11,7 @@ public class RequestAttributeName {
     public static final String PLAYLIST="playlist";
     public static final String PLAYLIST_PRICE="playlistPrice";
     public static final String BONUS_LIST ="bonusList";
+    public static final String COMMENT_LIST ="commentList";
 
     private RequestAttributeName(){
     }

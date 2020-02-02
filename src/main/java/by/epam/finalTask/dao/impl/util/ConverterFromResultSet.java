@@ -1,5 +1,6 @@
 package by.epam.finalTask.dao.impl.util;
 
+import by.epam.finalTask.dao.DAOFactory;
 import by.epam.finalTask.dao.impl.util.auxiliary.*;
 import by.epam.finalTask.entity.*;
 import by.epam.finalTask.entity.util.Role;
@@ -147,8 +148,9 @@ public class ConverterFromResultSet {
             date.setTimeInMillis(dateSql.getTime());
             int trackId = resultSet.getInt(CommentFields.TRACK_ID.name());
             String text = resultSet.getString(CommentFields.TEXT.name());
+            String username= DAOFactory.getInstance().getSqlUserDAO().getUserById(userId).getName();
 
-            comment = new Comment(id, userId, date, trackId, text);
+            comment = new Comment(id, userId, username, date, trackId, text);
 
         } catch (SQLException e) {
             logger.error(e);
