@@ -30,6 +30,7 @@ public class SQLPlaylistDAO implements PlaylistDAO {
     private String sqlUpdatePlaylistById ="UPDATE playlists SET name=?, date=? where id=?";
     private String sqlDeletePlaylistById ="DELETE FROM playlists where id=?";
     private String sqlGetAllPlaylists ="SELECT * FROM playlists";
+    private String sqlDeletePlaylistTracks ="DELETE FROM tr_pl where playlist_id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -48,6 +49,7 @@ public class SQLPlaylistDAO implements PlaylistDAO {
         prepareStatement(connection, sqlUpdatePlaylistById);
         prepareStatement(connection, sqlDeletePlaylistById);
         prepareStatement(connection, sqlGetAllPlaylists);
+        prepareStatement(connection, sqlDeletePlaylistTracks);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -211,7 +213,7 @@ public class SQLPlaylistDAO implements PlaylistDAO {
     }
 
     @Override
-    public boolean deletePlaylistBId(int id) throws DAOException {
+    public boolean deletePlaylistById(int id) throws DAOException {
         boolean result=true;
         int resultRow;
 
@@ -222,6 +224,32 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             preparedStatement.setInt(1, id);
 
             resultRow=preparedStatement.executeUpdate();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        if(resultRow==0){
+            result=false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deletePlaylistTracks(int id) throws DAOException {
+        boolean result=true;
+        int resultRow;
+
+        try {
+            PreparedStatement preparedStatement=preparedStatementMap.get(sqlDeletePlaylistTracks);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+
+                resultRow=preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }

@@ -6,9 +6,9 @@ import by.epam.finalTask.controller.util.DispatchAssistant;
 import by.epam.finalTask.controller.util.JspPageName;
 import by.epam.finalTask.controller.util.RequestAttributeName;
 import by.epam.finalTask.controller.util.RequestParameterName;
-import by.epam.finalTask.entity.Album;
+import by.epam.finalTask.entity.Playlist;
 import by.epam.finalTask.entity.Track;
-import by.epam.finalTask.service.AlbumService;
+import by.epam.finalTask.service.PlaylistService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import by.epam.finalTask.service.TrackService;
@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class EditAlbumPage implements Command {
+public class EditPlaylistPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddTrackPage.class);
+    private static final Logger logger= LogManager.getLogger(EditPlaylistPage.class);
 
-    private static final AlbumService albumService = ServiceFactory.getInstance().getAlbumService();
+    private static final PlaylistService playlistService = ServiceFactory.getInstance().getPlaylistService();
     private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
 
     @Override
@@ -33,17 +33,17 @@ public class EditAlbumPage implements Command {
 
         try {
 
-            int albumId=Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int playlistId=Integer.valueOf(req.getParameter(RequestParameterName.PLAYLIST_ID));
 
-            Album album= albumService.getAlbum(albumId);
+            Playlist playlist= playlistService.getPlaylist(playlistId);
 
-            req.setAttribute(RequestAttributeName.ALBUM, album);
+            req.setAttribute(RequestAttributeName.PLAYLIST, playlist);
 
-            List<Track> trackList=trackService.getTracksWithArtist(album.getArtist());
+            List<Track> trackList=trackService.getAllTracks();
 
             req.setAttribute(RequestAttributeName.TRACK_LIST, trackList);
 
-            DispatchAssistant.forwardToJsp(req, resp, JspPageName.EDIT_ALBUM_PAGE);
+            DispatchAssistant.forwardToJsp(req, resp, JspPageName.EDIT_PLAYLIST_PAGE);
         } catch (ServletException | IOException | ServiceException e) {
             logger.error(e);
             throw new CommandException(e);

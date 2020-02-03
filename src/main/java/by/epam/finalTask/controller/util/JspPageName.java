@@ -20,6 +20,8 @@ public class JspPageName {
     public final static String EDIT_TRACK_PAGE ="/jsp/editTrack.jsp";
     public final static String ADD_ALBUM_PAGE ="/jsp/addAlbum.jsp";
     public final static String EDIT_ALBUM_PAGE ="/jsp/editAlbum.jsp";
+    public final static String ADD_PLAYLIST_PAGE ="/jsp/addPlaylist.jsp";
+    public final static String EDIT_PLAYLIST_PAGE ="/jsp/editPlaylist.jsp";
 
     private JspPageName(){
     }

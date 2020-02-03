@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="album" class="by.epam.finalTask.entity.Album" scope="request"/>
+<jsp:useBean id="albumList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <html>
 <head>
@@ -23,7 +24,8 @@
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
-        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary">Add new album</a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary">Add new
+            album</a>
     </div>
 </c:if>
 <br>

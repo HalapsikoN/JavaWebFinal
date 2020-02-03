@@ -15,6 +15,7 @@ public interface AlbumDAO {
     boolean updateAlbumById(int id, Album album) throws DAOException;
 
     boolean deleteAlbumBId(int id) throws DAOException;
+    boolean deleteAlbumTracks(int id) throws DAOException;
 
     List<Album> getAllAlbums() throws DAOException;
 }

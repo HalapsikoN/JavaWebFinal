@@ -13,9 +13,22 @@ import java.util.List;
 
 public class PlaylistServiceImpl implements PlaylistService {
 
-    public static final Logger logger= LogManager.getLogger(TrackServiceImpl.class);
+    public static final Logger logger= LogManager.getLogger(PlaylistServiceImpl.class);
 
     private PlaylistDAO playlistDAO = DAOFactory.getInstance().getSqlPlaylistDAO();
+
+    @Override
+    public boolean addPlaylist(Playlist playlist) throws ServiceException {
+        boolean result;
+
+        try{
+            result=playlistDAO.addPlaylistWithOutTracks(playlist);
+        }catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
 
     @Override
     public Playlist getPlaylist(int id) throws ServiceException {
@@ -28,6 +41,52 @@ public class PlaylistServiceImpl implements PlaylistService {
         }
 
         return playlist;
+    }
+
+    @Override
+    public boolean updatePlaylist(int id, Playlist playlist) throws ServiceException {
+        boolean result;
+
+        try{
+            result=playlistDAO.updatePlaylistById(id, playlist);
+        }catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean updatePlaylistTracks(int playlistId, List<Integer> trackListId) throws ServiceException {
+        boolean result = true;
+
+        try {
+            playlistDAO.deletePlaylistTracks(playlistId);
+            for (Integer trackId : trackListId) {
+                System.out.println(trackId);
+                if (!playlistDAO.addTrackToPlaylistById(playlistId, trackId)) {
+                    result = false;
+                }
+            }
+
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean deletePlaylist(int id) throws ServiceException {
+        boolean result;
+
+        try{
+            result=playlistDAO.deletePlaylistById(id);
+        }catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
     }
 
     @Override

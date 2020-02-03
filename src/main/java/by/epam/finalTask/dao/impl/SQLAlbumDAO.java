@@ -30,6 +30,7 @@ public class SQLAlbumDAO implements AlbumDAO {
     private String sqlUpdateAlbumById = "UPDATE albums SET name=?, artist=?, date=? where id=?";
     private String sqlDeleteAlbumById = "DELETE FROM albums where id=?";
     private String sqlGetAllAlbums = "SELECT * FROM albums";
+    private String sqlDeleteAlbumTracks = "DELETE FROM tr_al where album_id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -48,6 +49,7 @@ public class SQLAlbumDAO implements AlbumDAO {
         prepareStatement(connection, sqlUpdateAlbumById);
         prepareStatement(connection, sqlDeleteAlbumById);
         prepareStatement(connection, sqlGetAllAlbums);
+        prepareStatement(connection, sqlDeleteAlbumTracks);
 
         if (connection != null) {
             connectionPool.closeConnection(connection);
@@ -220,6 +222,32 @@ public class SQLAlbumDAO implements AlbumDAO {
 
         try {
             PreparedStatement preparedStatement = preparedStatementMap.get(sqlDeleteAlbumById);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+
+                resultRow = preparedStatement.executeUpdate();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        if (resultRow == 0) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deleteAlbumTracks(int id) throws DAOException {
+        boolean result = true;
+        int resultRow;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlDeleteAlbumTracks);
 
             if (preparedStatement != null) {
                 preparedStatement.setInt(1, id);

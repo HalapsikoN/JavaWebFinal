@@ -49,6 +49,14 @@ public class CommandProvider {
         repository.put(CommandName.ADD_ALBUM, new AddAlbum());
         repository.put(CommandName.EDIT_ALBUM_PAGE, new EditAlbumPage());
         repository.put(CommandName.EDIT_ALBUM_TRACKS, new EditAlbumTracks());
+        repository.put(CommandName.EDIT_ALBUM, new EditAlbum());
+        repository.put(CommandName.DELETE_ALBUM, new DeleteAlbum());
+        repository.put(CommandName.ADD_PLAYLIST_PAGE, new AddPlaylistPage());
+        repository.put(CommandName.ADD_PLAYLIST, new AddPlaylist());
+        repository.put(CommandName.EDIT_PLAYLIST_PAGE, new EditPlaylistPage());
+        repository.put(CommandName.EDIT_PLAYLIST_TRACKS, new EditPlaylistTracks());
+        repository.put(CommandName.EDIT_PLAYLIST, new EditPlaylist());
+        repository.put(CommandName.DELETE_PLAYLIST, new DeletePlaylist());
     }
 
     public static CommandProvider getInstance(){

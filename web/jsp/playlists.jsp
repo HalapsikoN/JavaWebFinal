@@ -17,6 +17,13 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
+<c:if test="${sessionScope.role eq 'ADMIN'}">
+    <br>
+    <div id="center_div">
+        <a href="${pageContext.request.contextPath}/atrack?command=add_playlist_page" class="btn btn-primary">Add new
+            playlist</a>
+    </div>
+</c:if>
 <br>
 <c:if test="${!requestScope.get('playlistList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
@@ -25,6 +32,9 @@
             <th>Playlist name(topic)</th>
             <th>Date</th>
             <th>Track list</th>
+            <c:if test="${sessionScope.role eq 'ADMIN'}">
+                <th>Edit</th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -42,6 +52,18 @@
                         </a>
                     </form>
                 </td>
+                <c:if test="${sessionScope.role eq 'ADMIN'}">
+                    <td>
+                        <form id="info_playlist2${playlist.id}" method="post" action="atrack">
+                            <input type="hidden" name="command" value="edit_playlist_page">
+                            <input type="hidden" name="playlist_id" value="${playlist.id}">
+                            <a href="#">
+                                <img src="${pageContext.request.contextPath}/jsp/icons/edit.png"
+                                     onclick="submitById('info_playlist2${playlist.id}')">
+                            </a>
+                        </form>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

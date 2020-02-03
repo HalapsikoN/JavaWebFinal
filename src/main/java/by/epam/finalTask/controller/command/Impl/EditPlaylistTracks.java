@@ -6,7 +6,7 @@ import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.RequestAttributeName;
 import by.epam.finalTask.controller.util.RequestParameterName;
-import by.epam.finalTask.service.AlbumService;
+import by.epam.finalTask.service.PlaylistService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -15,23 +15,22 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class EditAlbumTracks implements Command {
+public class EditPlaylistTracks implements Command {
 
-    private static final Logger logger= LogManager.getLogger(EditAlbumTracks.class);
+    private static final Logger logger= LogManager.getLogger(EditPlaylistTracks.class);
 
-    private static final AlbumService albumService= ServiceFactory.getInstance().getAlbumService();
+    private static final PlaylistService playlistService = ServiceFactory.getInstance().getPlaylistService();
 
-    private static final String SUCCESS_MSG="Album tracks has been updated!";
-    private static final String ERROR_MSG="Album tracks has not been updated!";
+    private static final String SUCCESS_MSG="Playlist tracks has been updated!";
+    private static final String ERROR_MSG="Playlist tracks has not been updated!";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
-            int albumId = Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int playlistId = Integer.valueOf(req.getParameter(RequestParameterName.PLAYLIST_ID));
 
             String[] tracksUpdate = req.getParameterValues(RequestParameterName.TRACKS_UPDATE);
 
@@ -40,21 +39,19 @@ public class EditAlbumTracks implements Command {
                 trackIdList.add(Integer.valueOf(track));
             }
 
-            boolean isUpdated = albumService.updateAlbumTracks(albumId, trackIdList);
+            boolean isUpdated = playlistService.updatePlaylistTracks(playlistId, trackIdList);
 
             if (isUpdated) {
                 req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG);
             } else {
                 req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
             }
-            Command command = CommandProvider.getInstance().getCommand(CommandName.EDIT_ALBUM_PAGE.name());
+            Command command = CommandProvider.getInstance().getCommand(CommandName.EDIT_PLAYLIST_PAGE.name());
             command.execute(req, resp);
         } catch (ServiceException e) {
             logger.error(e);
             throw new CommandException(e);
         }
-
-        //крч норм выводит надо брать массив преобразовывать в айдишник дропать таблицу связей с эти айдишником альбома и фгарить новые
 
     }
 }
