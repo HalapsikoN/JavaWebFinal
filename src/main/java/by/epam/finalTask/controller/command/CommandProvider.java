@@ -45,6 +45,10 @@ public class CommandProvider {
         repository.put(CommandName.EDIT_TRACK_PAGE, new EditTrackPage());
         repository.put(CommandName.EDIT_TRACK, new EditTrack());
         repository.put(CommandName.DELETE_TRACK, new DeleteTrack());
+        repository.put(CommandName.ADD_ALBUM_PAGE, new AddAlbumPage());
+        repository.put(CommandName.ADD_ALBUM, new AddAlbum());
+        repository.put(CommandName.EDIT_ALBUM_PAGE, new EditAlbumPage());
+        repository.put(CommandName.EDIT_ALBUM_TRACKS, new EditAlbumTracks());
     }
 
     public static CommandProvider getInstance(){

@@ -42,7 +42,7 @@ public class Main {
 //            System.out.println(userDAO.updateUserLoginById(1, "DOPDOP"));
 ////            System.out.println(userDAO.updateUserPasswordById(1, "aaaaaa"));
 ////            Track track=userDAO.getUserTracksById(1).get(2);
-////            System.out.println(albumDAO.addAlbumWithOutTracks(album));
+////            System.out.println(albumDAO.addAlbumWithoutTracks(album));
 ////            System.out.println(albumDAO.getAlbumById(1));
 ////            System.out.println(albumDAO.addTrackToAlbum(album, track));
 //            //System.out.println(trackDAO.getTrackById(3));

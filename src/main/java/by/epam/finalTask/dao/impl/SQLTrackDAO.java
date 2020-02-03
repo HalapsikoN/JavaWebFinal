@@ -28,6 +28,7 @@ public class SQLTrackDAO implements TrackDAO {
     private String sqlUpdateTrackById = "UPDATE tracks SET name=?, artist=?, date=?, price=? where id=?";
     private String sqlDeleteTrackById = "DELETE FROM tracks where id=?";
     private String sqlGetAllTracks = "SELECT * FROM tracks";
+    private String sqlGetAllTracksWithArtist = "SELECT * FROM tracks WHERE artist=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -45,6 +46,7 @@ public class SQLTrackDAO implements TrackDAO {
         prepareStatement(connection, sqlUpdateTrackById);
         prepareStatement(connection, sqlDeleteTrackById);
         prepareStatement(connection, sqlGetAllTracks);
+        prepareStatement(connection, sqlGetAllTracksWithArtist);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -210,6 +212,33 @@ public class SQLTrackDAO implements TrackDAO {
             PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllTracks);
 
             if (preparedStatement != null) {
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Track track = converterFromResultSet.getTrackFromResultSet(resultSet);
+                result.add(track);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Track> getTracksWithArtist(String artist) throws DAOException {
+        List<Track> result = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllTracksWithArtist);
+
+            if (preparedStatement != null) {
+                preparedStatement.setString(1, artist);
+
                 resultSet = preparedStatement.executeQuery();
             } else {
                 throw new DAOException("Couldn't find prepared statement");

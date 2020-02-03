@@ -19,6 +19,7 @@ public class RequestParameterName {
     public static final String ARTIST="artist";
     public static final String DATE="date";
     public static final String PRICE="price";
+    public static final String TRACKS_UPDATE="tracks_update";
 
     private RequestParameterName(){
     }

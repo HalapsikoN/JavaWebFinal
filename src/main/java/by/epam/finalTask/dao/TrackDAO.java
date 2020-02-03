@@ -16,4 +16,6 @@ public interface TrackDAO {
     boolean deleteTrackById(int id) throws DAOException;
 
     List<Track> getAllTracks() throws DAOException;
+
+    List<Track> getTracksWithArtist(String artist) throws DAOException;
 }

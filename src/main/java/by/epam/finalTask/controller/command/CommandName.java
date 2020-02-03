@@ -28,5 +28,9 @@ public enum  CommandName {
     ADD_TRACK,
     EDIT_TRACK_PAGE,
     EDIT_TRACK,
-    DELETE_TRACK
+    DELETE_TRACK,
+    ADD_ALBUM_PAGE,
+    ADD_ALBUM,
+    EDIT_ALBUM_PAGE,
+    EDIT_ALBUM_TRACKS
 }

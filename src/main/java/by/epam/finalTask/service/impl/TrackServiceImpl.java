@@ -82,4 +82,17 @@ public class TrackServiceImpl implements TrackService {
 
         return trackList;
     }
+
+    @Override
+    public List<Track> getTracksWithArtist(String artist) throws ServiceException {
+        List<Track> trackList;
+
+        try {
+            trackList=trackDAO.getTracksWithArtist(artist);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return trackList;
+    }
 }

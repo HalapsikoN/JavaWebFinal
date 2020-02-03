@@ -40,6 +40,10 @@ public class DateTag extends TagSupport {
         try {
             DateTagFormats dateTagFormats = DateTagFormats.valueOf(format.toUpperCase());
 
+            if(item==null){
+                return SKIP_BODY;
+            }
+
             switch (dateTagFormats) {
                 case YYYY:
                     pageContext.getOut().print(item.get(Calendar.YEAR));

@@ -18,6 +18,8 @@ public class JspPageName {
     public final static String EDIT_USER_PAGE ="/jsp/editUser.jsp";
     public final static String ADD_TRACK_PAGE ="/jsp/addTrack.jsp";
     public final static String EDIT_TRACK_PAGE ="/jsp/editTrack.jsp";
+    public final static String ADD_ALBUM_PAGE ="/jsp/addAlbum.jsp";
+    public final static String EDIT_ALBUM_PAGE ="/jsp/editAlbum.jsp";
 
     private JspPageName(){
     }

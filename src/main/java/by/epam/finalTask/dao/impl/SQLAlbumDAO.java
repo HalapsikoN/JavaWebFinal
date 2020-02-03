@@ -67,7 +67,7 @@ public class SQLAlbumDAO implements AlbumDAO {
 
 
     @Override
-    public boolean addAlbumWithOutTracks(Album album) throws DAOException {
+    public boolean addAlbumWithoutTracks(Album album) throws DAOException {
         boolean result = true;
         int resultRow;
 

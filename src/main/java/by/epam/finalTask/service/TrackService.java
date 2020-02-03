@@ -15,4 +15,6 @@ public interface TrackService {
     boolean deleteTrack(int id) throws ServiceException;
 
     List<Track> getAllTracks() throws ServiceException;
+
+    List<Track> getTracksWithArtist(String artist) throws ServiceException;
 }

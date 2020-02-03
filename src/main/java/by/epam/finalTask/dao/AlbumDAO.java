@@ -6,7 +6,7 @@ import by.epam.finalTask.entity.Track;
 import java.util.List;
 
 public interface AlbumDAO {
-    boolean addAlbumWithOutTracks(Album album) throws DAOException;
+    boolean addAlbumWithoutTracks(Album album) throws DAOException;
     boolean addTrackToAlbum(Album album, Track track) throws DAOException;
     boolean addTrackToAlbumById(int album_id, int track_id) throws DAOException;
 

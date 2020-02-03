@@ -9,7 +9,6 @@ import by.epam.finalTask.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumServiceImpl implements AlbumService {
@@ -17,6 +16,19 @@ public class AlbumServiceImpl implements AlbumService {
     public static final Logger logger= LogManager.getLogger(TrackServiceImpl.class);
 
     private AlbumDAO albumDAO = DAOFactory.getInstance().getSqlAlbumDAO();
+
+    @Override
+    public boolean addAlbum(Album album) throws ServiceException {
+        boolean result;
+
+        try {
+            result=albumDAO.addAlbumWithoutTracks(album);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
 
     @Override
     public Album getAlbum(int id) throws ServiceException {

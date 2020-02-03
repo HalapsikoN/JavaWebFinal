@@ -19,6 +19,13 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
+<c:if test="${sessionScope.role eq 'ADMIN'}">
+    <br>
+    <div id="center_div">
+        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary">Add new album</a>
+    </div>
+</c:if>
 <br>
 <c:if test="${!requestScope.get('albumList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
@@ -28,6 +35,9 @@
             <th>Signer</th>
             <th>Date</th>
             <th>Track list</th>
+            <c:if test="${sessionScope.role eq 'ADMIN'}">
+                <th>Edit</th>
+            </c:if>
         </tr>
         </thead>
         <tbody>
@@ -37,15 +47,27 @@
                 <td>${album.artist}</td>
                 <td><outputTag:date format="yyyy" item="${album.date}"/></td>
                 <td>
-                    <form id="info_album${album.id}" method="post" action="atrack">
+                    <form id="info_album1${album.id}" method="post" action="atrack">
                         <input type="hidden" name="command" value="album_info">
                         <input type="hidden" name="album_id" value="${album.id}">
                         <a href="#">
                             <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png"
-                                 onclick="submitById('info_album${album.id}')">
+                                 onclick="submitById('info_album1${album.id}')">
                         </a>
                     </form>
                 </td>
+                <c:if test="${sessionScope.role eq 'ADMIN'}">
+                    <td>
+                        <form id="info_album2${album.id}" method="post" action="atrack">
+                            <input type="hidden" name="command" value="edit_album_page">
+                            <input type="hidden" name="album_id" value="${album.id}">
+                            <a href="#">
+                                <img src="${pageContext.request.contextPath}/jsp/icons/edit.png"
+                                     onclick="submitById('info_album2${album.id}')">
+                            </a>
+                        </form>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>
