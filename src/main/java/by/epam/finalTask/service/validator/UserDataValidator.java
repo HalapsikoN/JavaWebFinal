@@ -29,10 +29,6 @@ public class UserDataValidator {
         return (wallet>=0);
     }
 
-    public static boolean isRoleValid(String role){
-        return ((role!=null)&&(!role.isEmpty())&&(Role.isRole(role)));
-    }
-
     public static boolean isUserValid(User user){
         if(user==null) {
             return false;
@@ -41,7 +37,6 @@ public class UserDataValidator {
         boolean validName=isNameValid(user.getName());
         boolean validLogin=isValidLogin(user.getLogin());
         boolean validWallet=isWalletValid(user.getWallet());
-
 
         return (validLogin && validName && validWallet);
     }

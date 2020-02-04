@@ -36,7 +36,7 @@ public class ConverterFromResultSet {
                 int id = resultSet.getInt(UserFields.ID.name());
                 String name = resultSet.getString(UserFields.NAME.name());
                 String login = resultSet.getString(UserFields.LOGIN.name());
-                Role role = Role.getRoleFromString(resultSet.getString(UserFields.ROLE.name()).toLowerCase());
+                Role role = Role.valueOf(resultSet.getString(UserFields.ROLE.name()).toUpperCase());
                 double wallet = resultSet.getDouble(UserFields.WALLET.name());
 
                 user = new User(id, name, login, role, wallet);
