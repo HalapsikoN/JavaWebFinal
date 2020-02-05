@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="message" class="java.lang.String" scope="request"/>
 
 <html>
 <head>
@@ -32,7 +33,9 @@
         <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/atrack?command=main_page">Cancel</a>
     </div>
 </form>
-
+<br>
+<br>
+<p class="badge badge-info" style="font-size: 20px; margin-left: 10%">${message}</p>
 <script src="${pageContext.request.contextPath}/jsp/js/signIn.js"></script>
 </body>
 </html>

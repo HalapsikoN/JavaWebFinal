@@ -21,7 +21,7 @@ public class Registration implements Command {
     private static final Logger logger = LogManager.getLogger(Registration.class);
 
     private static final String SUCCESS_REGISTRATION ="Successfully added new user!";
-    private static final String LOGIN_TAKEN="Email is already taken!";
+    private static final String LOGIN_TAKEN="Login is already taken!";
     private static final String USER_STANDART_ROLE="USER";
 
     private static final UserService userService=ServiceFactory.getInstance().getUserService();

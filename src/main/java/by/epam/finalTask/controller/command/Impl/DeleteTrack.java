@@ -38,11 +38,9 @@ public class DeleteTrack implements Command {
             Command command;
             if (isDeleted) {
                 command = CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
-                command.execute(req, resp);
             } else {
                 req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
                 command = CommandProvider.getInstance().getCommand(CommandName.EDIT_TRACK_PAGE.name());
-                command.execute(req, resp);
             }
 
             command.execute(req, resp);

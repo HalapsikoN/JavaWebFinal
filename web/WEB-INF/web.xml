@@ -14,18 +14,13 @@
         <url-pattern>/atrack</url-pattern>
     </servlet-mapping>
 
-    <context-param>
-        <param-name>isLog4jAutoInitializationDisabled</param-name>
-        <param-value>true</param-value>
-    </context-param>
-
     <filter>
         <filter-name>CommandFilter</filter-name>
         <filter-class>by.epam.finalTask.app.filter.CommandFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CommandFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
 </web-app>

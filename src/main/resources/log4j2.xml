@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="WARN">
+<configuration status="INFO">
 
     <appenders>
-        <File name="MyFile" fileName="logs/app.log">
+        <File name="MyFile" fileName="${web:rootDir}/../../logs/app.log">
             <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
         </File>
     </appenders>
 
     <loggers>
         <root level="debug">
-            <appender-ref ref="MyFile" level="warn"/>
+            <appender-ref ref="MyFile" level="info"/>
         </root>
     </loggers>
 </configuration>

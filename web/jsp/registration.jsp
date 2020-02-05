@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<jsp:useBean id="message" class="java.lang.String" scope="request"/>
 
 <html>
 <head>
@@ -39,11 +40,8 @@
     </div>
 </form>
 
-<p>
-    <c:if test="${requestScope.get('message')!=null}">
-        <c:out value="${requestScope.get('message')}"/>
-    </c:if>
-</p>
+<br>
+<p class="badge badge-info" style="font-size: 20px; margin-left: 10%">${message}</p>
 
 <script src="${pageContext.request.contextPath}/jsp/js/registration.js"></script>
 </body>

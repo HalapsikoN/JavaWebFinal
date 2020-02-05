@@ -25,6 +25,8 @@ public class SignIn implements Command {
 
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
+    private static final String INVALID_DATA="Invalid password or username";
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
@@ -43,15 +45,16 @@ public class SignIn implements Command {
             throw new CommandException(e);
         }
 
+        Command command;
         if (user == null) {
-            throw new CommandException("Invalid password or username");
+            req.setAttribute(RequestAttributeName.MESSAGE, INVALID_DATA);
+            command = CommandProvider.getInstance().getCommand(CommandName.SIGN_IN_PAGE.name());
+        }else {
+            HttpSession session = SessionHelper.createOrGetSession(req);
+            SessionHelper.saveUserToSession(session, user);
+            command = CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
         }
 
-        HttpSession session = SessionHelper.createOrGetSession(req);
-        SessionHelper.saveUserToSession(session, user);
-
-
-        Command command = CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
         command.execute(req, resp);
     }
 }

@@ -10,6 +10,7 @@ import by.epam.finalTask.service.UserService;
 import by.epam.finalTask.service.validator.UserDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +29,9 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Not valid data");
         }
 
-        //закодировать пароль!!!!!!
-
         try {
             String realPassword=userDAO.getUserPasswordByLogin(login);
-            if(password.equals(realPassword)){
+            if(BCrypt.checkpw(password, realPassword)){
                 user=userDAO.getUserByLogin(login);
             }
         } catch (DAOException e) {
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
         try {
             boolean isBusyLogin=(userDAO.getUserByLogin(user.getLogin())!=null);
 
-            //закодироавать пароль!!!!!!
+            password=BCrypt.hashpw(password, BCrypt.gensalt());
 
             if(!isBusyLogin){
                 userDAO.addUser(user, password);
@@ -177,7 +176,7 @@ public class UserServiceImpl implements UserService {
 
         try {
 
-            //закодировать пароль
+            password=BCrypt.hashpw(password, BCrypt.gensalt());
 
             result=userDAO.updateUserPasswordById(id, password);
         } catch (DAOException e) {

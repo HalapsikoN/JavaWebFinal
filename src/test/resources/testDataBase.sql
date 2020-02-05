@@ -6,7 +6,7 @@ CREATE TABLE users
     `id`       INT         NOT NULL AUTO_INCREMENT,
     `name`     VARCHAR(45) NOT NULL,
     `login`    VARCHAR(45) NOT NULL,
-    `password` VARCHAR(20) NOT NULL,
+    `password` VARCHAR(60) NOT NULL,
     `role`     VARCHAR(20) NOT NULL,
     `wallet`   DOUBLE      NULL DEFAULT 0,
     PRIMARY KEY (`id`)
@@ -45,11 +45,11 @@ CREATE TABLE playlists
 
 CREATE TABLE comments
 (
-    `id`       INT         NOT NULL AUTO_INCREMENT,
-    `userId`  INT         NOT NULL,
-    `date`     DATETIME    NOT NULL,
-    `trackId` INT         NOT NULL,
-    `text`     VARCHAR(45) NOT NULL,
+    `id`      INT          NOT NULL AUTO_INCREMENT,
+    `userId`  INT          NOT NULL,
+    `date`    DATETIME     NOT NULL,
+    `trackId` INT          NOT NULL,
+    `text`    VARCHAR(200) NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT FOREIGN KEY (userId)
         REFERENCES users (id) ON DELETE CASCADE,
@@ -63,8 +63,8 @@ CREATE TABLE bonuses
     `id`          INT         NOT NULL AUTO_INCREMENT,
     `name`        VARCHAR(45) NOT NULL,
     `description` VARCHAR(45),
-    `startDate`  DATETIME    NOT NULL,
-    `endDate`    DATETIME    NOT NULL,
+    `startDate`   DATETIME    NOT NULL,
+    `endDate`     DATETIME    NOT NULL,
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;
@@ -83,7 +83,7 @@ create table us_tr
 
 create table us_al
 (
-    userId  INT NOT NULL,
+    userId   INT NOT NULL,
     album_id INT NOT NULL,
     PRIMARY KEY (userId, album_id),
     CONSTRAINT FOREIGN KEY (userId)
@@ -95,7 +95,7 @@ create table us_al
 
 create table us_pl
 (
-    userId     INT NOT NULL,
+    userId      INT NOT NULL,
     playlist_id INT NOT NULL,
     PRIMARY KEY (userId, playlist_id),
     CONSTRAINT FOREIGN KEY (userId)
@@ -107,7 +107,7 @@ create table us_pl
 
 create table us_bon
 (
-    userId  INT NOT NULL,
+    userId   INT NOT NULL,
     bonus_id INT NOT NULL,
     PRIMARY KEY (userId, bonus_id),
     CONSTRAINT FOREIGN KEY (userId)
@@ -119,7 +119,7 @@ create table us_bon
 
 create table tr_al
 (
-    trackId INT NOT NULL,
+    trackId  INT NOT NULL,
     album_id INT NOT NULL,
     PRIMARY KEY (trackId, album_id),
     CONSTRAINT FOREIGN KEY (trackId)
@@ -131,7 +131,7 @@ create table tr_al
 
 create table tr_com
 (
-    trackId   INT NOT NULL,
+    trackId    INT NOT NULL,
     comment_id INT NOT NULL,
     PRIMARY KEY (trackId, comment_id),
     CONSTRAINT FOREIGN KEY (trackId)
@@ -144,7 +144,7 @@ create table tr_com
 create table tr_pl
 (
     playlist_id INT NOT NULL,
-    trackId    INT NOT NULL,
+    trackId     INT NOT NULL,
     PRIMARY KEY (playlist_id, trackId),
     CONSTRAINT FOREIGN KEY (playlist_id)
         REFERENCES playlists (id) ON DELETE CASCADE,

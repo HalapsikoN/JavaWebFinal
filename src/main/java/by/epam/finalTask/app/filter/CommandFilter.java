@@ -18,6 +18,8 @@ import java.util.Set;
 
 public class CommandFilter implements Filter {
 
+    private final String REDIRECT_PATH="/atrack";
+
     private Set<String> userCommand= new HashSet<>();
     private Set<String> adminCommand= new HashSet<>();
 
@@ -70,31 +72,40 @@ public class CommandFilter implements Filter {
 
         String command=request.getParameter(RequestParameterName.COMMAND_NAME);
 
-        if ((command == null) || (!userCommand.contains(command.toUpperCase())) || (!adminCommand.contains(command.toUpperCase()))) {
+        if ((command == null)) {
             filterChain.doFilter(request, response);
             return;
         }else {
             command=command.toUpperCase();
         }
 
-        System.out.println("filter:"+command);
+        if(session!=null && session.getAttribute(SessionAttributeName.ID) != null) {
+            Role role=(Role) session.getAttribute(SessionAttributeName.ROLE);
+            System.out.println(role);
 
-        if(session!=null && Role.valueOf((String) session.getAttribute(SessionAttributeName.ROLE))==Role.USER && userCommand.contains(command)){
-            System.out.println("tyt1");
-            filterChain.doFilter(request, response);
-            return;
+            if (role == Role.USER && userCommand.contains(command)) {
+
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            if (role == Role.ADMIN && adminCommand.contains(command)) {
+
+                filterChain.doFilter(request, response);
+                return;
+            }
+
+            response.sendRedirect(request.getContextPath()+REDIRECT_PATH);
+        }else{
+            if(adminCommand.contains(command) || userCommand.contains(command)){
+
+                response.sendRedirect(request.getContextPath()+REDIRECT_PATH);
+            }else{
+
+                filterChain.doFilter(request, response);
+            }
         }
 
-        if(session!=null && Role.valueOf((String) session.getAttribute(SessionAttributeName.ROLE))==Role.ADMIN && adminCommand.contains(command)){
-            System.out.println("tyt2");
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        if((session==null || isGuest(session)) && (adminCommand.contains(command) || userCommand.contains(command))){
-            System.out.println("tyt3");
-            response.sendRedirect(request.getContextPath());
-        }
     }
 
     @Override
