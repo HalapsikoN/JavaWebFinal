@@ -61,6 +61,7 @@ public class CommandProvider {
         repository.put(CommandName.BUY_TRACK, new BuyTrack());
         repository.put(CommandName.BUY_ALBUM, new BuyAlbum());
         repository.put(CommandName.BUY_PLAYLIST, new BuyPlaylist());
+        repository.put(CommandName.ADD_CREDIT, new AddCredit());
     }
 
     public static CommandProvider getInstance(){

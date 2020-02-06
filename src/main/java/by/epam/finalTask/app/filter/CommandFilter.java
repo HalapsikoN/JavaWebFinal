@@ -43,6 +43,7 @@ public class CommandFilter implements Filter {
         userCommand.add(CommandName.PLAYLIST_INFO.name());
         userCommand.add(CommandName.BUY_ALBUM.name());
         userCommand.add(CommandName.BUY_PLAYLIST.name());
+        userCommand.add(CommandName.ADD_CREDIT.name());
 
 
         adminCommand.add(CommandName.USER_PROFILE.name());

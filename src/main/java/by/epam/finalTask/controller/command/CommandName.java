@@ -44,5 +44,6 @@ public enum  CommandName {
     ADD_BONUS,
     BUY_TRACK,
     BUY_ALBUM,
-    BUY_PLAYLIST
+    BUY_PLAYLIST,
+    ADD_CREDIT
 }

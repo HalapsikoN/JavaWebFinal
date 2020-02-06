@@ -160,4 +160,25 @@ public class ConverterFromResultSet {
 
         return comment;
     }
+
+    public Credit getCreidtFromResultSet(ResultSet resultSet) throws DAOException {
+        Credit credit=null;
+
+        try {
+            int id = resultSet.getInt(CommentFields.ID.name());
+            int userId = resultSet.getInt(CreditFields.USER_ID.name());
+            java.sql.Date sqlDate=resultSet.getDate(CreditFields.DATE_END.name());
+            Calendar date = new GregorianCalendar();
+            date.setTimeInMillis(sqlDate.getTime());
+            double amount=resultSet.getDouble(CreditFields.CREDIT.name());
+
+            credit = new Credit(id, amount, date, userId);
+
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return credit;
+    }
 }

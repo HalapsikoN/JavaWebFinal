@@ -24,16 +24,20 @@
     <p>Amount: <strong>${sessionScope.wallet}</strong></p>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCenter">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCenter1">
         Replenish balance
     </button>
 
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalCenter2">
+        Promised payment
+    </button>
+
     <!-- Modal -->
-    <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="modalCenter1" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Replenishing of balance</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle1">Replenishing of balance</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -55,6 +59,34 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="replenishBalanceFormById('adding_balance')">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCenter2" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCenterTitle2">Promised payment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add_credit" action="atrack" method="post">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            <input type="hidden" name="command" value="add_credit">
+                            <input type="number" name="amount" id="credit" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Enter the amount to add (min->1)" required min="1">
+                            <input type="date" name="date" id="date" class="form-control" aria-label="End date if payment">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="addCreditFormById('add_credit')">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

@@ -155,3 +155,15 @@ create table tr_pl
         REFERENCES tracks (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
+
+CREATE TABLE credits
+(
+    `id`       INT    NOT NULL,
+    `credit`   DOUBLE NULL DEFAULT '0',
+    `date_end` DATE   NOT NULL,
+    `user_id`  INT    NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT FOREIGN KEY (user_id)
+            REFERENCES users (id) ON DELETE CASCADE
+)
+    ENGINE = InnoDB;

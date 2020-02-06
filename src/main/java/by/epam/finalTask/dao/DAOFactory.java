@@ -12,6 +12,7 @@ public class DAOFactory {
     private final PlaylistDAO sqlPlaylistDAO=new SQLPlaylistDAO();
     private final CommentDAO sqlCommentDAO=new SQLCommentDAO();
     private final BonusDAO sqlBonusDAO=new SQLBonusDAO();
+    private final CreditDAO sqlCreditDAO=new SQLCreditDAO();
 
     private DAOFactory(){
     }
@@ -42,5 +43,9 @@ public class DAOFactory {
 
     public BonusDAO getSqlBonusDAO() {
         return sqlBonusDAO;
+    }
+
+    public CreditDAO getSqlCreditDAO() {
+        return sqlCreditDAO;
     }
 }
