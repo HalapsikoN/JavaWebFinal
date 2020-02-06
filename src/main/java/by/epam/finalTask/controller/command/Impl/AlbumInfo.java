@@ -37,8 +37,6 @@ public class AlbumInfo implements Command {
 
             Album album=albumService.getAlbum(albumId);
 
-            System.out.println(album);
-
             req.setAttribute(RequestAttributeName.ALBUM, album);
 
             double albumPrice= AlbumLogic.getAlbumPrice(album);

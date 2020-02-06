@@ -10,8 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 public class SQLBonusDAO implements BonusDAO {
 
@@ -20,10 +20,12 @@ public class SQLBonusDAO implements BonusDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final ConverterFromResultSet converterFromResultSet = ConverterFromResultSet.getInstance();
 
-    private String sqlAddBonus = "INSERT INTO bonuses (name, description, start_date, end_date) values (?,?,?,?)";
+    private String sqlAddBonus = "INSERT INTO bonuses (name, description, start_date, end_date, user_id) values (?,?,?,?,?)";
     private String sqlGetBonusById = "SELECT * FROM bonuses WHERE id=?";
     private String sqlUpdateBonusById = "UPDATE bonuses SET name=?, description=?, start_date=?, end_date=?  where id=?";
     private String sqlDeleteBonusById = "DELETE FROM bonuses where id=?";
+    private String sqlGetBonusesByUserId = "SELECT * FROM bonuses WHERE user_id=?";
+    private String sqlGetActualBonusesByUserId = "SELECT * FROM bonuses WHERE user_id=? AND start_date<=? AND end_date>=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -39,6 +41,8 @@ public class SQLBonusDAO implements BonusDAO {
         prepareStatement(connection, sqlGetBonusById);
         prepareStatement(connection, sqlUpdateBonusById);
         prepareStatement(connection, sqlDeleteBonusById);
+        prepareStatement(connection, sqlGetBonusesByUserId);
+        prepareStatement(connection, sqlGetActualBonusesByUserId);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -57,7 +61,7 @@ public class SQLBonusDAO implements BonusDAO {
     }
 
     @Override
-    public boolean addBonusWithOutTracks(Bonus bonus) throws DAOException {
+    public boolean addBonus(Bonus bonus) throws DAOException {
         boolean result = true;
         int resultRow;
 
@@ -66,11 +70,12 @@ public class SQLBonusDAO implements BonusDAO {
 
             if (preparedStatement != null) {
                 preparedStatement.setString(1, bonus.getName());
-                preparedStatement.setString(2, bonus.getDescription());
+                preparedStatement.setInt(2, bonus.getDiscount());
                 java.sql.Date date = new Date(bonus.getStartDate().getTimeInMillis());
                 preparedStatement.setDate(3, date);
                 date = new Date(bonus.getEndDate().getTimeInMillis());
                 preparedStatement.setDate(4, date);
+                preparedStatement.setInt(5, bonus.getUserId());
 
                 resultRow = preparedStatement.executeUpdate();
             } else {
@@ -122,7 +127,7 @@ public class SQLBonusDAO implements BonusDAO {
 
             if (preparedStatement != null) {
                 preparedStatement.setString(1, bonus.getName());
-                preparedStatement.setString(2, bonus.getDescription());
+                preparedStatement.setInt(2, bonus.getDiscount());
                 java.sql.Date date = new Date(bonus.getStartDate().getTimeInMillis());
                 preparedStatement.setDate(3, date);
                 date = new Date(bonus.getEndDate().getTimeInMillis());
@@ -168,5 +173,61 @@ public class SQLBonusDAO implements BonusDAO {
             result = false;
         }
         return result;
+    }
+
+    @Override
+    public List<Bonus> getBonusesByUserId(int id) throws DAOException {
+        ResultSet resultSet = null;
+        List<Bonus> bonusList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetBonusesByUserId);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Bonus bonus = converterFromResultSet.getBonusFromResultSet(resultSet);
+                    bonusList.add(bonus);
+                }
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return bonusList;
+    }
+
+    @Override
+    public List<Bonus> getActualBonusesByUserId(int id) throws DAOException {
+        ResultSet resultSet = null;
+        List<Bonus> bonusList = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetActualBonusesByUserId);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+                Calendar calendar=new GregorianCalendar();
+                java.sql.Date date=new java.sql.Date(calendar.getTimeInMillis());
+                preparedStatement.setDate(2, date);
+                preparedStatement.setDate(3, date);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    Bonus bonus = converterFromResultSet.getBonusFromResultSet(resultSet);
+                    bonusList.add(bonus);
+                }
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return bonusList;
     }
 }

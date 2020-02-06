@@ -19,13 +19,16 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="UTF-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div>
     <br>
     <c:if test="${requestScope.get('songList').isEmpty()}">
-        <p>There are not any songs yet. You can correct this: </p>
-        <a href="${pageContext.request.contextPath}/atrack?command=main_page">
-            Click here.
-        </a>
+        <div id="center_div">
+            <p>There are not any songs yet. You can correct this: </p>
+            <a href="${pageContext.request.contextPath}/atrack?command=main_page">
+                Click here.
+            </a>
+        </div>
     </c:if>
     <c:if test="${!requestScope.get('songList').isEmpty()}">
         <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
@@ -41,18 +44,20 @@
                 <tr>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>
-                    <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy" item="${song.date}"/></td>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy"
+                                                                                     item="${song.date}"/></td>
                 </tr>
                 <tr id="hiddenRow${song.id}" style="display: none">
                     <td colspan="10" class="comment" style="text-align: left; margin: 0">
                         <div class="card card-body">
-                            <div class="container-fluid" >
+                            <div class="container-fluid">
                                 <c:forEach var="comment" items="${commentList}">
                                     <c:if test="${comment.trackId == song.id}">
                                         <div class="row">
                                             <div class="col-2">
                                                 <p><strong>${comment.username}</strong></p>
-                                                <p><outputTag:date format="hh_mm_ss_dd_mm_yyyy" item="${comment.date}"/></p>
+                                                <p><outputTag:date format="hh_mm_ss_dd_mm_yyyy"
+                                                                   item="${comment.date}"/></p>
                                             </div>
 
                                             <div class="col">

@@ -41,5 +41,8 @@ public enum  CommandName {
     EDIT_PLAYLIST_TRACKS,
     EDIT_PLAYLIST,
     DELETE_PLAYLIST,
-
+    ADD_BONUS,
+    BUY_TRACK,
+    BUY_ALBUM,
+    BUY_PLAYLIST
 }

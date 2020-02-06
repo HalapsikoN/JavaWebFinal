@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="outputTag" uri="/WEB-INF/dateTag" %>
 <jsp:useBean id="bonusList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
 <html>
@@ -61,39 +62,37 @@
     <br>
     <br>
     <p class="badge badge-info">${message}</p>
-</div>
-<div>
     <br>
-    <c:if test="${requestScope.get('bonusList').isEmpty()}">
-        <p>There are not any bonuses yet.</p>
-    </c:if>
-    <c:if test="${!requestScope.get('bonusList').isEmpty()}">
-        <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
-            <thead class="thead-dark">
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Start date</th>
-                <th>End date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="bonus" items="${bonusList}">
-                <tr>
-                    <td >${bonus.name}</td>
-                    <td>${bonus.description}</td>
-                    <td>${bonus.startDate.get(10)}:${bonus.startDate.get(12)}:${bonus.startDate.get(13)}   ${bonus.startDate.get(5)}.${bonus.startDate.get(2)}.${bonus.startDate.get(1)}</td>
-                    <td>${bonus.endDate.get(10)}:${bonus.endDate.get(12)}:${bonus.endDate.get(13)}   ${bonus.endDate.get(5)}.${bonus.endDate.get(2)}.${bonus.endDate.get(1)}</td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+    <c:if test="${empty bonusList}">
+        <p>You have no bonuses.</p>
     </c:if>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<c:if test="${not empty bonusList}">
+    <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
+        <thead class="thead-dark">
+        <tr>
+            <th>Bonus name</th>
+            <th>Discount</th>
+            <th>Start date</th>
+            <th>End date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="bonus" items="${bonusList}">
+            <tr>
+                <td>${bonus.name}</td>
+                <td>-${bonus.discount}%</td>
+                <td><outputTag:date format="dd_mm_yyyy" item="${bonus.startDate}"/></td>
+                <td><outputTag:date format="dd_mm_yyyy" item="${bonus.endDate}"/></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</c:if>
+
+
+
 <script src="${pageContext.request.contextPath}/jsp/js/wallet.js"></script>
 </body>
 </html>

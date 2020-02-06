@@ -10,6 +10,7 @@
 <jsp:useBean id="playlist" class="by.epam.finalTask.entity.Playlist" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
+<jsp:useBean id="message" class="java.lang.String" scope="request"/>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -24,9 +25,23 @@
 <div id="center_div">
     <h2>Playlist information</h2>
     <br>
+    <div id="center_div">
+        <p class="badge badge-info" style="font-size: 20px">${message}</p>
+    </div>
+    <br>
     <p>Name: <strong>${playlist.name}</strong></p>
     <p>Create date: <strong><outputTag:date format="dd_mm_yyyy" item="${playlist.date}"/></strong></p>
-    <p>Album price: <strong>${playlistPrice}</strong></p>
+    <p>Playlist price: <strong>${playlistPrice}</strong></p>
+    <c:if test="${sessionScope.role eq 'USER'}">
+        <form id="form${playlist.id}" method="post" action="atrack">
+            <input type="hidden" name="command" value="buy_playlist">
+            <input type="hidden" name="playlist_id" value="${playlist.id}">
+            <a href="#">
+                <img src="${pageContext.request.contextPath}/jsp/icons/buy.png"
+                     onclick="submitById('form${playlist.id}')">
+            </a>
+        </form>
+    </c:if>
 </div>
 <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
     <thead class="thead-dark">
@@ -89,5 +104,6 @@
 </table>
 
 <script src="${pageContext.request.contextPath}/jsp/js/comment.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 </body>
 </html>

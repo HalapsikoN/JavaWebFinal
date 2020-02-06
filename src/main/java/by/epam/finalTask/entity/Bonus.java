@@ -6,19 +6,29 @@ public class Bonus {
 
     private int id;
     private String name;
-    private String description;
+    private int discount;
     private Calendar startDate;
     private Calendar endDate;
+    private int userId;
 
     public Bonus() {
     }
 
-    public Bonus(int id, String name, String description, Calendar startDate, Calendar endDate) {
-        this.id = id;
+    public Bonus(String name, int discount, Calendar startDate, Calendar endDate, int userId) {
         this.name = name;
-        this.description = description;
+        this.discount = discount;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.userId = userId;
+    }
+
+    public Bonus(int id, String name, int discount, Calendar startDate, Calendar endDate, int userId) {
+        this.id = id;
+        this.name = name;
+        this.discount = discount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.userId = userId;
     }
 
     public int getId() {
@@ -37,12 +47,12 @@ public class Bonus {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public int getDiscount() {
+        return discount;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 
     public Calendar getStartDate() {
@@ -61,6 +71,14 @@ public class Bonus {
         this.endDate = endDate;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,8 +87,9 @@ public class Bonus {
         Bonus bonus = (Bonus) o;
 
         if (id != bonus.id) return false;
+        if (discount != bonus.discount) return false;
+        if (userId != bonus.userId) return false;
         if (!name.equals(bonus.name)) return false;
-        if (!description.equals(bonus.description)) return false;
         if (!startDate.equals(bonus.startDate)) return false;
         return endDate.equals(bonus.endDate);
 
@@ -80,9 +99,10 @@ public class Bonus {
     public int hashCode() {
         int result = id;
         result = 31 * result + name.hashCode();
-        result = 31 * result + description.hashCode();
+        result = 31 * result + discount;
         result = 31 * result + startDate.hashCode();
         result = 31 * result + endDate.hashCode();
+        result = 31 * result + userId;
         return result;
     }
 
@@ -91,9 +111,10 @@ public class Bonus {
         return "Bonus{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", discount=" + discount +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", userId=" + userId +
                 '}';
     }
 }

@@ -11,6 +11,7 @@ public class ServiceFactory {
     private final AlbumService albumService=new AlbumServiceImpl();
     private final PlaylistService playlistService=new PlaylistServiceImpl();
     private final CommentService commentService=new CommentServiceImpl();
+    private final BonusService bonusService=new BonusServiceImpl();
 
     private ServiceFactory(){
     }
@@ -37,5 +38,9 @@ public class ServiceFactory {
 
     public CommentService getCommentService() {
         return commentService;
+    }
+
+    public BonusService getBonusService() {
+        return bonusService;
     }
 }

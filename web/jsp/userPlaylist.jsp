@@ -18,12 +18,15 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <br>
 <c:if test="${requestScope.get('playlistList').isEmpty()}">
-    <p>There are not any playlists yet. You can correct this: </p>
-    <a href="${pageContext.request.contextPath}/atrack?command=playlists_page">
-        Click here.
-    </a>
+    <div id="center_div">
+        <p>There are not any playlists yet. You can correct this: </p>
+        <a href="${pageContext.request.contextPath}/atrack?command=playlists_page">
+            Click here.
+        </a>
+    </div>
 </c:if>
 <c:if test="${!requestScope.get('playlistList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
@@ -37,7 +40,7 @@
         <tbody>
         <c:forEach var="playlist" items="${playlistList}">
             <tr>
-                <td >${playlist.name}</td>
+                <td>${playlist.name}</td>
                 <td><outputTag:date format="dd_mm_yyyy" item="${playlist.date}"/></td>
                 <td>
                     <form id="info_playlist${playlist.id}" method="post" action="atrack">

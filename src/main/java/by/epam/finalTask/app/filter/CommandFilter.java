@@ -35,6 +35,14 @@ public class CommandFilter implements Filter {
         userCommand.add(CommandName.UPDATE_PASSWORD.name());
         userCommand.add(CommandName.SIGN_OUT.name());
         userCommand.add(CommandName.ADD_COMMENT.name());
+        userCommand.add(CommandName.BUY_TRACK.name());
+        userCommand.add(CommandName.MAIN_PAGE.name());
+        userCommand.add(CommandName.ALBUMS_PAGE.name());
+        userCommand.add(CommandName.PLAYLISTS_PAGE.name());
+        userCommand.add(CommandName.ALBUM_INFO.name());
+        userCommand.add(CommandName.PLAYLIST_INFO.name());
+        userCommand.add(CommandName.BUY_ALBUM.name());
+        userCommand.add(CommandName.BUY_PLAYLIST.name());
 
 
         adminCommand.add(CommandName.USER_PROFILE.name());
@@ -61,6 +69,12 @@ public class CommandFilter implements Filter {
         adminCommand.add(CommandName.EDIT_PLAYLIST_TRACKS.name());
         adminCommand.add(CommandName.EDIT_PLAYLIST.name());
         adminCommand.add(CommandName.DELETE_PLAYLIST.name());
+        adminCommand.add(CommandName.ADD_BONUS.name());
+        adminCommand.add(CommandName.MAIN_PAGE.name());
+        adminCommand.add(CommandName.ALBUMS_PAGE.name());
+        adminCommand.add(CommandName.PLAYLISTS_PAGE.name());
+        adminCommand.add(CommandName.ALBUM_INFO.name());
+        adminCommand.add(CommandName.PLAYLIST_INFO.name());
     }
 
     @Override

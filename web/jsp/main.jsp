@@ -11,6 +11,7 @@
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="message" class="java.lang.String" scope="request"/>
 
 <html>
 <head>
@@ -28,8 +29,16 @@
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
-        <a href="${pageContext.request.contextPath}/atrack?command=add_track_page" class="btn btn-primary">Add new track</a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_track_page" class="btn btn-primary">Add new
+            track</a>
     </div>
+</c:if>
+<c:if test="${sessionScope.role eq 'USER'}">
+    <br>
+    <div id="center_div">
+        <p class="badge badge-info" style="font-size: 20px">${message}</p>
+    </div>
+    <br>
 </c:if>
 <div>
     <br>
@@ -55,13 +64,14 @@
                 <tr>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>
-                    <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy" item="${song.date}"/></td>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy"
+                                                                                     item="${song.date}"/></td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.price}</td>
                     <c:if test="${sessionScope.role eq 'USER'}">
                         <td>
                             <form id="form1${song.id}" method="post" action="atrack">
-                                <input type="hidden" name="command" value="buy_song">
-                                <input type="hidden" name="song_id" value="${song.id}">
+                                <input type="hidden" name="command" value="buy_track">
+                                <input type="hidden" name="track_id" value="${song.id}">
                                 <a href="#">
                                     <img src="${pageContext.request.contextPath}/jsp/icons/buy.png"
                                          onclick="submitById('form1${song.id}')">
@@ -92,7 +102,8 @@
                                         <div class="row">
                                             <div class="col-2">
                                                 <p><strong>${comment.username}</strong></p>
-                                                <p><outputTag:date format="hh_mm_ss_dd_mm_yyyy" item="${comment.date}"/></p>
+                                                <p><outputTag:date format="hh_mm_ss_dd_mm_yyyy"
+                                                                   item="${comment.date}"/></p>
                                             </div>
 
                                             <div class="col">

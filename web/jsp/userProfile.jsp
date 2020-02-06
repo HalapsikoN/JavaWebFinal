@@ -7,7 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="outputTag" uri="/WEB-INF/dateTag" %>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
+<jsp:useBean id="bonusList" class="java.util.ArrayList" scope="request"/>
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -105,11 +107,7 @@
     <br>
     <br>
     <p class="badge badge-info">${message}</p>
-
 </div>
-
-
-
 
 <script src="${pageContext.request.contextPath}/jsp/js/profile.js"></script>
 </body>

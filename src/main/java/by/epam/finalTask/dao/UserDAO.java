@@ -8,6 +8,9 @@ import java.util.List;
 public interface UserDAO {
 
     boolean addUser(User user, String password) throws DAOException;
+    boolean addTrackToUser(int userId, int trackId) throws DAOException;
+    boolean addAlbumToUser(int userId, int albumId) throws DAOException;
+    boolean addPlaylistToUser(int userId, int playlistId) throws DAOException;
 
     User getUserById(int id) throws DAOException;
     User getUserByLogin(String login) throws DAOException;

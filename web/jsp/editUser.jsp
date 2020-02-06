@@ -41,17 +41,82 @@
     </form>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCenter">
-        Delete user
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCenter1">
+        Add bonus
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    <div class="modal fade" id="modalCenter1" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle1"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Are you sure that you want to delete user
+                    <h5 class="modal-title" id="ModalCenterTitle1">Which discount you want to give (${user.name})?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="text-align: left">
+                    <form id="add_bonus" action="atrack" method="post">
+                        <div class="form-group">
+                            <input type="hidden" name="command" value="add_bonus">
+                            <input type="hidden" name="user_id" value="${user.id}">
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-3 col-form-label">Name: </label>
+                                <div class="col-sm">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           placeholder="Enter bonus name" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="discount" class="col-sm-4 col-form-label">Discount: </label>
+
+                                <input type="number" class="col-sm-6 form-control" id="discount" name="discount"
+                                       placeholder="Enter discount"
+                                       required min="1" max="100">
+                                <div class="col-sm-1 input-group-append">
+                                    <span class="input-group-text">%</span>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <label for="start_date" class="col-sm-3 col-form-label">Start date: </label>
+                                <div class="col-sm">
+                                    <input type="date" class="form-control" id="start_date" name="start_date"
+                                           placeholder="Enter start date" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="start_date" class="col-sm-3 col-form-label">End date: </label>
+                                <div class="col-sm">
+                                    <input type="date" class="form-control" id="end_date" name="end_date"
+                                           placeholder="Enter end date" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-danger" onclick="bonusAddForm('add_bonus')">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCenter2">
+        Delete user
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalCenter2" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle2"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCenterTitle2">Are you sure that you want to delete user
                         (<strong>${user.name}</strong>) from service?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -70,9 +135,11 @@
     </div>
 
     <br>
+    <br>
     <p class="badge badge-info" style="font-size: 20px">${message}</p>
     <br>
 </div>
 
+<script src="${pageContext.request.contextPath}/jsp/js/bonus.js"></script>
 </body>
 </html>

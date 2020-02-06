@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             String realPassword=userDAO.getUserPasswordByLogin(login);
-            if(BCrypt.checkpw(password, realPassword)){
+            if(realPassword!=null && BCrypt.checkpw(password, realPassword)){
                 user=userDAO.getUserByLogin(login);
             }
         } catch (DAOException e) {
@@ -61,6 +61,45 @@ public class UserServiceImpl implements UserService {
 
         } catch (DAOException e) {
             throw new ServiceException("Cannot perform action with data source", e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean addTrackToUser(int userId, int trackId) throws ServiceException {
+        boolean result=true;
+
+        try {
+            result=userDAO.addTrackToUser(userId, trackId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean addAlbumToUser(int userId, int albumId) throws ServiceException {
+        boolean result=true;
+
+        try {
+            result=userDAO.addAlbumToUser(userId, albumId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean addPlaylistToUser(int userId, int playlistId) throws ServiceException {
+        boolean result=true;
+
+        try {
+            result=userDAO.addPlaylistToUser(userId, playlistId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
         }
 
         return result;

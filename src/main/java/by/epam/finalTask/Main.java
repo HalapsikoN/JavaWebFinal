@@ -3,25 +3,27 @@ package by.epam.finalTask;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        String string="cat";
-        String string1="dog";
-        String newS= BCrypt.hashpw(string, BCrypt.gensalt());
-        String newS1=BCrypt.hashpw(string, BCrypt.gensalt());
+        List<Integer> list=new ArrayList<>();
 
-        boolean check=BCrypt.checkpw(string, newS);
-        boolean check1=BCrypt.checkpw(string1, newS);
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
 
-        System.out.println(string);
-        System.out.println(newS.length());
-        System.out.println(string1);
-        System.out.println(newS);
-        System.out.println(newS1);
-        System.out.println(check);
-        System.out.println(check1);
+        System.out.println(list.get(1));
+
+
     }
 
 

@@ -45,27 +45,30 @@ CREATE TABLE playlists
 
 CREATE TABLE comments
 (
-    `id`      INT          NOT NULL AUTO_INCREMENT,
-    `userId`  INT          NOT NULL,
-    `date`    DATETIME     NOT NULL,
-    `trackId` INT          NOT NULL,
-    `text`    VARCHAR(200) NOT NULL,
+    `id`       INT          NOT NULL AUTO_INCREMENT,
+    `user_id`  INT          NOT NULL,
+    `date`     DATETIME     NOT NULL,
+    `track_id` INT          NOT NULL,
+    `text`     VARCHAR(200) NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT FOREIGN KEY (userId)
+    CONSTRAINT FOREIGN KEY (user_id)
         REFERENCES users (id) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY (trackId)
+    CONSTRAINT FOREIGN KEY (track_id)
         REFERENCES tracks (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
 
 CREATE TABLE bonuses
 (
-    `id`          INT         NOT NULL AUTO_INCREMENT,
-    `name`        VARCHAR(45) NOT NULL,
-    `description` VARCHAR(45),
-    `startDate`   DATETIME    NOT NULL,
-    `endDate`     DATETIME    NOT NULL,
-    PRIMARY KEY (`id`)
+    `id`        INT         NOT NULL AUTO_INCREMENT,
+    `name`      VARCHAR(45) NOT NULL,
+    `discount`  INT         NOT NULL,
+    `startDate` DATE        NOT NULL,
+    `endDate`   DATE        NOT NULL,
+    `user_id`   INT         NOT NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT FOREIGN KEY (user_id)
+        REFERENCES users (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;
 

@@ -119,15 +119,16 @@ public class ConverterFromResultSet {
         try {
             int id = resultSet.getInt(BonusFields.ID.name());
             String name = resultSet.getString(BonusFields.NAME.name());
-            String description = resultSet.getString(BonusFields.DESRIPTION.name());
+            int discount = resultSet.getInt(BonusFields.DESCRIPTION.name());
             java.sql.Date dateSql = resultSet.getDate(BonusFields.START_DATE.name());
             Calendar startDate = new GregorianCalendar();
             startDate.setTimeInMillis(dateSql.getTime());
             dateSql = resultSet.getDate(BonusFields.END_DATE.name());
             Calendar endDate = new GregorianCalendar();
             endDate.setTimeInMillis(dateSql.getTime());
+            int userId=resultSet.getInt(BonusFields.USER_ID.name());
 
-            bonus = new Bonus(id, name, description, startDate, endDate);
+            bonus = new Bonus(id, name, discount, startDate, endDate, userId);
 
         } catch (SQLException e) {
             logger.error(e);

@@ -57,6 +57,10 @@ public class CommandProvider {
         repository.put(CommandName.EDIT_PLAYLIST_TRACKS, new EditPlaylistTracks());
         repository.put(CommandName.EDIT_PLAYLIST, new EditPlaylist());
         repository.put(CommandName.DELETE_PLAYLIST, new DeletePlaylist());
+        repository.put(CommandName.ADD_BONUS, new AddBonus());
+        repository.put(CommandName.BUY_TRACK, new BuyTrack());
+        repository.put(CommandName.BUY_ALBUM, new BuyAlbum());
+        repository.put(CommandName.BUY_PLAYLIST, new BuyPlaylist());
     }
 
     public static CommandProvider getInstance(){

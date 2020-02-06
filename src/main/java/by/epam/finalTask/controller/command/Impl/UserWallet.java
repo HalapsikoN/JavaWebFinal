@@ -4,6 +4,7 @@ import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Bonus;
+import by.epam.finalTask.service.BonusService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import by.epam.finalTask.service.UserService;
@@ -22,6 +23,7 @@ public class UserWallet implements Command {
     private final static Logger logger= LogManager.getLogger(UserWallet.class);
 
     private final static UserService userService= ServiceFactory.getInstance().getUserService();
+    private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -35,7 +37,7 @@ public class UserWallet implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-            List<Bonus> bonusList =userService.getUserBonuses(userId);
+            List<Bonus> bonusList =bonusService.getUserBonuses(userId);
 
             req.setAttribute(RequestAttributeName.BONUS_LIST, bonusList);
 

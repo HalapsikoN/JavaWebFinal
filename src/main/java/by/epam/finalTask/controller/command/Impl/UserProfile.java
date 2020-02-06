@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class UserProfile implements Command {
 
-    private static final Logger logger= LogManager.getLogger(UserProfile.class);
+    private static final Logger logger = LogManager.getLogger(UserProfile.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

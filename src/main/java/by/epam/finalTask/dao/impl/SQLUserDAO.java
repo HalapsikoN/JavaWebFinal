@@ -41,6 +41,9 @@ public class SQLUserDAO implements UserDAO {
     private String sqlGetUserPlaylistsById = "SELECT playlists.* FROM users INNER JOIN us_pl ON users.id=us_pl.user_id INNER JOIN playlists ON us_pl.playlist_id=playlists.id WHERE users.id=?";
     private String sqlGetUserBonusesById = "SELECT bonuses.* FROM users INNER JOIN us_bon ON users.id=us_bon.user_id INNER JOIN bonuses ON us_bon.bonus_id=bonuses.id WHERE users.id=?";
     private String sqlGetAllUsers = "SELECT * FROM users";
+    private String sqlAddTrackToUser = "INSERT INTO us_tr (user_id, track_id) values (?,?)";
+    private String sqlAddAlbumToUser = "INSERT INTO us_al (user_id, album_id) values (?,?)";
+    private String sqlAddPlaylistToUser = "INSERT INTO us_pl (user_id, playlist_id) values (?,?)";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -66,6 +69,9 @@ public class SQLUserDAO implements UserDAO {
         prepareStatement(connection, sqlGetUserPlaylistsById);
         prepareStatement(connection, sqlGetUserBonusesById);
         prepareStatement(connection, sqlGetAllUsers);
+        prepareStatement(connection, sqlAddTrackToUser);
+        prepareStatement(connection, sqlAddAlbumToUser);
+        prepareStatement(connection, sqlAddPlaylistToUser);
 
         if(connection!=null) {
             connectionPool.closeConnection(connection);
@@ -96,6 +102,87 @@ public class SQLUserDAO implements UserDAO {
                 preparedStatement.setString(2, user.getLogin());
                 preparedStatement.setString(3, password);
                 preparedStatement.setString(4, user.getRole().name());
+
+                resultRow = preparedStatement.executeUpdate();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        if (resultRow == 0) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean addTrackToUser(int userId, int trackId) throws DAOException {
+        boolean result = true;
+        int resultRow;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlAddTrackToUser);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, userId);
+                preparedStatement.setInt(2, trackId);
+
+                resultRow = preparedStatement.executeUpdate();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        if (resultRow == 0) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean addAlbumToUser(int userId, int albumId) throws DAOException {
+        boolean result = true;
+        int resultRow;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlAddAlbumToUser);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, userId);
+                preparedStatement.setInt(2, albumId);
+
+                resultRow = preparedStatement.executeUpdate();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        if (resultRow == 0) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean addPlaylistToUser(int userId, int playlistId) throws DAOException {
+        boolean result = true;
+        int resultRow;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlAddPlaylistToUser);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, userId);
+                preparedStatement.setInt(2, playlistId);
 
                 resultRow = preparedStatement.executeUpdate();
             } else {

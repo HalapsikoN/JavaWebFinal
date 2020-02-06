@@ -34,16 +34,6 @@ public class Controller extends HttpServlet {
     private void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         CommandProvider commandProvider = CommandProvider.getInstance();
 
-        logger.info("Works");
-        System.out.println(req.getCharacterEncoding());
-        System.out.println(resp.getCharacterEncoding());
-        System.out.println(req.getContextPath());
-        System.out.println(req.getServletPath());
-        System.out.println();
-        File f=new File("file.txt");
-        System.out.println(f.getAbsolutePath());
-
-
         String commandName = req.getParameter(RequestParameterName.COMMAND_NAME);
 
         if (commandName == null) {

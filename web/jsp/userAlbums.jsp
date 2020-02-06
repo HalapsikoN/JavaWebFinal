@@ -20,10 +20,12 @@
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <br>
 <c:if test="${requestScope.get('albumList').isEmpty()}">
-    <p>There are not any albums yet. You can correct this: </p>
-    <a href="${pageContext.request.contextPath}/atrack?command=albums_page">
-        Click here.
-    </a>
+    <div id="center_div">
+        <p>There are not any albums yet. You can correct this: </p>
+        <a href="${pageContext.request.contextPath}/atrack?command=albums_page">
+            Click here.
+        </a>
+    </div>
 </c:if>
 <c:if test="${!requestScope.get('albumList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
