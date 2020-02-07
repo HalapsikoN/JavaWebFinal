@@ -158,7 +158,7 @@ create table tr_pl
 
 CREATE TABLE credits
 (
-    `id`       INT    NOT NULL,
+    `id`       INT    NOT NULL AUTO_INCREMENT,
     `credit`   DOUBLE NULL DEFAULT '0',
     `date_end` DATE   NOT NULL,
     `user_id`  INT    NOT NULL,

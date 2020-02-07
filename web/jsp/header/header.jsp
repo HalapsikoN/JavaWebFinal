@@ -31,6 +31,7 @@
         <c:choose>
             <c:when test="${sessionScope.role eq 'ADMIN'}">
                 <a id="ends" href="${path}/atrack?command=user_list"> List of users </a>
+                <a href="${path}/atrack?command=user_ban_list"> List of baned users </a>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink2" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
                 <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink2" id="dropdownMenu1" style="left: auto">
                     <a class="dropdown-item" href="${path}/atrack?command=user_profile">My profile</a>

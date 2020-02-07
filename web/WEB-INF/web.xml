@@ -14,12 +14,43 @@
         <url-pattern>/atrack</url-pattern>
     </servlet-mapping>
 
+    <error-page>
+        <exception-type>java.lang.Error</exception-type>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+
+    <!--Filter of commands-->
     <filter>
         <filter-name>CommandFilter</filter-name>
         <filter-class>by.epam.finalTask.app.filter.CommandFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CommandFilter</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
+    <!--Filter of banned users-->
+    <filter>
+        <filter-name>BannedUsers</filter-name>
+        <filter-class>by.epam.finalTask.app.filter.BanFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>BannedUsers</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
+    <!--Filter of charset-->
+    <filter>
+        <filter-name>Charset</filter-name>
+        <filter-class>by.epam.finalTask.app.filter.CharsetFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Charset</filter-name>
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 

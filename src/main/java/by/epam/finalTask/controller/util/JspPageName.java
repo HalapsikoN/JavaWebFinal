@@ -22,6 +22,9 @@ public class JspPageName {
     public final static String EDIT_ALBUM_PAGE ="/jsp/editAlbum.jsp";
     public final static String ADD_PLAYLIST_PAGE ="/jsp/addPlaylist.jsp";
     public final static String EDIT_PLAYLIST_PAGE ="/jsp/editPlaylist.jsp";
+    public final static String BAN_PAGE ="/jsp/ban.jsp";
+    public final static String BAN_USER_PAGE ="/jsp/banUsers.jsp";
+    public final static String ERROR_PAGE ="/jsp/errorPage.jsp";
 
     private JspPageName(){
     }

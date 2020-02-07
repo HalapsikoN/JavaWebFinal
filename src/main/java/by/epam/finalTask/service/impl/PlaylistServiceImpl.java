@@ -6,6 +6,7 @@ import by.epam.finalTask.dao.PlaylistDAO;
 import by.epam.finalTask.entity.Playlist;
 import by.epam.finalTask.service.PlaylistService;
 import by.epam.finalTask.service.ServiceException;
+import by.epam.finalTask.service.validator.PlaylistDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +21,10 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Override
     public boolean addPlaylist(Playlist playlist) throws ServiceException {
         boolean result;
+
+        if (!PlaylistDataValidator.isValidPlaylist(playlist)){
+            throw new ServiceException("Not valid date playlist");
+        }
 
         try{
             result=playlistDAO.addPlaylistWithOutTracks(playlist);
@@ -46,6 +51,10 @@ public class PlaylistServiceImpl implements PlaylistService {
     @Override
     public boolean updatePlaylist(int id, Playlist playlist) throws ServiceException {
         boolean result;
+
+        if (!PlaylistDataValidator.isValidPlaylist(playlist)){
+            throw new ServiceException("Not valid date playlist");
+        }
 
         try{
             result=playlistDAO.updatePlaylistById(id, playlist);

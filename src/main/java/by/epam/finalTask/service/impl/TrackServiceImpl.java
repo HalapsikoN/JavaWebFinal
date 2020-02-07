@@ -6,6 +6,7 @@ import by.epam.finalTask.dao.TrackDAO;
 import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.TrackService;
+import by.epam.finalTask.service.validator.TrackDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +22,10 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public boolean addTrack(Track track) throws ServiceException {
         boolean result;
+
+        if(!TrackDataValidator.isValidTrack(track)){
+            throw new ServiceException("Not valid data track");
+        }
 
         try {
             result=trackDAO.addTrack(track);
@@ -47,6 +52,10 @@ public class TrackServiceImpl implements TrackService {
     @Override
     public boolean updateTrack(int id,Track track) throws ServiceException {
         boolean result;
+
+        if(!TrackDataValidator.isValidTrack(track)){
+            throw new ServiceException("Not valid data track");
+        }
 
         try {
             result=trackDAO.updateTrackById(id, track);

@@ -187,6 +187,10 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserWallet(int id, double wallet) throws ServiceException {
         boolean result=true;
 
+        if(!UserDataValidator.isWalletValid(wallet)){
+            throw new ServiceException("Not valid data user.wallet");
+        }
+
         try {
             result=userDAO.updateUserWalletById(id, wallet);
         } catch (DAOException e) {
@@ -200,6 +204,10 @@ public class UserServiceImpl implements UserService {
     public boolean updateUserUsername(int id, String username) throws ServiceException {
         boolean result=true;
 
+        if(!UserDataValidator.isNameValid(username)){
+            throw new ServiceException("Not valid data user.username");
+        }
+
         try {
             result=userDAO.updateUserNameById(id, username);
         } catch (DAOException e) {
@@ -212,6 +220,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUserPassword(int id, String password) throws ServiceException {
         boolean result=true;
+
+        if(!UserDataValidator.isValidPassword(password)){
+            throw new ServiceException("Not valid data user.password");
+        }
 
         try {
 

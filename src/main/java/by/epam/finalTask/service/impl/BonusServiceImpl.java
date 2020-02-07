@@ -6,6 +6,7 @@ import by.epam.finalTask.dao.DAOFactory;
 import by.epam.finalTask.entity.Bonus;
 import by.epam.finalTask.service.BonusService;
 import by.epam.finalTask.service.ServiceException;
+import by.epam.finalTask.service.validator.BonusDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +22,10 @@ public class BonusServiceImpl implements BonusService {
     @Override
     public boolean addBonus(Bonus bonus) throws ServiceException {
         boolean result;
+
+        if (!BonusDataValidator.isValidBonus(bonus)){
+            throw new ServiceException("Not valid date bonus");
+        }
 
         try {
             result = bonusDAO.addBonus(bonus);

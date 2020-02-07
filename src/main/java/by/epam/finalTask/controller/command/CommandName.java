@@ -45,5 +45,8 @@ public enum  CommandName {
     BUY_TRACK,
     BUY_ALBUM,
     BUY_PLAYLIST,
-    ADD_CREDIT
+    ADD_CREDIT,
+    BAN_PAGE,
+    USER_BAN_LIST,
+    UNBAN_USER
 }

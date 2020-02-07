@@ -31,6 +31,7 @@ public class AddCredit implements Command {
     private static final SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
     private static final String SUCCESSFULLY_UPDATE="Successfully added";
     private static final String ERROR_MSG="Problems at adding";
+    private static final String ALREADY_HAVE="You have already have a credit";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -44,26 +45,37 @@ public class AddCredit implements Command {
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
             double userWallet=(double) session.getAttribute(SessionAttributeName.WALLET);
 
-            //проверить есть ли у юзера кредит
+            Credit actualCredit=creditService.getActualCredit(userId);
 
-            double amount=Double.valueOf(req.getParameter(RequestParameterName.AMOUNT));
-            GregorianCalendar date=new GregorianCalendar();
-            Date date_end=format.parse(req.getParameter(RequestParameterName.DATE));
-            date.setTimeInMillis(date_end.getTime());
+            if(actualCredit==null) {
+                double amount = Double.valueOf(req.getParameter(RequestParameterName.AMOUNT));
+                GregorianCalendar date = new GregorianCalendar();
+                Date date_end = format.parse(req.getParameter(RequestParameterName.DATE));
+                date.setTimeInMillis(date_end.getTime());
+                System.out.println(date);
 
-            Credit credit=new Credit(amount, date, userId);
+                Credit credit = new Credit(amount, date, userId);
 
-            //добавил кредит
+                System.out.println(credit);
 
-            double updatedWallet=userWallet+amount;
+                boolean isAdded=creditService.addCredit(credit);
 
-            boolean isUpdated=userService.updateUserWallet(userId, updatedWallet);
+                if(isAdded) {
+                    double updatedWallet = userWallet + amount;
 
-            if(isUpdated){
-                session.setAttribute(SessionAttributeName.WALLET, updatedWallet);
-                req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
+                    boolean isUpdated = userService.updateUserWallet(userId, updatedWallet);
+
+                    if (isUpdated) {
+                        session.setAttribute(SessionAttributeName.WALLET, updatedWallet);
+                        req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
+                    } else {
+                        req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                    }
+                }else {
+                    req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                }
             }else {
-                req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
             }
 
             Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());

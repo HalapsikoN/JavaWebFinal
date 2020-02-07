@@ -4,10 +4,8 @@ import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Bonus;
-import by.epam.finalTask.service.BonusService;
-import by.epam.finalTask.service.ServiceException;
-import by.epam.finalTask.service.ServiceFactory;
-import by.epam.finalTask.service.UserService;
+import by.epam.finalTask.entity.Credit;
+import by.epam.finalTask.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +22,7 @@ public class UserWallet implements Command {
 
     private final static UserService userService= ServiceFactory.getInstance().getUserService();
     private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
+    private final static CreditService creditService=ServiceFactory.getInstance().getCreditService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -40,6 +39,10 @@ public class UserWallet implements Command {
             List<Bonus> bonusList =bonusService.getUserBonuses(userId);
 
             req.setAttribute(RequestAttributeName.BONUS_LIST, bonusList);
+
+            Credit credit=creditService.getUserCredit(userId);
+
+            req.setAttribute(RequestAttributeName.CREDIT, credit);
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.USER_WALLET);
         } catch (ServiceException | ServletException | IOException e) {

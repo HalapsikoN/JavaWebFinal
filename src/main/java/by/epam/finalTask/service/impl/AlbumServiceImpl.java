@@ -7,6 +7,7 @@ import by.epam.finalTask.entity.Album;
 import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.AlbumService;
 import by.epam.finalTask.service.ServiceException;
+import by.epam.finalTask.service.validator.AlbumDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +22,10 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public boolean addAlbum(Album album) throws ServiceException {
         boolean result;
+
+        if (!AlbumDataValidator.isValidAlbum(album)){
+            throw new ServiceException("Not valid date album");
+        }
 
         try {
             result = albumDAO.addAlbumWithoutTracks(album);
@@ -47,6 +52,10 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public boolean updateAlbum(int albumId, Album album) throws ServiceException {
         boolean result;
+
+        if (!AlbumDataValidator.isValidAlbum(album)){
+            throw new ServiceException("Not valid date album");
+        }
 
         try {
             result = albumDAO.updateAlbumById(albumId, album);

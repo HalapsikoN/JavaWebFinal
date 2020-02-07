@@ -10,6 +10,7 @@
 <%@ taglib prefix="outputTag" uri="/WEB-INF/dateTag" %>
 <jsp:useBean id="bonusList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
+<jsp:useBean id="credit" class="by.epam.finalTask.entity.Credit" scope="request"/>
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -20,6 +21,14 @@
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
     <h2>${sessionScope.username} wallet</h2>
+    <c:if test="${credit.amount!=0}">
+        <br>
+        <div class="alert alert-danger" role="alert">
+            <p>You have a credit:</p>
+            <p>Amount to pay: <strong>${credit.amount}</strong></p>
+            <p>End date: <strong><outputTag:date format="dd_mm_yyyy" item="${credit.date}"/></strong></p>
+        </div>
+    </c:if>
     <br>
     <p>Amount: <strong>${sessionScope.wallet}</strong></p>
 

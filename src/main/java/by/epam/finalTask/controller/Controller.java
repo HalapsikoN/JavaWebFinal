@@ -4,8 +4,10 @@ import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
+import by.epam.finalTask.controller.command.Impl.NoSuchCommand;
 import by.epam.finalTask.controller.util.DispatchAssistant;
 import by.epam.finalTask.controller.util.JspPageName;
+import by.epam.finalTask.controller.util.RequestAttributeName;
 import by.epam.finalTask.controller.util.RequestParameterName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,20 +40,20 @@ public class Controller extends HttpServlet {
 
         if (commandName == null) {
             commandName= CommandName.MAIN_PAGE.name();
-            //DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
-            //req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, resp);
         }
 
-        System.out.println(commandName);
-
         Command command = commandProvider.getCommand(commandName);
-        System.out.println(command);
+
+        if(command==null){
+            command=new NoSuchCommand();
+        }
+
         try {
             command.execute(req, resp);
         } catch (CommandException e) {
             logger.error(e);
-            //перенаправление на страницу ошибки
-            System.out.println(e);
+            req.setAttribute(RequestAttributeName.MESSAGE, e.getLocalizedMessage());
+            DispatchAssistant.forwardToJsp(req, resp, JspPageName.ERROR_PAGE);
         }
     }
 }

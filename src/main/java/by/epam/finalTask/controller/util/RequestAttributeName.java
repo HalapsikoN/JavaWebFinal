@@ -16,6 +16,7 @@ public class RequestAttributeName {
     public static final String USER_LIST ="userList";
     public static final String USER="user";
     public static final String TRACK="track";
+    public static final String CREDIT="credit";
 
     private RequestAttributeName(){
     }

@@ -5,6 +5,8 @@ import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.*;
+import by.epam.finalTask.entity.Credit;
+import by.epam.finalTask.service.CreditService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import by.epam.finalTask.service.UserService;
@@ -17,12 +19,13 @@ import javax.servlet.http.HttpSession;
 
 public class UpdateUserWallet implements Command {
 
-    private static final Logger logger= LogManager.getLogger(UpdateUserWallet.class);
+    private static final Logger logger = LogManager.getLogger(UpdateUserWallet.class);
 
-    private static final UserService userService= ServiceFactory.getInstance().getUserService();
+    private static final UserService userService = ServiceFactory.getInstance().getUserService();
+    private static final CreditService creditService = ServiceFactory.getInstance().getCreditService();
 
-    private static final String SUCCESSFULLY_UPDATE="Successfully updated";
-    private static final String ERROR_MSG="Problems at update";
+    private static final String SUCCESSFULLY_UPDATE = "Successfully updated";
+    private static final String ERROR_MSG = "Problems at update";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -34,20 +37,34 @@ public class UpdateUserWallet implements Command {
             }
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
-            double userWallet=(double) session.getAttribute(SessionAttributeName.WALLET);
+            double userWallet = (double) session.getAttribute(SessionAttributeName.WALLET);
 
-            double addToWallet= RequestDataExecutor.getDoubleByName(RequestParameterName.AMOUNT, req);
+            double addToWallet = RequestDataExecutor.getDoubleByName(RequestParameterName.AMOUNT, req);
 
-            double updatedWallet=userWallet+addToWallet;
+            Credit credit = creditService.getUserCredit(userId);
+            if (credit != null) {
+                double creditAmountToPay = credit.getAmount() - addToWallet;
 
-            boolean isUpdated=userService.updateUserWallet(userId, updatedWallet);
+                if (creditAmountToPay > 0) {
+                    creditService.updateCreditAmount(credit.getId(), creditAmountToPay);
+                    addToWallet=0;
+                } else {
+                    creditService.deleteCredit(credit.getId());
+                    addToWallet-=credit.getAmount();
+                }
+            }
+            double updatedWallet = userWallet + addToWallet;
 
-            if(isUpdated){
+            boolean isUpdated = userService.updateUserWallet(userId, updatedWallet);
+
+            if (isUpdated) {
                 session.setAttribute(SessionAttributeName.WALLET, updatedWallet);
                 req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
-            }else {
+
+            } else {
                 req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
             }
+
 
             Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());
             command.execute(req, resp);

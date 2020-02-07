@@ -62,6 +62,9 @@ public class CommandProvider {
         repository.put(CommandName.BUY_ALBUM, new BuyAlbum());
         repository.put(CommandName.BUY_PLAYLIST, new BuyPlaylist());
         repository.put(CommandName.ADD_CREDIT, new AddCredit());
+        repository.put(CommandName.BAN_PAGE, new BanPage());
+        repository.put(CommandName.USER_BAN_LIST, new UserBanListPage());
+        repository.put(CommandName.UNBAN_USER, new UnbanUser());
     }
 
     public static CommandProvider getInstance(){
