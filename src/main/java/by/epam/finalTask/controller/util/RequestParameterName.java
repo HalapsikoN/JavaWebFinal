@@ -23,6 +23,7 @@ public class RequestParameterName {
     public static final String DISCOUNT="discount";
     public static final String START_DATE="start_date";
     public static final String END_DATE="end_date";
+    public static final String LOCALE="locale";
 
     private RequestParameterName(){
     }

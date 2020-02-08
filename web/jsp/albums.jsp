@@ -10,6 +10,10 @@
 <jsp:useBean id="album" class="by.epam.finalTask.entity.Album" scope="request"/>
 <jsp:useBean id="albumList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -24,8 +28,7 @@
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
-        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary">Add new
-            album</a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary"><fmt:message key="locale.albums.addNewAlbumBtn" bundle="${bundle}"/></a>
     </div>
 </c:if>
 <br>
@@ -33,12 +36,12 @@
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
         <thead class="thead-dark">
         <tr>
-            <th>Album name</th>
-            <th>Signer</th>
-            <th>Date</th>
-            <th>Track list</th>
+            <th><fmt:message key="locale.general.tableAlbumName" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableArtist" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableDate" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableTrackList" bundle="${bundle}"/></th>
             <c:if test="${sessionScope.role eq 'ADMIN'}">
-                <th>Edit</th>
+                <th><fmt:message key="locale.general.tableEdit" bundle="${bundle}"/></th>
             </c:if>
         </tr>
         </thead>

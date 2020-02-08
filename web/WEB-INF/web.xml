@@ -54,4 +54,24 @@
         <servlet-name>Controller</servlet-name>
     </filter-mapping>
 
+    <!--Filter of language-->
+    <filter>
+        <filter-name>Language</filter-name>
+        <filter-class>by.epam.finalTask.app.filter.LocaleFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Language</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
+    <!--Filter of saveURL-->
+    <filter>
+        <filter-name>URL</filter-name>
+        <filter-class>by.epam.finalTask.app.filter.SaveLastRequest</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>URL</filter-name>
+        <servlet-name>Controller</servlet-name>
+    </filter-mapping>
+
 </web-app>

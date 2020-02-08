@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="outputTag" uri="/WEB-INF/dateTag" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="bonusList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
 <jsp:useBean id="credit" class="by.epam.finalTask.entity.Credit" scope="request"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -20,25 +24,25 @@
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
-    <h2>${sessionScope.username} wallet</h2>
+    <h2>${sessionScope.username} <fmt:message key="locale.userWallet.title" bundle="${bundle}"/>wallet</h2>
     <c:if test="${credit.amount!=0}">
         <br>
         <div class="alert alert-danger" role="alert">
-            <p>You have a credit:</p>
-            <p>Amount to pay: <strong>${credit.amount}</strong></p>
-            <p>End date: <strong><outputTag:date format="dd_mm_yyyy" item="${credit.date}"/></strong></p>
+            <p><fmt:message key="locale.userWallet.haveCredit" bundle="${bundle}"/>:</p>
+            <p><fmt:message key="locale.userWallet.amountToPay" bundle="${bundle}"/>: <strong>${credit.amount}</strong></p>
+            <p><fmt:message key="locale.userWallet.endDate" bundle="${bundle}"/>: <strong><outputTag:date format="dd_mm_yyyy" item="${credit.date}"/></strong></p>
         </div>
     </c:if>
     <br>
-    <p>Amount: <strong>${sessionScope.wallet}</strong></p>
+    <p><fmt:message key="locale.userWallet.amount" bundle="${bundle}"/>: <strong>${sessionScope.wallet}</strong></p>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCenter1">
-        Replenish balance
+        <fmt:message key="locale.userWallet.replenishBalanceBtn" bundle="${bundle}"/>
     </button>
 
     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalCenter2">
-        Promised payment
+        <fmt:message key="locale.userWallet.promisedPaymentBtn" bundle="${bundle}"/>
     </button>
 
     <!-- Modal -->
@@ -46,7 +50,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle1">Replenishing of balance</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle1"><fmt:message key="locale.userWallet.replenishBalanceTitle" bundle="${bundle}"/></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -58,7 +62,7 @@
                                 <span class="input-group-text">$</span>
                             </div>
                             <input type="hidden" name="command" value="add_user_wallet">
-                            <input type="number" name="amount" id="amount" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Enter the amount to add (min->1)" required min="1">
+                            <input type="number" name="amount" id="amount" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="<fmt:message key="locale.userWallet.replenishBalancePlaceholder" bundle="${bundle}"/>" required min="1">
                             <div class="input-group-append">
                                 <span class="input-group-text">.00</span>
                             </div>
@@ -66,8 +70,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="replenishBalanceFormById('adding_balance')">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="replenishBalanceFormById('adding_balance')"><fmt:message key="locale.button.submit" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>
@@ -76,7 +80,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle2">Promised payment</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle2"><fmt:message key="locale.userWallet.promisedPaymentTitle" bundle="${bundle}"/></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -88,14 +92,14 @@
                                 <span class="input-group-text">$</span>
                             </div>
                             <input type="hidden" name="command" value="add_credit">
-                            <input type="number" name="amount" id="credit" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Enter the amount to add (min->1)" required min="1">
+                            <input type="number" name="amount" id="credit" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="<fmt:message key="locale.userWallet.promisedPaymentPlaceholderAmount" bundle="${bundle}"/>" required min="1">
                             <input type="date" name="date" id="date" class="form-control" aria-label="End date if payment">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="addCreditFormById('add_credit')">Submit</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addCreditFormById('add_credit')"><fmt:message key="locale.button.submit" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>
@@ -105,7 +109,7 @@
     <p class="badge badge-info">${message}</p>
     <br>
     <c:if test="${empty bonusList}">
-        <p>You have no bonuses.</p>
+        <p><fmt:message key="locale.userWallet.noBonuses" bundle="${bundle}"/>.</p>
     </c:if>
 </div>
 
@@ -113,10 +117,10 @@
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
         <thead class="thead-dark">
         <tr>
-            <th>Bonus name</th>
-            <th>Discount</th>
-            <th>Start date</th>
-            <th>End date</th>
+            <th><fmt:message key="locale.general.tableBonusName" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableDiscount" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableStartDate" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableEndDate" bundle="${bundle}"/></th>
         </tr>
         </thead>
         <tbody>

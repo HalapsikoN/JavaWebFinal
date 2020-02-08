@@ -11,6 +11,10 @@
 <jsp:useBean id="album" class="by.epam.finalTask.entity.Album" scope="request"/>
 <jsp:useBean id="trackList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -22,41 +26,41 @@
 
 <div id="center_div">
     <br>
-    <h2>Edit (${album.name}) album</h2>
+    <h2><fmt:message key="locale.editAlbum.title1" bundle="${bundle}"/> (${album.name}) <fmt:message key="locale.editAlbum.title2" bundle="${bundle}"/></h2>
     <br>
     <form action="atrack" method="post" id="input_form">
         <input type="hidden" name="command" value="edit_album">
         <input type="hidden" name="album_id" value="${album.id}">
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">Name: </label>
+            <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.name" bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter track name" required
+                <input type="text" class="form-control" id="name" name="name" placeholder="<fmt:message key="locale.formAlbum.namePlaceholder" bundle="${bundle}"/>" required
                        value="${album.name}">
             </div>
         </div>
         <div class="form-group row">
-            <label for="artist" class="col-sm-2 col-form-label">Singer: </label>
+            <label for="artist" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.artist" bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="artist" name="artist" placeholder="Enter singer name"
+                <input type="text" class="form-control" id="artist" name="artist" placeholder="<fmt:message key="locale.formAlbum.artistPlaceholder" bundle="${bundle}"/>"
                        required value="${album.artist}">
             </div>
         </div>
         <div class="form-group row">
-            <label for="date" class="col-sm-2 col-form-label">Year: </label>
+            <label for="date" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.date" bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
                 <input type="number" class="date-own form-control" id="date" name="date"
-                       placeholder="Select the year of the track" required min="1900" max="2099" step="1"
+                       placeholder="<fmt:message key="locale.formAlbum.datePlaceholder" bundle="${bundle}"/>" required min="1900" max="2099" step="1"
                        value="<outputTag:date format="yyyy" item="${album.date}"/>">
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="locale.button.update" bundle="${bundle}"/></button>
 
     </form>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalCenter2">
-        Edit album tracks
+        <fmt:message key="locale.editAlbum.editAlbumTracksBtn" bundle="${bundle}"/>
     </button>
 
     <!-- Modal -->
@@ -65,7 +69,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle1">Choose which tracks should be in album:</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle1"><fmt:message key="locale.editAlbum.editAlbumTrackTitle" bundle="${bundle}"/>:</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -80,16 +84,16 @@
                                 <br>
                             </c:forEach>
                             <c:if test="${empty trackList}">
-                                <p>There are no tracks of this artist.</p>
+                                <p><fmt:message key="locale.editAlbum.noArtistTracks" bundle="${bundle}"/>.</p>
                             </c:if>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <c:if test="${not empty trackList}">
-                    <button type="button" class="btn btn-primary" onclick="submitById('album_tracks')">Submit</button>
+                    <button type="button" class="btn btn-primary" onclick="submitById('album_tracks')"><fmt:message key="locale.button.submit" bundle="${bundle}"/></button>
                     </c:if>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>
@@ -97,7 +101,7 @@
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalCenter">
-        Delete album
+        <fmt:message key="locale.editAlbum.deleteAlbumBtn" bundle="${bundle}"/>
     </button>
 
     <!-- Modal -->
@@ -106,8 +110,8 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle2">Are you sure that you want to delete album
-                        (<strong>${album.name}</strong>) from service?</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle2"><fmt:message key="locale.editAlbum.deleteAlbumTitle1" bundle="${bundle}"/>
+                        (<strong>${album.name}</strong>) <fmt:message key="locale.editAlbum.deleteAlbumTitle2" bundle="${bundle}"/>?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -116,9 +120,9 @@
                     <form action="atrack" method="post">
                         <input type="hidden" name="command" value="delete_album">
                         <input type="hidden" name="album_id" value="${album.id}">
-                        <button type="submit" class="btn btn-danger">Yes</button>
+                        <button type="submit" class="btn btn-danger"><fmt:message key="locale.button.yes" bundle="${bundle}"/></button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.no" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

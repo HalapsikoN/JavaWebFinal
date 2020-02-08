@@ -43,9 +43,9 @@ public class AddComment implements Command {
 
         GregorianCalendar date=new GregorianCalendar();
 
-        System.out.println("    sss   "+date);
-
         String text=req.getParameter(RequestParameterName.TEXT);
+
+        System.out.println(text);
 
         Comment comment=new Comment(userId, date, trackId, text);
 

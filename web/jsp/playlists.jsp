@@ -9,6 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="playlistList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -20,8 +24,7 @@
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
-        <a href="${pageContext.request.contextPath}/atrack?command=add_playlist_page" class="btn btn-primary">Add new
-            playlist</a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_playlist_page" class="btn btn-primary"><fmt:message key="locale.playlists.title" bundle="${bundle}"/></a>
     </div>
 </c:if>
 <br>
@@ -29,11 +32,11 @@
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
         <thead class="thead-dark">
         <tr>
-            <th>Playlist name(topic)</th>
-            <th>Date</th>
-            <th>Track list</th>
+            <th><fmt:message key="locale.general.tablePlaylistName" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableDate" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableTrackList" bundle="${bundle}"/></th>
             <c:if test="${sessionScope.role eq 'ADMIN'}">
-                <th>Edit</th>
+                <th><fmt:message key="locale.general.tableEdit" bundle="${bundle}"/></th>
             </c:if>
         </tr>
         </thead>

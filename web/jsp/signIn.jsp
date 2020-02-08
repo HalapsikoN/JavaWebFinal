@@ -9,6 +9,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
 
 <html>
 <head>
@@ -21,16 +23,16 @@
     <div class="form-group" id="main">
         <input type="hidden" name="command" value="sign_in">
         <section id="section" class="form-fields">
-            <label for="login">Login:</label>
-            <input type="text" name="login" class="form-control" id="login" placeholder="Enter login" required minlength="4"/>
+            <label for="login"><fmt:message key="locale.formUser.login" bundle="${bundle}"/>:</label>
+            <input type="text" name="login" class="form-control" id="login" placeholder="<fmt:message key="locale.formUser.loginPlaceholder" bundle="${bundle}"/>" required minlength="4"/>
             <br>
-            <label for="password">Password:</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required minlength="6"/>
+            <label for="password"><fmt:message key="locale.formUser.password" bundle="${bundle}"/>:</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="<fmt:message key="locale.formUser.passwordPlaceholder" bundle="${bundle}"/>" required minlength="6"/>
             <br>
         </section>
 
-        <input type="button" class="btn btn-primary" value="Sign in" onclick="signInForm(this)">
-        <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/atrack?command=main_page">Cancel</a>
+        <input type="button" class="btn btn-primary" value="<fmt:message key="locale.formUser.signInBtn" bundle="${bundle}"/>" onclick="signInForm(this)">
+        <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/atrack?command=main_page"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></a>
     </div>
 </form>
 <br>

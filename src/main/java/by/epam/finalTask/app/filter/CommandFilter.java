@@ -108,7 +108,6 @@ public class CommandFilter implements Filter {
 
         if(session!=null && session.getAttribute(SessionAttributeName.ID) != null) {
             Role role=(Role) session.getAttribute(SessionAttributeName.ROLE);
-            System.out.println(role);
 
             if (role == Role.USER && userCommand.contains(command)) {
 

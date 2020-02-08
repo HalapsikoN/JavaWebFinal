@@ -9,6 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="albumList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -21,9 +25,9 @@
 <br>
 <c:if test="${requestScope.get('albumList').isEmpty()}">
     <div id="center_div">
-        <p>There are not any albums yet. You can correct this: </p>
+        <p><fmt:message key="locale.userAlbums.title" bundle="${bundle}"/>There are not any albums yet. You can correct this: </p>
         <a href="${pageContext.request.contextPath}/atrack?command=albums_page">
-            Click here.
+            <fmt:message key="locale.general.hrefClickHere" bundle="${bundle}"/>.
         </a>
     </div>
 </c:if>
@@ -31,10 +35,10 @@
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
         <thead class="thead-dark">
         <tr>
-            <th>Album name</th>
-            <th>Signer</th>
-            <th>Date</th>
-            <th>Track list</th>
+            <th><fmt:message key="locale.general.tableAlbumName" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableArtist" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableDate" bundle="${bundle}"/></th>
+            <th><fmt:message key="locale.general.tableTrackList" bundle="${bundle}"/></th>
         </tr>
         </thead>
         <tbody>

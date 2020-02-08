@@ -7,7 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -19,18 +23,18 @@
 
 <div id="center_div">
     <br>
-    <h2>Add new playlist</h2>
+    <h2><fmt:message key="locale.addPlaylist.title" bundle="${bundle}"/></h2>
     <br>
     <form action="atrack" method="post" id="input_form">
         <input type="hidden" name="command" value="add_playlist">
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label">Name(topic): </label>
+            <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formPlaylist.name" bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter playlist name(topic)" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="<fmt:message key="locale.formPlaylist.namePlaceholder" bundle="${bundle}"/>" required>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="locale.button.add" bundle="${bundle}"/></button>
 
     </form>
 

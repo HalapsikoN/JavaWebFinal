@@ -10,7 +10,11 @@
 <jsp:useBean id="album" class="by.epam.finalTask.entity.Album" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <jsp:useBean id="message" class="java.lang.String" scope="request"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -23,16 +27,16 @@
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <br>
 <div id="center_div">
-    <h2>Album information</h2>
+    <h2><fmt:message key="locale.albumInfo.title" bundle="${bundle}"/></h2>
     <br>
     <div id="center_div">
         <p class="badge badge-info" style="font-size: 20px">${message}</p>
     </div>
     <br>
-    <p>Name: <strong>${album.name}</strong></p>
-    <p>Singer: <strong>${album.artist}</strong></p>
-    <p>Release year: <strong><outputTag:date format="yyyy" item="${album.date}"/></strong></p>
-    <p>Album price: <strong>${albumPrice}</strong></p>
+    <p><fmt:message key="locale.albumInfo.name" bundle="${bundle}"/>: <strong>${album.name}</strong></p>
+    <p><fmt:message key="locale.albumInfo.artist" bundle="${bundle}"/>: <strong>${album.artist}</strong></p>
+    <p><fmt:message key="locale.albumInfo.date" bundle="${bundle}"/>: <strong><outputTag:date format="yyyy" item="${album.date}"/></strong></p>
+    <p><fmt:message key="locale.albumInfo.price" bundle="${bundle}"/>: <strong>${albumPrice}</strong></p>
     <c:if test="${sessionScope.role eq 'USER'}">
         <form id="form${album.id}" method="post" action="atrack">
             <input type="hidden" name="command" value="buy_album">
@@ -47,16 +51,16 @@
 <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
     <thead class="thead-dark">
     <tr>
-        <th>Song</th>
-        <th>Date</th>
-        <th>Price</th>
+        <th><fmt:message key="locale.general.tableTrack" bundle="${bundle}"/></th>
+        <th><fmt:message key="locale.general.tableDate" bundle="${bundle}"/></th>
+        <th><fmt:message key="locale.general.tablePrice" bundle="${bundle}"/></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="song" items="${album.trackList}">
         <tr>
             <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
-            <td onclick="hideAndSick('hiddenRow${song.id}')">${song.date.get(1)}</td>
+            <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy" item="${song.date}"/></td>
             <td onclick="hideAndSick('hiddenRow${song.id}')">${song.price}</td>
         </tr>
         <tr id="hiddenRow${song.id}" style="display: none">
@@ -80,18 +84,18 @@
                         </c:forEach>
                     </div>
                     <c:if test="${sessionScope.role==null}">
-                        <p>Sign in to comment!</p>
+                        <p><fmt:message key="locale.general.tableCommentNotSignIn" bundle="${bundle}"/>!</p>
                     </c:if>
                     <c:if test="${sessionScope.role eq 'USER'}">
                         <form action="atrack" method="post">
                             <div class="form-group">
                                 <input type="hidden" name="command" value="add_comment">
                                 <input type="hidden" name="track_id" value="${song.id}">
-                                <label for="textComment${song.id}">Add your comment</label>
+                                <label for="textComment${song.id}"><fmt:message key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
                                 <textarea class="form-control" name="text" id="textComment${song.id}"
                                           rows="1" required></textarea>
                                 <br>
-                                <button type="submit" class="btn btn-primary">Add</button>
+                                <button type="submit" class="btn btn-primary"><fmt:message key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
                             </div>
                         </form>
                     </c:if>

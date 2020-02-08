@@ -8,10 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
+
 <html>
 <head>
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
@@ -24,9 +26,9 @@
     <br>
     <c:if test="${requestScope.get('songList').isEmpty()}">
         <div id="center_div">
-            <p>There are not any songs yet. You can correct this: </p>
+            <p><fmt:message key="locale.userTracks.title" bundle="${bundle}"/>There are not any songs yet. You can correct this: </p>
             <a href="${pageContext.request.contextPath}/atrack?command=main_page">
-                Click here.
+                <fmt:message key="locale.general.hrefClickHere" bundle="${bundle}"/>.
             </a>
         </div>
     </c:if>
@@ -34,9 +36,9 @@
         <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
             <thead class="thead-dark">
             <tr>
-                <th>Song</th>
-                <th>Signer</th>
-                <th>Date</th>
+                <th><fmt:message key="locale.general.tableTrack" bundle="${bundle}"/></th>
+                <th><fmt:message key="locale.general.tableArtist" bundle="${bundle}"/></th>
+                <th><fmt:message key="locale.general.tableDate" bundle="${bundle}"/></th>
             </tr>
             </thead>
             <tbody>
@@ -69,18 +71,18 @@
                                 </c:forEach>
                             </div>
                             <c:if test="${sessionScope.role==null}">
-                                <p>Sign in to comment!</p>
+                                <p><fmt:message key="locale.general.tableCommentNotSignIn" bundle="${bundle}"/>!</p>
                             </c:if>
                             <c:if test="${sessionScope.role eq 'USER'}">
                                 <form action="atrack" method="post">
                                     <div class="form-group">
                                         <input type="hidden" name="command" value="add_comment">
                                         <input type="hidden" name="track_id" value="${song.id}">
-                                        <label for="textComment${song.id}">Add your comment</label>
+                                        <label for="textComment${song.id}"><fmt:message key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
                                         <textarea class="form-control" name="text" id="textComment${song.id}"
                                                   rows="1" required></textarea>
                                         <br>
-                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        <button type="submit" class="btn btn-primary"><fmt:message key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
                                     </div>
                                 </form>
                             </c:if>

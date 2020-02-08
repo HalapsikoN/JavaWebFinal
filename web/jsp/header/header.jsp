@@ -8,6 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="locale" var="bundle"/>
 
 <c:set var="path" value="${pageContext.request.contextPath}" scope="request"/>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -18,37 +20,37 @@
 
 <nav class="navbar">
 
-    <a href="${path}/atrack?command=main_page"> Songs </a>
-    <a href="${path}/atrack?command=albums_page"> Albums </a>
-    <a id="" href="${path}/atrack?command=playlists_page"> Playlists </a>
+    <a href="${path}/atrack?command=main_page"> <fmt:message key="locale.header.tracks" bundle="${bundle}"/> </a>
+    <a href="${path}/atrack?command=albums_page"> <fmt:message key="locale.header.albums" bundle="${bundle}"/> </a>
+    <a id="" href="${path}/atrack?command=playlists_page"> <fmt:message key="locale.header.playlists" bundle="${bundle}"/> </a>
 
     <c:if test="${sessionScope.id==null}">
-        <a id="ends" href="${path}/atrack?command=sign_in_page"> Sign in </a>
-        <a href="${path}/atrack?command=registration_page"> Register </a>
+        <a id="ends" href="${path}/atrack?command=sign_in_page"> <fmt:message key="locale.header.signIn" bundle="${bundle}"/> </a>
+        <a href="${path}/atrack?command=registration_page"> <fmt:message key="locale.header.register" bundle="${bundle}"/> </a>
     </c:if>
 
     <c:if test="${sessionScope.id!=null}">
         <c:choose>
             <c:when test="${sessionScope.role eq 'ADMIN'}">
-                <a id="ends" href="${path}/atrack?command=user_list"> List of users </a>
-                <a href="${path}/atrack?command=user_ban_list"> List of baned users </a>
+                <a id="ends" href="${path}/atrack?command=user_list"> <fmt:message key="locale.header.listOfUsers" bundle="${bundle}"/> </a>
+                <a href="${path}/atrack?command=user_ban_list"> <fmt:message key="locale.header.listOfBanedUsers" bundle="${bundle}"/> </a>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink2" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
                 <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink2" id="dropdownMenu1" style="left: auto">
-                    <a class="dropdown-item" href="${path}/atrack?command=user_profile">My profile</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=user_profile"><fmt:message key="locale.header.myProfile" bundle="${bundle}"/></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="${path}/atrack?command=sign_out">Sign out</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=sign_out"><fmt:message key="locale.header.signOut" bundle="${bundle}"/></a>
                 </div>
             </c:when>
             <c:when test="${sessionScope.role eq 'USER'}">
-                <a id="ends" href="${path}/atrack?command=user_tracks"> My songs </a>
-                <a href="${path}/atrack?command=user_albums"> My albums </a>
-                <a href="${path}/atrack?command=user_playlists"> My playlists </a>
+                <a id="ends" href="${path}/atrack?command=user_tracks"> <fmt:message key="locale.header.myTracks" bundle="${bundle}"/> </a>
+                <a href="${path}/atrack?command=user_albums"> <fmt:message key="locale.header.myAlbums" bundle="${bundle}"/> </a>
+                <a href="${path}/atrack?command=user_playlists"> <fmt:message key="locale.header.myPlaylists" bundle="${bundle}"/> </a>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink1" aria-haspopup="true" aria-expanded="false"> ${sessionScope.username} </a>
                 <div class="dropdown-menu"  aria-labelledby="dropdownMenuLink1" id="dropdownMenu1" style="left: auto">
-                    <a class="dropdown-item" href="${path}/atrack?command=user_profile">My profile</a>
-                    <a class="dropdown-item" href="${path}/atrack?command=user_wallet">My wallet (<strong>${sessionScope.wallet}</strong>)</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=user_profile"><fmt:message key="locale.header.myProfile" bundle="${bundle}"/></a>
+                    <a class="dropdown-item" href="${path}/atrack?command=user_wallet"><fmt:message key="locale.header.myWallet" bundle="${bundle}"/> (<strong>${sessionScope.wallet}</strong>)</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="${path}/atrack?command=sign_out">Sign out</a>
+                    <a class="dropdown-item" href="${path}/atrack?command=sign_out"><fmt:message key="locale.header.signOut" bundle="${bundle}"/></a>
                 </div>
             </c:when>
         </c:choose>
