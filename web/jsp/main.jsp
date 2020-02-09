@@ -11,10 +11,10 @@
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
-<jsp:useBean id="message" class="java.lang.String" scope="request"/>
+
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale" var="bundle"/>
-
+<%@ page pageEncoding="UTF-8"%>
 
 <html>
 <head>
@@ -38,7 +38,7 @@
 <c:if test="${sessionScope.role eq 'USER'}">
     <br>
     <div id="center_div">
-        <p class="badge badge-info" style="font-size: 20px">${message}</p>
+        <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
     </div>
     <br>
 </c:if>
@@ -144,7 +144,7 @@
 </div>
 <br>
 
-
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/js/comment.js"></script>
 </body>

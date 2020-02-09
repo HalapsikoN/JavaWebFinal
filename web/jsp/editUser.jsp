@@ -140,10 +140,9 @@
 
     <br>
     <br>
-    <p class="badge badge-info" style="font-size: 20px">${message}</p>
-    <br>
 </div>
 
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/bonus.js"></script>
 </body>
 </html>

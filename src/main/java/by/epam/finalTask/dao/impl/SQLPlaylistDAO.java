@@ -24,13 +24,13 @@ public class SQLPlaylistDAO implements PlaylistDAO {
     private static final ConverterFromResultSet converterFromResultSet= ConverterFromResultSet.getInstance();
 
     private String sqlAddPlaylist ="INSERT INTO playlists (name, date) values (?,?)";
-    private String sqlAddTrackToPlaylist ="INSERT INTO tr_pl (track_id, playlist_id) values (?,?)";
+    private String sqlAddTrackToPlaylist ="INSERT INTO track_playlist (track_id, playlist_id) values (?,?)";
     private String sqlGetPlaylistById ="SELECT * FROM playlists WHERE id=?";
-    private String sqlGetAllPlaylistTracks="SELECT tracks.* FROM playlists INNER JOIN tr_pl ON playlists.id=tr_pl.playlist_id INNER JOIN tracks ON tr_pl.track_id=tracks.id WHERE playlists.id=?";
+    private String sqlGetAllPlaylistTracks="SELECT tracks.* FROM playlists INNER JOIN track_playlist ON playlists.id=track_playlist.playlist_id INNER JOIN tracks ON tr_pl.track_id=tracks.id WHERE playlists.id=?";
     private String sqlUpdatePlaylistById ="UPDATE playlists SET name=?, date=? where id=?";
     private String sqlDeletePlaylistById ="DELETE FROM playlists where id=?";
     private String sqlGetAllPlaylists ="SELECT * FROM playlists";
-    private String sqlDeletePlaylistTracks ="DELETE FROM tr_pl where playlist_id=?";
+    private String sqlDeletePlaylistTracks ="DELETE FROM track_playlist where playlist_id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 

@@ -25,12 +25,15 @@
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
+<div id="center_div">
+<p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
-    <div id="center_div">
+
         <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary"><fmt:message key="locale.albums.addNewAlbumBtn" bundle="${bundle}"/></a>
-    </div>
+
 </c:if>
+    </div>
 <br>
 <c:if test="${!requestScope.get('albumList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
@@ -79,7 +82,7 @@
     </table>
 </c:if>
 
-
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 </body>
 </html>

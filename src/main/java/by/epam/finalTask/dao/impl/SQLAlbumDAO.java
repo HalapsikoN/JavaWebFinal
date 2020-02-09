@@ -24,13 +24,13 @@ public class SQLAlbumDAO implements AlbumDAO {
     private static final ConverterFromResultSet converterFromResultSet = ConverterFromResultSet.getInstance();
 
     private String sqlAddAlbum = "INSERT INTO albums (name, artist, date) values (?,?,?)";
-    private String sqlAddTrackToAlbum = "INSERT INTO tr_al (track_id, album_id) values (?,?)";
+    private String sqlAddTrackToAlbum = "INSERT INTO track_album (track_id, album_id) values (?,?)";
     private String sqlGetAlbumById = "SELECT * FROM albums WHERE id=?";
-    private String sqlGetAllAlbumTracks = "SELECT tracks.* FROM albums INNER JOIN tr_al ON albums.id=tr_al.album_id INNER JOIN tracks ON tr_al.track_id=tracks.id WHERE albums.id=?";
+    private String sqlGetAllAlbumTracks = "SELECT tracks.* FROM albums INNER JOIN track_album ON albums.id=tr_al.album_id INNER JOIN tracks ON track_album.track_id=tracks.id WHERE albums.id=?";
     private String sqlUpdateAlbumById = "UPDATE albums SET name=?, artist=?, date=? where id=?";
     private String sqlDeleteAlbumById = "DELETE FROM albums where id=?";
     private String sqlGetAllAlbums = "SELECT * FROM albums";
-    private String sqlDeleteAlbumTracks = "DELETE FROM tr_al where album_id=?";
+    private String sqlDeleteAlbumTracks = "DELETE FROM track_album where album_id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 

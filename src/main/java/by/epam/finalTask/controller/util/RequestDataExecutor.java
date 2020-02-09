@@ -1,9 +1,13 @@
 package by.epam.finalTask.controller.util;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 
 public class RequestDataExecutor {
+
+    private final static String OLD_CHARSET="ISO-8859-1";
+    private final static String NEW_CHARSET="utf-8";
 
     private RequestDataExecutor(){
     }
@@ -37,5 +41,9 @@ public class RequestDataExecutor {
         }
 
         return number;
+    }
+
+    public static String getStringWithWriteEncoding(HttpServletRequest req, String parameter) throws UnsupportedEncodingException {
+        return new String(req.getParameter(parameter).getBytes(OLD_CHARSET),NEW_CHARSET);
     }
 }

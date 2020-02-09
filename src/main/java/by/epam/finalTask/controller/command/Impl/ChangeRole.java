@@ -4,10 +4,7 @@ import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
-import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.controller.util.RequestParameterName;
-import by.epam.finalTask.controller.util.SessionAttributeName;
-import by.epam.finalTask.controller.util.SessionHelper;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.util.Role;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
@@ -15,9 +12,12 @@ import by.epam.finalTask.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Locale;
 
 public class ChangeRole implements Command {
 
@@ -25,37 +25,46 @@ public class ChangeRole implements Command {
 
     private final static UserService userService = ServiceFactory.getInstance().getUserService();
 
-    private final static String SUCCESSFUL_MSG="Role has been updated!";
-    private final static String FAILED_MSG="Role has not been updated!";
+    private final static String SUCCESS_MSG="locale.changeRole.successMsg";
+        private final static String ERROR_MSG="locale.changeRole.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
 
+            HttpSession session = SessionHelper.getExistingSession(req);
+
+            if (session == null) {
+                throw new CommandException("no session");
+            }
+
             int userId=Integer.valueOf(req.getParameter(RequestParameterName.USER_ID));
 
             Role newRole=Role.valueOf(req.getParameter(RequestParameterName.ROLE));
 
             boolean isChanged=userService.updateUserRole(userId, newRole);
-
+            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            String message;
             if(isChanged){
-                req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFUL_MSG);
+                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFUL_MSG);
+                message=ResourceManager.getString(SUCCESS_MSG, locale);
             }else {
-                req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
+                //req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
+                message=ResourceManager.getString(ERROR_MSG, locale);
             }
 
-            HttpSession session= SessionHelper.getExistingSession(req);
             int id=(int) session.getAttribute(SessionAttributeName.ID);
 
             if(id==userId && newRole==Role.USER && isChanged){
                 Command command= CommandProvider.getInstance().getCommand(CommandName.SIGN_OUT.name());
                 command.execute(req, resp);
             }else {
-                Command command = CommandProvider.getInstance().getCommand(CommandName.EDIT_USER_PAGE.name());
-                command.execute(req, resp);
+//                Command command = CommandProvider.getInstance().getCommand(CommandName.EDIT_USER_PAGE.name());
+//                command.execute(req, resp);
+                DispatchAssistant.redirectToCommand(req, resp, CommandName.EDIT_USER_PAGE, message);
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException| ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

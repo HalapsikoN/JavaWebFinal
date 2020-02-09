@@ -13,13 +13,16 @@ import by.epam.finalTask.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class AddCredit implements Command {
 
@@ -29,9 +32,9 @@ public class AddCredit implements Command {
     private static final CreditService creditService=ServiceFactory.getInstance().getCreditService();
 
     private static final SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
-    private static final String SUCCESSFULLY_UPDATE="Successfully added";
-    private static final String ERROR_MSG="Problems at adding";
-    private static final String ALREADY_HAVE="You have already have a credit";
+    private static final String SUCCESS_MSG="locale.addCredit.successMsg";
+    private static final String ERROR_MSG="locale.addCredit.errorMsg";
+    private static final String ALREADY_HAVE="locale.addCredit.alreadyHave";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -46,17 +49,15 @@ public class AddCredit implements Command {
             double userWallet=(double) session.getAttribute(SessionAttributeName.WALLET);
 
             Credit actualCredit=creditService.getActualCredit(userId);
-
+            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            String message;
             if(actualCredit==null) {
                 double amount = Double.valueOf(req.getParameter(RequestParameterName.AMOUNT));
                 GregorianCalendar date = new GregorianCalendar();
                 Date date_end = format.parse(req.getParameter(RequestParameterName.DATE));
                 date.setTimeInMillis(date_end.getTime());
-                System.out.println(date);
 
                 Credit credit = new Credit(amount, date, userId);
-
-                System.out.println(credit);
 
                 boolean isAdded=creditService.addCredit(credit);
 
@@ -67,20 +68,26 @@ public class AddCredit implements Command {
 
                     if (isUpdated) {
                         session.setAttribute(SessionAttributeName.WALLET, updatedWallet);
-                        req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
+                        //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
+                        message=ResourceManager.getString(SUCCESS_MSG, locale);
                     } else {
-                        req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                        //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                        message=ResourceManager.getString(ERROR_MSG, locale);
                     }
                 }else {
-                    req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                    //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                    message=ResourceManager.getString(ERROR_MSG, locale);
                 }
             }else {
-                req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
+                //req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
+                message=ResourceManager.getString(ALREADY_HAVE, locale);
             }
 
-            Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());
-            command.execute(req, resp);
-        } catch (ServiceException | ParseException e) {
+//            Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());
+//            command.execute(req, resp);
+
+            DispatchAssistant.redirectToCommand(req, resp, CommandName.USER_WALLET, message);
+        } catch (ServiceException | ParseException| ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

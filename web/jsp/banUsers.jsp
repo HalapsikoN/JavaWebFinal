@@ -54,6 +54,7 @@
     </tbody>
 </table>
 
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 </body>
 </html>

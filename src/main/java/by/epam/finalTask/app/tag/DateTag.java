@@ -44,15 +44,22 @@ public class DateTag extends TagSupport {
                 return SKIP_BODY;
             }
 
+            String year= String.valueOf(item.get(Calendar.YEAR));
+            String month= ((item.get(Calendar.MONTH)+1)<10)?"0"+(item.get(Calendar.MONTH)+1):""+(item.get(Calendar.MONTH)+1);
+            String date= (item.get(Calendar.DATE)<10)?"0"+item.get(Calendar.DATE):""+item.get(Calendar.DATE);
+            String second= (item.get(Calendar.SECOND)<10)?"0"+item.get(Calendar.SECOND):""+item.get(Calendar.SECOND);
+            String minute= (item.get(Calendar.MINUTE)<10)?"0"+item.get(Calendar.MINUTE):""+item.get(Calendar.MINUTE);
+            String hour= (item.get(Calendar.HOUR_OF_DAY)<10)?"0"+item.get(Calendar.HOUR_OF_DAY):""+item.get(Calendar.HOUR_OF_DAY);
+
             switch (dateTagFormats) {
                 case YYYY:
-                    pageContext.getOut().print(item.get(Calendar.YEAR));
+                    pageContext.getOut().print(year);
                     break;
                 case DD_MM_YYYY:
-                    pageContext.getOut().print(item.get(Calendar.DATE) + DATE_DELIMITER + (item.get(Calendar.MONTH)+1) + DATE_DELIMITER + item.get(Calendar.YEAR));
+                    pageContext.getOut().print(date + DATE_DELIMITER + month + DATE_DELIMITER + year);
                     break;
                 case HH_MM_SS_DD_MM_YYYY:
-                    pageContext.getOut().print(item.get(Calendar.HOUR_OF_DAY) + TIME_DELIMITER + item.get(Calendar.MINUTE) + TIME_DELIMITER + item.get(Calendar.SECOND) + " " + item.get(Calendar.DATE) + DATE_DELIMITER + (item.get(Calendar.MONTH)+1) + DATE_DELIMITER + item.get(Calendar.YEAR));
+                    pageContext.getOut().print(hour + TIME_DELIMITER + minute + TIME_DELIMITER + second + " " + date + DATE_DELIMITER + month + DATE_DELIMITER + year);
                     break;
             }
 

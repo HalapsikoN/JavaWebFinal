@@ -33,5 +33,6 @@
         <a href="${pageContext.request.contextPath}/atrack"><fmt:message key="locale.general.hrefMainPage" bundle="${bundle}"/>.</a>
     </div>
 </div>
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 </body>
 </html>

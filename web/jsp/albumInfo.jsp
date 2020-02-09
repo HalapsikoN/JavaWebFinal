@@ -30,7 +30,7 @@
     <h2><fmt:message key="locale.albumInfo.title" bundle="${bundle}"/></h2>
     <br>
     <div id="center_div">
-        <p class="badge badge-info" style="font-size: 20px">${message}</p>
+        <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
     </div>
     <br>
     <p><fmt:message key="locale.albumInfo.name" bundle="${bundle}"/>: <strong>${album.name}</strong></p>
@@ -107,6 +107,7 @@
     </tbody>
 </table>
 
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/comment.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 </body>

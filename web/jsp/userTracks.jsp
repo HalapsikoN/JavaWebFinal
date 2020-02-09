@@ -95,6 +95,7 @@
     </c:if>
 </div>
 
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/comment.js"></script>
 </body>
 </html>

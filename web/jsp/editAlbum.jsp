@@ -129,11 +129,9 @@
     </div>
 
     <br>
-    <br>
-    <p class="badge badge-info" style="font-size: 20px">${message}</p>
 </div>
 
-
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 </body>
 </html>

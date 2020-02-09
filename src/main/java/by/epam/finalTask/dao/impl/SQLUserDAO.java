@@ -36,14 +36,14 @@ public class SQLUserDAO implements UserDAO {
     private String sqlUpdateUserNameById = "UPDATE users SET name=? where id=?";
     private String sqlUpdateUserRoleById = "UPDATE users SET role=? where id=?";
     private String sqlDeleteUserById = "DELETE FROM users where id=?";
-    private String sqlGetUserTracksById = "SELECT tracks.* FROM users INNER JOIN us_tr ON users.id=us_tr.user_id INNER JOIN tracks ON us_tr.track_id=tracks.id WHERE users.id=?";
-    private String sqlGetUserAlbumsById = "SELECT albums.* FROM users INNER JOIN us_al ON users.id=us_al.user_id INNER JOIN albums ON us_al.album_id=albums.id WHERE users.id=?";
-    private String sqlGetUserPlaylistsById = "SELECT playlists.* FROM users INNER JOIN us_pl ON users.id=us_pl.user_id INNER JOIN playlists ON us_pl.playlist_id=playlists.id WHERE users.id=?";
-    private String sqlGetUserBonusesById = "SELECT bonuses.* FROM users INNER JOIN us_bon ON users.id=us_bon.user_id INNER JOIN bonuses ON us_bon.bonus_id=bonuses.id WHERE users.id=?";
+    private String sqlGetUserTracksById = "SELECT tracks.* FROM users INNER JOIN user_track ON users.id=user_track.user_id INNER JOIN tracks ON user_track.track_id=tracks.id WHERE users.id=?";
+    private String sqlGetUserAlbumsById = "SELECT albums.* FROM users INNER JOIN user_album ON users.id=user_album.user_id INNER JOIN albums ON user_album.album_id=albums.id WHERE users.id=?";
+    private String sqlGetUserPlaylistsById = "SELECT playlists.* FROM users INNER JOIN user_playlist ON users.id=user_playlist.user_id INNER JOIN playlists ON user_playlist.playlist_id=playlists.id WHERE users.id=?";
+    private String sqlGetUserBonusesById = "SELECT bonuses.* FROM users INNER JOIN user_bonus ON users.id=user_bonus.user_id INNER JOIN bonuses ON user_bonus.bonus_id=bonuses.id WHERE users.id=?";
     private String sqlGetAllUsers = "SELECT * FROM users";
-    private String sqlAddTrackToUser = "INSERT INTO us_tr (user_id, track_id) values (?,?)";
-    private String sqlAddAlbumToUser = "INSERT INTO us_al (user_id, album_id) values (?,?)";
-    private String sqlAddPlaylistToUser = "INSERT INTO us_pl (user_id, playlist_id) values (?,?)";
+    private String sqlAddTrackToUser = "INSERT INTO user_track (user_id, track_id) values (?,?)";
+    private String sqlAddAlbumToUser = "INSERT INTO user_album (user_id, album_id) values (?,?)";
+    private String sqlAddPlaylistToUser = "INSERT INTO us_playlist (user_id, playlist_id) values (?,?)";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 

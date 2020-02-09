@@ -21,8 +21,7 @@ public class CreditDataValid {
             result=false;
         }else {
             Calendar today=new GregorianCalendar();
-            double monthTime=30*86400*1000;
-            if(today.compareTo(calendar)>=0 || calendar.getTimeInMillis()-today.getTimeInMillis()>=monthTime){
+            if(today.compareTo(calendar)>=0){
                 result=false;
             }
         }

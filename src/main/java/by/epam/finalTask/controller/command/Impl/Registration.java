@@ -2,6 +2,7 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
+import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.User;
 import by.epam.finalTask.entity.util.Role;
@@ -14,14 +15,17 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 
 public class Registration implements Command {
 
     private static final Logger logger = LogManager.getLogger(Registration.class);
 
-    private static final String SUCCESS_REGISTRATION ="Successfully added new user!";
-    private static final String LOGIN_TAKEN="Login is already taken!";
+    private static final String SUCCESS_REGISTRATION ="locale.registration.successMsg";
+    private static final String LOGIN_TAKEN="locale.registration.takenLogin";
     private static final String USER_STANDART_ROLE="USER";
 
     private static final UserService userService=ServiceFactory.getInstance().getUserService();
@@ -29,29 +33,37 @@ public class Registration implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
+        HttpSession session = SessionHelper.getExistingSession(req);
+
+        if (session == null) {
+            throw new CommandException("no session");
+        }
+
         User user=createUserFromRequest(req);
 
-        System.out.println(user);
-
-        String password=RequestDataExecutor.getStringByName(RequestParameterName.PASSWORD, req);
-        if(password==null){
-            throw new CommandException("Invalid registration request");
+        String password= null;
+        try {
+            password = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.PASSWORD);
+        } catch (UnsupportedEncodingException e) {
+            logger.error(e);
+            throw new CommandException(e);
         }
 
         boolean isSuccess=true;
-
+        String message;
+        Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
         try {
             isSuccess=userService.register(user, password);
 
-            System.out.println(isSuccess);
-
             if(isSuccess){
-                req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_REGISTRATION);
+                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_REGISTRATION);
+                message=ResourceManager.getString(SUCCESS_REGISTRATION, locale);
             }else{
-                req.setAttribute(RequestAttributeName.MESSAGE, LOGIN_TAKEN);
+                //req.setAttribute(RequestAttributeName.MESSAGE, LOGIN_TAKEN);
+                message=ResourceManager.getString(LOGIN_TAKEN, locale);
             }
 
-            DispatchAssistant.forwardToJsp(req, resp, JspPageName.REGISTRATION_PAGE);
+            DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE, message);
         } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);

@@ -110,9 +110,10 @@
 
     <br>
     <br>
-    <p class="badge badge-info">${message}</p>
+    <p class="badge badge-info">${param.get("message")}</p>
 </div>
 
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/profile.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
-    <h2>${sessionScope.username} <fmt:message key="locale.userWallet.title" bundle="${bundle}"/>wallet</h2>
+    <h2>${sessionScope.username} <fmt:message key="locale.userWallet.title" bundle="${bundle}"/></h2>
     <c:if test="${credit.amount!=0}">
         <br>
         <div class="alert alert-danger" role="alert">
@@ -106,7 +106,7 @@
     </div>
     <br>
     <br>
-    <p class="badge badge-info">${message}</p>
+    <p class="badge badge-info">${param.get("message")}</p>
     <br>
     <c:if test="${empty bonusList}">
         <p><fmt:message key="locale.userWallet.noBonuses" bundle="${bundle}"/>.</p>
@@ -137,7 +137,7 @@
 </c:if>
 
 
-
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/wallet.js"></script>
 </body>
 </html>

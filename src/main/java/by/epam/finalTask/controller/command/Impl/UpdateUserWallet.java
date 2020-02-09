@@ -13,9 +13,12 @@ import by.epam.finalTask.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Locale;
 
 public class UpdateUserWallet implements Command {
 
@@ -24,8 +27,8 @@ public class UpdateUserWallet implements Command {
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
     private static final CreditService creditService = ServiceFactory.getInstance().getCreditService();
 
-    private static final String SUCCESSFULLY_UPDATE = "Successfully updated";
-    private static final String ERROR_MSG = "Problems at update";
+    private static final String SUCCESS_MSG = "locale.update.successMsg";
+    private static final String ERROR_MSG = "locale.update.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -40,7 +43,8 @@ public class UpdateUserWallet implements Command {
             double userWallet = (double) session.getAttribute(SessionAttributeName.WALLET);
 
             double addToWallet = RequestDataExecutor.getDoubleByName(RequestParameterName.AMOUNT, req);
-
+            String message;
+            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             Credit credit = creditService.getUserCredit(userId);
             if (credit != null) {
                 double creditAmountToPay = credit.getAmount() - addToWallet;
@@ -59,16 +63,18 @@ public class UpdateUserWallet implements Command {
 
             if (isUpdated) {
                 session.setAttribute(SessionAttributeName.WALLET, updatedWallet);
-                req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
+                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
+                message=ResourceManager.getString(SUCCESS_MSG, locale);
 
             } else {
-                req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                message=ResourceManager.getString(ERROR_MSG, locale);
             }
 
-
-            Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());
-            command.execute(req, resp);
-        } catch (ServiceException e) {
+            DispatchAssistant.redirectToCommand(req, resp, CommandName.USER_WALLET, message);
+//            Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());
+//            command.execute(req, resp);
+        } catch (ServiceException|ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

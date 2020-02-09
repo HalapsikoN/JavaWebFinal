@@ -37,7 +37,9 @@
 </form>
 <br>
 <br>
-<p class="badge badge-info" style="font-size: 20px; margin-left: 10%">${message}</p>
+<p class="badge badge-info" style="font-size: 20px; margin-left: 10%">${param.get("message")}</p>
+
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/signIn.js"></script>
 </body>
 </html>

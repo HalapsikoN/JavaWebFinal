@@ -21,6 +21,9 @@
 <body>
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
+<div id="center_div">
+    <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
+</div>
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
@@ -73,7 +76,7 @@
     </table>
 </c:if>
 
-
+<c:import url="footer/footer.jsp" charEncoding="utf-8"/>
 <script src="${pageContext.request.contextPath}/jsp/js/submition.js"></script>
 </body>
 </html>

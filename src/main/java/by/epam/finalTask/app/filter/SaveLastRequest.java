@@ -7,10 +7,12 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URL;
 
 public class SaveLastRequest implements Filter {
 
     private static final String LOCALE_REQUEST = "?locale=";
+    private static final String QUESTION_MARK = "?";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -28,7 +30,7 @@ public class SaveLastRequest implements Filter {
 
         if(!requestURL.toString().contains(LOCALE_REQUEST)){
 
-            session.setAttribute(SessionAttributeName.LAST_URL, requestURL.toString());
+            session.setAttribute(SessionAttributeName.LAST_URL, requestURL.toString()+QUESTION_MARK+request.getQueryString());
 
         }
 

@@ -4,10 +4,7 @@ import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
-import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.controller.util.RequestParameterName;
-import by.epam.finalTask.controller.util.SessionAttributeName;
-import by.epam.finalTask.controller.util.SessionHelper;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Bonus;
 import by.epam.finalTask.entity.Playlist;
 import by.epam.finalTask.entity.Track;
@@ -16,10 +13,13 @@ import by.epam.finalTask.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class BuyPlaylist implements Command {
 
@@ -29,12 +29,12 @@ public class BuyPlaylist implements Command {
     private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
     private final static PlaylistService playlistService =ServiceFactory.getInstance().getPlaylistService();
 
-    private final static String SUCCESS_MSG1="Playlist has been bought for (";
-    private final static String SUCCESS_MSG2=" $) with discount amount (";
-    private final static String SUCCESS_MSG3="$)";
-    private final static String ERROR_MSG="Playlist has not been bought";
-    private final static String MONEY_MSG ="Not enough money.";
-    private final static String ALREADY_HAVE ="You have already had all tracks from playlist.";
+    private final static String SUCCESS_MSG1="locale.buyPlaylist.successMsg1";
+    private final static String SUCCESS_MSG2="locale.general.successMsg2";
+    private final static String SUCCESS_MSG3="locale.general.successMsg3";
+    private final static String ERROR_MSG="locale.buyPlaylist.errorMsg";
+    private final static String MONEY_MSG ="locale.general.moneyMsg";
+    private final static String ALREADY_HAVE ="locale.buyPlaylist.alreadyHave";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -58,9 +58,12 @@ public class BuyPlaylist implements Command {
             List<Track> playlistTracks=playlist.getTrackList();
 
             playlistTracks.removeAll(userTrackList);
-
+            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            String message;
             if(playlistTracks.isEmpty()){
-                req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
+               // req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
+                message=ResourceManager.getString(ALREADY_HAVE, locale);
+                req.setAttribute(RequestAttributeName.MESSAGE, message);
             }else{
 
                 double price= TrackLogic.getTrackListPrice(playlistTracks);
@@ -84,19 +87,25 @@ public class BuyPlaylist implements Command {
                     boolean isWalletUpdated=userService.updateUserWallet(userId, wallet);
                     if (isAddedPlaylist && isAddedTracks && isWalletUpdated) {
                         session.setAttribute(SessionAttributeName.WALLET, wallet);
-                        req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
+                        message=ResourceManager.getString(SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3, locale);
+                        req.setAttribute(RequestAttributeName.MESSAGE, message);
+                        //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
                     } else {
-                        req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                        //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+                        message=ResourceManager.getString(ERROR_MSG, locale);
+                        req.setAttribute(RequestAttributeName.MESSAGE, message);
                     }
                 } else {
-                    req.setAttribute(RequestAttributeName.MESSAGE, MONEY_MSG);
+                    //req.setAttribute(RequestAttributeName.MESSAGE, MONEY_MSG);
+                    message=ResourceManager.getString(MONEY_MSG, locale);
+                    req.setAttribute(RequestAttributeName.MESSAGE, message);
                 }
 
             }
 
             Command command= CommandProvider.getInstance().getCommand(CommandName.PLAYLIST_INFO.name());
             command.execute(req, resp);
-
+          //  DispatchAssistant.redirectToCommand(req, resp, CommandName.PLAYLIST_INFO, message);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
