@@ -19,7 +19,7 @@ public class Album {
         this.name = name;
         this.artist = artist;
         this.date = date;
-        this.trackList=new ArrayList<>();
+        this.trackList = new ArrayList<>();
     }
 
     public Album(String name, String artist, Calendar date, List<Track> trackList) {
@@ -108,7 +108,7 @@ public class Album {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", artist='" + artist + '\'' +
-                ", date=" + date.get(Calendar.YEAR)+
+                ", date=" + date.get(Calendar.YEAR) +
                 ", trackList=" + trackList +
                 '}';
     }

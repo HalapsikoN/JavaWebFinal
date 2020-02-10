@@ -37,7 +37,8 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle"><fmt:message key="locale.userProfile.changeUserNameTitle" bundle="${bundle}"/></h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle"><fmt:message
+                            key="locale.userProfile.changeUserNameTitle" bundle="${bundle}"/></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -46,7 +47,8 @@
                     <form id="update_username" action="atrack" method="post">
                         <div class="form-group">
                             <input type="hidden" name="command" value="update_username">
-                            <label for="new_username"><fmt:message key="locale.userProfile.changeUserNameName" bundle="${bundle}"/>:</label>
+                            <label for="new_username"><fmt:message key="locale.userProfile.changeUserNameName"
+                                                                   bundle="${bundle}"/>:</label>
 
                             <input type="text" name="new_username" id="new_username" class="form-control"
                                    placeholder="<fmt:message key="locale.userProfile.changeUserNameNamePlaceholder" bundle="${bundle}"/>">
@@ -57,7 +59,8 @@
                     <button type="button" class="btn btn-primary" onclick="changeUsernameForm('update_username')">
                         <fmt:message key="locale.button.submit" bundle="${bundle}"/>
                     </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>
@@ -77,7 +80,8 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle2"><fmt:message key="locale.userProfile.changePasswordTitle" bundle="${bundle}"/></h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle2"><fmt:message
+                            key="locale.userProfile.changePasswordTitle" bundle="${bundle}"/></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -86,15 +90,19 @@
                     <form id="update_password" action="atrack" method="post">
                         <div class="form-group" style="text-align: left">
                             <input type="hidden" name="command" value="update_password">
-                            <label for="new_password"><fmt:message key="locale.userProfile.changePasswordNewPassword" bundle="${bundle}"/>:</label>
+                            <label for="new_password"><fmt:message key="locale.userProfile.changePasswordNewPassword"
+                                                                   bundle="${bundle}"/>:</label>
 
                             <input type="password" name="new_password" id="new_password" class="form-control"
                                    placeholder="<fmt:message key="locale.userProfile.changePasswordNewPasswordPlaceholder" bundle="${bundle}"/>">
                             <br>
-                            <label for="repeat_new_password"><fmt:message key="locale.userProfile.changePasswordNewPasswordRepeat" bundle="${bundle}"/>:</label>
+                            <label for="repeat_new_password"><fmt:message
+                                    key="locale.userProfile.changePasswordNewPasswordRepeat"
+                                    bundle="${bundle}"/>:</label>
 
                             <input type="password" name="repeat_new_password" id="repeat_new_password"
-                                   class="form-control" placeholder="<fmt:message key="locale.userProfile.changePasswordNewPasswordRepeatPlaceholder" bundle="${bundle}"/>">
+                                   class="form-control"
+                                   placeholder="<fmt:message key="locale.userProfile.changePasswordNewPasswordRepeatPlaceholder" bundle="${bundle}"/>">
                         </div>
                     </form>
                 </div>
@@ -102,7 +110,8 @@
                     <button type="button" class="btn btn-primary" onclick="changePasswordForm('update_password')">
                         <fmt:message key="locale.button.submit" bundle="${bundle}"/>
                     </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

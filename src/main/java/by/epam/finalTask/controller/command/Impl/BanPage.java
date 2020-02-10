@@ -1,6 +1,5 @@
 package by.epam.finalTask.controller.command.Impl;
 
-import by.epam.finalTask.app.filter.BanFilter;
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.util.DispatchAssistant;
@@ -17,13 +16,13 @@ import java.io.IOException;
 
 public class BanPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(BanPage.class);
+    private static final Logger logger = LogManager.getLogger(BanPage.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         try {
 
-            HttpSession session= SessionHelper.getExistingSession(req);
+            HttpSession session = SessionHelper.getExistingSession(req);
 
             SessionHelper.deleteUserFromSession(session);
 

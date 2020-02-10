@@ -22,11 +22,11 @@ import java.util.Locale;
 
 public class AddTrack implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddTrack.class);
+    private static final Logger logger = LogManager.getLogger(AddTrack.class);
 
-    private static final TrackService trackService= ServiceFactory.getInstance().getTrackService();
+    private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
 
-    private static final String ERROR_MSG="locale.addTrack.errorMsg";
+    private static final String ERROR_MSG = "locale.addTrack.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -39,31 +39,28 @@ public class AddTrack implements Command {
                 throw new CommandException("no session");
             }
 
-            String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
-            String artist=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
-            GregorianCalendar calendar=new GregorianCalendar();
-            int year=Integer.valueOf(req.getParameter(RequestParameterName.DATE));
+            String name = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
+            String artist = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
+            GregorianCalendar calendar = new GregorianCalendar();
+            int year = Integer.valueOf(req.getParameter(RequestParameterName.DATE));
             calendar.set(Calendar.YEAR, year);
-            double price=RequestDataExecutor.getDoubleByName(RequestParameterName.PRICE, req);
+            double price = RequestDataExecutor.getDoubleByName(RequestParameterName.PRICE, req);
 
-            Track track=new Track(name, artist, calendar, price);
+            Track track = new Track(name, artist, calendar, price);
 
-            boolean isAdded=trackService.addTrack(track);
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            boolean isAdded = trackService.addTrack(track);
+
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             String message;
-            //Command command;
-            if(isAdded){
-                //command= CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
+
+            if (isAdded) {
+
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE);
-            }else {
-                //command= CommandProvider.getInstance().getCommand(CommandName.ADD_TRACK_PAGE.name());
-               // req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE, message);
             }
-
-            //command.execute(req, resp);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

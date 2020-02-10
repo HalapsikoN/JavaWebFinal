@@ -10,31 +10,31 @@ import java.io.IOException;
 
 public class DispatchAssistant {
 
-    private static final String PATH="?command=";
-    private static final String MESSAGE="&message=";
+    private static final String PATH = "?command=";
+    private static final String MESSAGE = "&message=";
 
-    private DispatchAssistant(){
+    private DispatchAssistant() {
     }
 
     public static void forwardToJsp(HttpServletRequest req, HttpServletResponse resp, String jspPageName) throws ServletException, IOException {
 
-        RequestDispatcher requestDispatcher=req.getRequestDispatcher(jspPageName);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher(jspPageName);
 
         requestDispatcher.forward(req, resp);
     }
 
     public static void redirectToCommand(HttpServletRequest req, HttpServletResponse resp, CommandName commandName) throws ServletException, IOException {
 
-        String url=req.getRequestURL().toString();
+        String url = req.getRequestURL().toString();
 
-        resp.sendRedirect(url+PATH+commandName);
+        resp.sendRedirect(url + PATH + commandName);
     }
 
     public static void redirectToCommand(HttpServletRequest req, HttpServletResponse resp, CommandName commandName, String message) throws ServletException, IOException {
 
-        String url=req.getRequestURL().toString();
+        String url = req.getRequestURL().toString();
 
         System.out.println(message);
-        resp.sendRedirect(url+PATH+commandName+MESSAGE+message);
+        resp.sendRedirect(url + PATH + commandName + MESSAGE + message);
     }
 }

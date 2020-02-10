@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class NoSuchCommand implements Command {
 
-    private static final Logger logger= LogManager.getLogger(NoSuchCommand.class);
+    private static final Logger logger = LogManager.getLogger(NoSuchCommand.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

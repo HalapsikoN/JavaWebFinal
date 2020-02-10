@@ -7,15 +7,10 @@ import by.epam.finalTask.entity.Bonus;
 import by.epam.finalTask.service.BonusService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.validator.BonusDataValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class BonusServiceImpl implements BonusService {
-
-    public static final Logger logger = LogManager.getLogger(BonusServiceImpl.class);
 
     private BonusDAO bonusDAO = DAOFactory.getInstance().getSqlBonusDAO();
 
@@ -23,7 +18,7 @@ public class BonusServiceImpl implements BonusService {
     public boolean addBonus(Bonus bonus) throws ServiceException {
         boolean result;
 
-        if (!BonusDataValidator.isValidBonus(bonus)){
+        if (!BonusDataValidator.isValidBonus(bonus)) {
             throw new ServiceException("Not valid date bonus");
         }
 
@@ -38,15 +33,15 @@ public class BonusServiceImpl implements BonusService {
 
     @Override
     public Bonus getMaxValuableUserBonus(int userId) throws ServiceException {
-        Bonus result=null;
+        Bonus result = null;
 
-        List<Bonus> bonusList=getUserActualBonuses(userId);
-        for (Bonus bonus:bonusList){
-            if(result==null){
-                result=bonus;
-            }else {
-                if(result.getDiscount()<bonus.getDiscount()){
-                    result=bonus;
+        List<Bonus> bonusList = getUserActualBonuses(userId);
+        for (Bonus bonus : bonusList) {
+            if (result == null) {
+                result = bonus;
+            } else {
+                if (result.getDiscount() < bonus.getDiscount()) {
+                    result = bonus;
                 }
             }
         }

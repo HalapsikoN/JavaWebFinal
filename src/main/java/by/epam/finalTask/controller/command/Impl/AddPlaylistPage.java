@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class AddPlaylistPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddPlaylistPage.class);
+    private static final Logger logger = LogManager.getLogger(AddPlaylistPage.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

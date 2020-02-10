@@ -18,8 +18,6 @@ public class ConnectionPool {
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConnectionQueue;
 
-    //private final String dataBasePropertiesLocale = "src/main/resources/db.properties";
-
     private String driverName;
     private String url;
     private String user;

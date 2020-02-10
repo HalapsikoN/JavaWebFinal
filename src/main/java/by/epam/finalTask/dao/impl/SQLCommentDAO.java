@@ -1,13 +1,11 @@
 package by.epam.finalTask.dao.impl;
 
 import by.epam.finalTask.dao.CommentDAO;
-import by.epam.finalTask.dao.DAOFactory;
-import by.epam.finalTask.dao.UserDAO;
-import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
-import by.epam.finalTask.entity.Comment;
-import by.epam.finalTask.dao.pool.ConnectionPoolException;
 import by.epam.finalTask.dao.DAOException;
+import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
 import by.epam.finalTask.dao.pool.ConnectionPool;
+import by.epam.finalTask.dao.pool.ConnectionPoolException;
+import by.epam.finalTask.entity.Comment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,7 +44,7 @@ public class SQLCommentDAO implements CommentDAO {
         prepareStatement(connection, sqlDeleteCommentById);
         prepareStatement(connection, sqlGetAllComments);
 
-        if(connection!=null) {
+        if (connection != null) {
             connectionPool.closeConnection(connection);
         }
     }

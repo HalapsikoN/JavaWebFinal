@@ -1,11 +1,11 @@
 package by.epam.finalTask.dao.impl;
 
+import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.TrackDAO;
 import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
-import by.epam.finalTask.entity.Track;
-import by.epam.finalTask.dao.pool.ConnectionPoolException;
-import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.pool.ConnectionPool;
+import by.epam.finalTask.dao.pool.ConnectionPoolException;
+import by.epam.finalTask.entity.Track;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,7 +48,7 @@ public class SQLTrackDAO implements TrackDAO {
         prepareStatement(connection, sqlGetAllTracks);
         prepareStatement(connection, sqlGetAllTracksWithArtist);
 
-        if(connection!=null) {
+        if (connection != null) {
             connectionPool.closeConnection(connection);
         }
     }

@@ -20,18 +20,18 @@ import java.util.Locale;
 
 public class BuyTrack implements Command {
 
-    private final static Logger logger= LogManager.getLogger(BuyTrack.class);
+    private final static Logger logger = LogManager.getLogger(BuyTrack.class);
 
-    private final static UserService userService= ServiceFactory.getInstance().getUserService();
-    private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
-    private final static TrackService trackService=ServiceFactory.getInstance().getTrackService();
+    private final static UserService userService = ServiceFactory.getInstance().getUserService();
+    private final static BonusService bonusService = ServiceFactory.getInstance().getBonusService();
+    private final static TrackService trackService = ServiceFactory.getInstance().getTrackService();
 
-    private final static String SUCCESS_MSG1="locale.buyTrack.successMsg1";
-    private final static String SUCCESS_MSG2="locale.general.successMsg2";
-    private final static String SUCCESS_MSG3="locale.general.successMsg3";
-    private final static String ERROR_MSG="locale.buyTrack.errorMsg";
-    private final static String MONEY_MSG ="locale.general.moneyMsg";
-    private final static String ALREADY_HAVE ="locale.buyTrack.alreadyHave";
+    private final static String SUCCESS_MSG1 = "locale.buyTrack.successMsg1";
+    private final static String SUCCESS_MSG2 = "locale.general.successMsg2";
+    private final static String SUCCESS_MSG3 = "locale.general.successMsg3";
+    private final static String ERROR_MSG = "locale.buyTrack.errorMsg";
+    private final static String MONEY_MSG = "locale.general.moneyMsg";
+    private final static String ALREADY_HAVE = "locale.buyTrack.alreadyHave";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -44,19 +44,18 @@ public class BuyTrack implements Command {
             }
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
-            double wallet=(double) session.getAttribute(SessionAttributeName.WALLET);
+            double wallet = (double) session.getAttribute(SessionAttributeName.WALLET);
             int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
-            List<Track> trackList=userService.getUserTracks(userId);
+            List<Track> trackList = userService.getUserTracks(userId);
 
-            Track track=trackService.getTrack(trackId);
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            Track track = trackService.getTrack(trackId);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             String message;
-            if (trackList.contains(track)){
-                //req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
-                message=ResourceManager.getString(ALREADY_HAVE, locale);
+            if (trackList.contains(track)) {
+                message = ResourceManager.getString(ALREADY_HAVE, locale);
                 req.setAttribute(RequestAttributeName.MESSAGE, message);
-            }else {
+            } else {
                 double price = track.getPrice();
 
                 Bonus bonus = bonusService.getMaxValuableUserBonus(userId);
@@ -71,28 +70,20 @@ public class BuyTrack implements Command {
                     wallet -= price;
                     if (userService.addTrackToUser(userId, trackId) && userService.updateUserWallet(userId, wallet)) {
                         session.setAttribute(SessionAttributeName.WALLET, wallet);
-                        message=ResourceManager.getString(SUCCESS_MSG1, locale)+ price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale) ;
+                        message = ResourceManager.getString(SUCCESS_MSG1, locale) + price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale);
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
-                        //req.setAttribute(RequestAttributeName.MESSAGE, resourceManager.getString("locale.buyTrack.successMsg1", locale) + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
                     } else {
-                        //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                        message=ResourceManager.getString(ERROR_MSG, locale);
+                        message = ResourceManager.getString(ERROR_MSG, locale);
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
                     }
                 } else {
-                    //req.setAttribute(RequestAttributeName.MESSAGE, MONEY_MSG);
-                    message=ResourceManager.getString(MONEY_MSG, locale);
+                    message = ResourceManager.getString(MONEY_MSG, locale);
                     req.setAttribute(RequestAttributeName.MESSAGE, message);
                 }
 
             }
-
-//            Command command= CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
-//            command.execute(req, resp);
-
             DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE, message);
-
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

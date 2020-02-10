@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AddAlbumPage implements Command {
-    private static final Logger logger= LogManager.getLogger(AddTrackPage.class);
+    private static final Logger logger = LogManager.getLogger(AddTrackPage.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EditPlaylistPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(EditPlaylistPage.class);
+    private static final Logger logger = LogManager.getLogger(EditPlaylistPage.class);
 
     private static final PlaylistService playlistService = ServiceFactory.getInstance().getPlaylistService();
     private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
@@ -30,13 +30,13 @@ public class EditPlaylistPage implements Command {
 
         try {
 
-            int playlistId= RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
+            int playlistId = RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
 
-            Playlist playlist= playlistService.getPlaylist(playlistId);
+            Playlist playlist = playlistService.getPlaylist(playlistId);
 
             req.setAttribute(RequestAttributeName.PLAYLIST, playlist);
 
-            List<Track> trackList=trackService.getAllTracks();
+            List<Track> trackList = trackService.getAllTracks();
 
             req.setAttribute(RequestAttributeName.TRACK_LIST, trackList);
 

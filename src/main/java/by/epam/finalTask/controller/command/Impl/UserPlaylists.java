@@ -21,7 +21,7 @@ public class UserPlaylists implements Command {
 
     private final static Logger logger = LogManager.getLogger(UserAlbums.class);
 
-    private final static UserService userService= ServiceFactory.getInstance().getUserService();
+    private final static UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

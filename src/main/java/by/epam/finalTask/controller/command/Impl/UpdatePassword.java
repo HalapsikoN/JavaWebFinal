@@ -19,12 +19,12 @@ import java.util.Locale;
 
 public class UpdatePassword implements Command {
 
-    private static final Logger logger= LogManager.getLogger(UpdateUsername.class);
+    private static final Logger logger = LogManager.getLogger(UpdateUsername.class);
 
-    private static final UserService userService= ServiceFactory.getInstance().getUserService();
+    private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
-    private static final String SUCCESS_MSG="locale.update.successMsg";
-    private static final String ERROR_MSG="locale.update.errorMsg";
+    private static final String SUCCESS_MSG = "locale.update.successMsg";
+    private static final String ERROR_MSG = "locale.update.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -38,23 +38,19 @@ public class UpdatePassword implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-            String newPassword= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NEW_PASSWORD);
+            String newPassword = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NEW_PASSWORD);
 
-            boolean isUpdated=userService.updateUserPassword(userId, newPassword);
+            boolean isUpdated = userService.updateUserPassword(userId, newPassword);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-            if(isUpdated){
-               // req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
-            }else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            if (isUpdated) {
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
 
-//            Command command = CommandProvider.getInstance().getCommand(CommandName.USER_PROFILE.name());
-//            command.execute(req, resp);
             DispatchAssistant.redirectToCommand(req, resp, CommandName.USER_PROFILE, message);
-        }catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

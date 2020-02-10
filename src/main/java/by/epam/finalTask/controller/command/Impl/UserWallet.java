@@ -18,11 +18,11 @@ import java.util.List;
 
 public class UserWallet implements Command {
 
-    private final static Logger logger= LogManager.getLogger(UserWallet.class);
+    private final static Logger logger = LogManager.getLogger(UserWallet.class);
 
-    private final static UserService userService= ServiceFactory.getInstance().getUserService();
-    private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
-    private final static CreditService creditService=ServiceFactory.getInstance().getCreditService();
+    private final static UserService userService = ServiceFactory.getInstance().getUserService();
+    private final static BonusService bonusService = ServiceFactory.getInstance().getBonusService();
+    private final static CreditService creditService = ServiceFactory.getInstance().getCreditService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -36,11 +36,11 @@ public class UserWallet implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-            List<Bonus> bonusList =bonusService.getUserBonuses(userId);
+            List<Bonus> bonusList = bonusService.getUserBonuses(userId);
 
             req.setAttribute(RequestAttributeName.BONUS_LIST, bonusList);
 
-            Credit credit=creditService.getUserCredit(userId);
+            Credit credit = creditService.getUserCredit(userId);
 
             req.setAttribute(RequestAttributeName.CREDIT, credit);
 

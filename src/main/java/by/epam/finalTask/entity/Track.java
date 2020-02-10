@@ -1,9 +1,7 @@
 package by.epam.finalTask.entity;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Objects;
 
 public class Track {
 
@@ -20,7 +18,7 @@ public class Track {
         this.name = name;
         this.artist = artist;
         this.date = new GregorianCalendar();
-        this.date.set(Calendar.YEAR,date);
+        this.date.set(Calendar.YEAR, date);
         this.price = price;
     }
 
@@ -36,7 +34,7 @@ public class Track {
         this.name = name;
         this.artist = artist;
         this.date = new GregorianCalendar();
-        this.date.set(Calendar.YEAR,date);
+        this.date.set(Calendar.YEAR, date);
         this.price = price;
     }
 

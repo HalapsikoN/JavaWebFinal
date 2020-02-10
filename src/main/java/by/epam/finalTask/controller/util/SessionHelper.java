@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 
 public class SessionHelper {
 
-    private SessionHelper(){
+    private SessionHelper() {
     }
 
     public static HttpSession getExistingSession(HttpServletRequest request) {
@@ -26,7 +26,7 @@ public class SessionHelper {
         session.setAttribute(SessionAttributeName.WALLET, user.getWallet());
     }
 
-    public static void deleteUserFromSession(HttpSession session){
+    public static void deleteUserFromSession(HttpSession session) {
         session.removeAttribute(SessionAttributeName.ID);
         session.removeAttribute(SessionAttributeName.LOGIN);
         session.removeAttribute(SessionAttributeName.USERNAME);

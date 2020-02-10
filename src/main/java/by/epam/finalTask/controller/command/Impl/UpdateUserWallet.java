@@ -3,7 +3,6 @@ package by.epam.finalTask.controller.command.Impl;
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
-import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Credit;
 import by.epam.finalTask.service.CreditService;
@@ -44,17 +43,17 @@ public class UpdateUserWallet implements Command {
 
             double addToWallet = RequestDataExecutor.getDoubleByName(RequestParameterName.AMOUNT, req);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             Credit credit = creditService.getUserCredit(userId);
             if (credit != null) {
                 double creditAmountToPay = credit.getAmount() - addToWallet;
 
                 if (creditAmountToPay > 0) {
                     creditService.updateCreditAmount(credit.getId(), creditAmountToPay);
-                    addToWallet=0;
+                    addToWallet = 0;
                 } else {
                     creditService.deleteCredit(credit.getId());
-                    addToWallet-=credit.getAmount();
+                    addToWallet -= credit.getAmount();
                 }
             }
             double updatedWallet = userWallet + addToWallet;
@@ -63,18 +62,14 @@ public class UpdateUserWallet implements Command {
 
             if (isUpdated) {
                 session.setAttribute(SessionAttributeName.WALLET, updatedWallet);
-                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFULLY_UPDATE);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
 
             } else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
 
             DispatchAssistant.redirectToCommand(req, resp, CommandName.USER_WALLET, message);
-//            Command command = CommandProvider.getInstance().getCommand(CommandName.USER_WALLET.name());
-//            command.execute(req, resp);
-        } catch (ServiceException|ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

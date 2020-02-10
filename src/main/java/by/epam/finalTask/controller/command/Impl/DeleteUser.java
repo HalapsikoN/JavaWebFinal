@@ -24,8 +24,8 @@ public class DeleteUser implements Command {
 
     private final static UserService userService = ServiceFactory.getInstance().getUserService();
 
-    private final static String SUCCESS_MSG="locale.deleteUser.successMsg";
-    private final static String ERROR_MSG="locale.deleteUser.errorMsg";
+    private final static String SUCCESS_MSG = "locale.deleteUser.successMsg";
+    private final static String ERROR_MSG = "locale.deleteUser.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -38,30 +38,26 @@ public class DeleteUser implements Command {
                 throw new CommandException("no session");
             }
 
-            int userId=RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
+            int userId = RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
-            boolean isDeleted=userService.deleteUser(userId);
+            boolean isDeleted = userService.deleteUser(userId);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-            if(isDeleted){
-                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFUL_MSG);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
-            }else {
-               // req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            if (isDeleted) {
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
 
-            int id=(int) session.getAttribute(SessionAttributeName.ID);
+            int id = (int) session.getAttribute(SessionAttributeName.ID);
 
-            if(id==userId && isDeleted){
-                Command command= CommandProvider.getInstance().getCommand(CommandName.SIGN_OUT.name());
+            if (id == userId && isDeleted) {
+                Command command = CommandProvider.getInstance().getCommand(CommandName.SIGN_OUT.name());
                 command.execute(req, resp);
-            }else {
-//                Command command = CommandProvider.getInstance().getCommand(CommandName.USER_LIST.name());
-//                command.execute(req, resp);
+            } else {
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.USER_LIST, message);
             }
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

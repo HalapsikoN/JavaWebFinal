@@ -29,8 +29,10 @@
         <br>
         <div class="alert alert-danger" role="alert">
             <p><fmt:message key="locale.userWallet.haveCredit" bundle="${bundle}"/>:</p>
-            <p><fmt:message key="locale.userWallet.amountToPay" bundle="${bundle}"/>: <strong>${credit.amount}</strong></p>
-            <p><fmt:message key="locale.userWallet.endDate" bundle="${bundle}"/>: <strong><outputTag:date format="dd_mm_yyyy" item="${credit.date}"/></strong></p>
+            <p><fmt:message key="locale.userWallet.amountToPay" bundle="${bundle}"/>: <strong>${credit.amount}</strong>
+            </p>
+            <p><fmt:message key="locale.userWallet.endDate" bundle="${bundle}"/>: <strong><outputTag:date
+                    format="dd_mm_yyyy" item="${credit.date}"/></strong></p>
         </div>
     </c:if>
     <br>
@@ -46,11 +48,13 @@
     </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalCenter1" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle1" aria-hidden="true">
+    <div class="modal fade" id="modalCenter1" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle1"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle1"><fmt:message key="locale.userWallet.replenishBalanceTitle" bundle="${bundle}"/></h5>
+                    <h5 class="modal-title" id="ModalCenterTitle1"><fmt:message
+                            key="locale.userWallet.replenishBalanceTitle" bundle="${bundle}"/></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,7 +66,10 @@
                                 <span class="input-group-text">$</span>
                             </div>
                             <input type="hidden" name="command" value="add_user_wallet">
-                            <input type="number" name="amount" id="amount" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="<fmt:message key="locale.userWallet.replenishBalancePlaceholder" bundle="${bundle}"/>" required min="1">
+                            <input type="number" name="amount" id="amount" class="form-control"
+                                   aria-label="Amount (to the nearest dollar)"
+                                   placeholder="<fmt:message key="locale.userWallet.replenishBalancePlaceholder" bundle="${bundle}"/>"
+                                   required min="1">
                             <div class="input-group-append">
                                 <span class="input-group-text">.00</span>
                             </div>
@@ -70,17 +77,21 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="replenishBalanceFormById('adding_balance')"><fmt:message key="locale.button.submit" bundle="${bundle}"/></button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-primary" onclick="replenishBalanceFormById('adding_balance')">
+                        <fmt:message key="locale.button.submit" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalCenter2" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle2" aria-hidden="true">
+    <div class="modal fade" id="modalCenter2" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle2"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle2"><fmt:message key="locale.userWallet.promisedPaymentTitle" bundle="${bundle}"/></h5>
+                    <h5 class="modal-title" id="ModalCenterTitle2"><fmt:message
+                            key="locale.userWallet.promisedPaymentTitle" bundle="${bundle}"/></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -92,14 +103,20 @@
                                 <span class="input-group-text">$</span>
                             </div>
                             <input type="hidden" name="command" value="add_credit">
-                            <input type="number" name="amount" id="credit" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="<fmt:message key="locale.userWallet.promisedPaymentPlaceholderAmount" bundle="${bundle}"/>" required min="1">
-                            <input type="date" name="date" id="date" class="form-control" aria-label="End date if payment">
+                            <input type="number" name="amount" id="credit" class="form-control"
+                                   aria-label="Amount (to the nearest dollar)"
+                                   placeholder="<fmt:message key="locale.userWallet.promisedPaymentPlaceholderAmount" bundle="${bundle}"/>"
+                                   required min="1">
+                            <input type="date" name="date" id="date" class="form-control"
+                                   aria-label="End date if payment">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="addCreditFormById('add_credit')"><fmt:message key="locale.button.submit" bundle="${bundle}"/></button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-primary" onclick="addCreditFormById('add_credit')"><fmt:message
+                            key="locale.button.submit" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

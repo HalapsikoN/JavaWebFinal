@@ -7,14 +7,14 @@ import java.util.List;
 
 public class PlaylistLogic {
 
-    private PlaylistLogic(){
+    private PlaylistLogic() {
     }
 
-    public static double getAlbumPrice(Playlist playlist){
-        List<Track> trackList=playlist.getTrackList();
-        double result=0;
-        for(Track track:trackList){
-            result+=track.getPrice();
+    public static double getAlbumPrice(Playlist playlist) {
+        List<Track> trackList = playlist.getTrackList();
+        double result = 0;
+        for (Track track : trackList) {
+            result += track.getPrice();
         }
         return result;
     }

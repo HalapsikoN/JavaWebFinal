@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EditAlbumPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddTrackPage.class);
+    private static final Logger logger = LogManager.getLogger(AddTrackPage.class);
 
     private static final AlbumService albumService = ServiceFactory.getInstance().getAlbumService();
     private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
@@ -30,13 +30,13 @@ public class EditAlbumPage implements Command {
 
         try {
 
-            int albumId= RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
+            int albumId = RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
 
-            Album album= albumService.getAlbum(albumId);
+            Album album = albumService.getAlbum(albumId);
 
             req.setAttribute(RequestAttributeName.ALBUM, album);
 
-            List<Track> trackList=trackService.getTracksWithArtist(album.getArtist());
+            List<Track> trackList = trackService.getTracksWithArtist(album.getArtist());
 
             req.setAttribute(RequestAttributeName.TRACK_LIST, trackList);
 

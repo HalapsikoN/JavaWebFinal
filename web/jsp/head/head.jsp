@@ -20,6 +20,5 @@
 <link href="${pageContext.request.contextPath}/jsp/css/head.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
-<!--iconky zapixnyt'-->
-<!--Bootstrap js-->
+
 

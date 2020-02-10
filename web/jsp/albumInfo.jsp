@@ -17,8 +17,6 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 </head>
 <body>
@@ -35,7 +33,9 @@
     <br>
     <p><fmt:message key="locale.albumInfo.name" bundle="${bundle}"/>: <strong>${album.name}</strong></p>
     <p><fmt:message key="locale.albumInfo.artist" bundle="${bundle}"/>: <strong>${album.artist}</strong></p>
-    <p><fmt:message key="locale.albumInfo.date" bundle="${bundle}"/>: <strong><outputTag:date format="yyyy" item="${album.date}"/></strong></p>
+    <p><fmt:message key="locale.albumInfo.date" bundle="${bundle}"/>: <strong><outputTag:date format="yyyy"
+                                                                                              item="${album.date}"/></strong>
+    </p>
     <p><fmt:message key="locale.albumInfo.price" bundle="${bundle}"/>: <strong>${albumPrice}</strong></p>
     <c:if test="${sessionScope.role eq 'USER'}">
         <form id="form${album.id}" method="post" action="atrack">
@@ -91,11 +91,13 @@
                             <div class="form-group">
                                 <input type="hidden" name="command" value="add_comment">
                                 <input type="hidden" name="track_id" value="${song.id}">
-                                <label for="textComment${song.id}"><fmt:message key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
+                                <label for="textComment${song.id}"><fmt:message key="locale.general.tableAddYourComment"
+                                                                                bundle="${bundle}"/></label>
                                 <textarea class="form-control" name="text" id="textComment${song.id}"
                                           rows="1" required></textarea>
                                 <br>
-                                <button type="submit" class="btn btn-primary"><fmt:message key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
+                                <button type="submit" class="btn btn-primary"><fmt:message
+                                        key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
                             </div>
                         </form>
                     </c:if>

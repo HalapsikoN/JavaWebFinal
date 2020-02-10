@@ -21,12 +21,12 @@ import java.util.Locale;
 
 public class EditPlaylist implements Command {
 
-    private static final Logger logger= LogManager.getLogger(EditPlaylist.class);
+    private static final Logger logger = LogManager.getLogger(EditPlaylist.class);
 
     private static final PlaylistService playlistService = ServiceFactory.getInstance().getPlaylistService();
 
-    private static final String SUCCESS_MSG="locale.editPlaylist.successMsg";
-    private static final String ERROR_MSG="locale.editPlaylist.errorMsg";
+    private static final String SUCCESS_MSG = "locale.editPlaylist.successMsg";
+    private static final String ERROR_MSG = "locale.editPlaylist.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -39,26 +39,22 @@ public class EditPlaylist implements Command {
                 throw new CommandException("no session");
             }
 
-            int playlistId=RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
-            String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
-            GregorianCalendar calendar=new GregorianCalendar();
+            int playlistId = RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
+            String name = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
+            GregorianCalendar calendar = new GregorianCalendar();
 
-            Playlist playlist=new Playlist(name, calendar);
+            Playlist playlist = new Playlist(name, calendar);
 
-            boolean isUpdated= playlistService.updatePlaylist(playlistId, playlist);
+            boolean isUpdated = playlistService.updatePlaylist(playlistId, playlist);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-            if(isUpdated){
-                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
-            }else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            if (isUpdated) {
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
-//            Command command= CommandProvider.getInstance().getCommand(CommandName.EDIT_PLAYLIST_PAGE.name());
-//            command.execute(req, resp);
             DispatchAssistant.redirectToCommand(req, resp, CommandName.PLAYLISTS_PAGE, message);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

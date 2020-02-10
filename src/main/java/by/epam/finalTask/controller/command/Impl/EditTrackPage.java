@@ -17,18 +17,18 @@ import java.io.IOException;
 
 public class EditTrackPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(EditTrackPage.class);
+    private static final Logger logger = LogManager.getLogger(EditTrackPage.class);
 
-    private static final TrackService trackService= ServiceFactory.getInstance().getTrackService();
+    private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
 
-            int trackId= RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
+            int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
-            Track track=trackService.getTrack(trackId);
+            Track track = trackService.getTrack(trackId);
 
             req.setAttribute(RequestAttributeName.TRACK, track);
 

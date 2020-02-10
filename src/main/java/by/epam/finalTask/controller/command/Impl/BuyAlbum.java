@@ -3,7 +3,6 @@ package by.epam.finalTask.controller.command.Impl;
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
-import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Album;
 import by.epam.finalTask.entity.Bonus;
@@ -23,18 +22,18 @@ import java.util.Locale;
 
 public class BuyAlbum implements Command {
 
-    private final static Logger logger= LogManager.getLogger(BuyAlbum.class);
+    private final static Logger logger = LogManager.getLogger(BuyAlbum.class);
 
-    private final static UserService userService= ServiceFactory.getInstance().getUserService();
-    private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
-    private final static AlbumService albumService=ServiceFactory.getInstance().getAlbumService();
+    private final static UserService userService = ServiceFactory.getInstance().getUserService();
+    private final static BonusService bonusService = ServiceFactory.getInstance().getBonusService();
+    private final static AlbumService albumService = ServiceFactory.getInstance().getAlbumService();
 
-    private final static String SUCCESS_MSG1="locale.buyAlbum.successMsg1";
-    private final static String SUCCESS_MSG2= "locale.general.successMsg2";
-    private final static String SUCCESS_MSG3="locale.general.successMsg3";
-    private final static String ERROR_MSG="locale.buyAlbum.errorMsg";
-    private final static String MONEY_MSG ="locale.general.moneyMsg";
-    private final static String ALREADY_HAVE ="locale.buyAlbum.alreadyHave";
+    private final static String SUCCESS_MSG1 = "locale.buyAlbum.successMsg1";
+    private final static String SUCCESS_MSG2 = "locale.general.successMsg2";
+    private final static String SUCCESS_MSG3 = "locale.general.successMsg3";
+    private final static String ERROR_MSG = "locale.buyAlbum.errorMsg";
+    private final static String MONEY_MSG = "locale.general.moneyMsg";
+    private final static String ALREADY_HAVE = "locale.buyAlbum.alreadyHave";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -48,25 +47,24 @@ public class BuyAlbum implements Command {
             }
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
-            double wallet=(double) session.getAttribute(SessionAttributeName.WALLET);
-            int albumId=RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
+            double wallet = (double) session.getAttribute(SessionAttributeName.WALLET);
+            int albumId = RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
 
-            List<Track> userTrackList=userService.getUserTracks(userId);
+            List<Track> userTrackList = userService.getUserTracks(userId);
 
-            Album album=albumService.getAlbum(albumId);
+            Album album = albumService.getAlbum(albumId);
 
-            List<Track> albumTracks=album.getTrackList();
+            List<Track> albumTracks = album.getTrackList();
 
             albumTracks.removeAll(userTrackList);
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             String message;
-            if(albumTracks.isEmpty()){
-                //req.setAttribute(RequestAttributeName.MESSAGE, ALREADY_HAVE);
-                message=ResourceManager.getString(ALREADY_HAVE, locale);
+            if (albumTracks.isEmpty()) {
+                message = ResourceManager.getString(ALREADY_HAVE, locale);
                 req.setAttribute(RequestAttributeName.MESSAGE, message);
-            }else{
+            } else {
 
-                double price= TrackLogic.getTrackListPrice(albumTracks);
+                double price = TrackLogic.getTrackListPrice(albumTracks);
 
                 Bonus bonus = bonusService.getMaxValuableUserBonus(userId);
                 double discountAmount = 0;
@@ -77,34 +75,28 @@ public class BuyAlbum implements Command {
 
                 if (wallet > price) {
                     wallet -= price;
-                    boolean isAddedAlbum=userService.addAlbumToUser(userId, albumId);
-                    boolean isAddedTracks=true;
-                    for(Track track:albumTracks){
-                        if(!userService.addTrackToUser(userId, track.getId())){
-                            isAddedTracks=false;
+                    boolean isAddedAlbum = userService.addAlbumToUser(userId, albumId);
+                    boolean isAddedTracks = true;
+                    for (Track track : albumTracks) {
+                        if (!userService.addTrackToUser(userId, track.getId())) {
+                            isAddedTracks = false;
                         }
                     }
-                    boolean isWalletUpdated=userService.updateUserWallet(userId, wallet);
+                    boolean isWalletUpdated = userService.updateUserWallet(userId, wallet);
                     if (isAddedAlbum && isAddedTracks && isWalletUpdated) {
                         session.setAttribute(SessionAttributeName.WALLET, wallet);
-                        message=ResourceManager.getString(SUCCESS_MSG1, locale)+ price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale);
-                        //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
+                        message = ResourceManager.getString(SUCCESS_MSG1, locale) + price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale);
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
                     } else {
-                        //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                        message=ResourceManager.getString(ERROR_MSG, locale);
+                        message = ResourceManager.getString(ERROR_MSG, locale);
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
                     }
                 } else {
-                    //req.setAttribute(RequestAttributeName.MESSAGE, MONEY_MSG);
-                    message=ResourceManager.getString(MONEY_MSG, locale);
+                    message = ResourceManager.getString(MONEY_MSG, locale);
                     req.setAttribute(RequestAttributeName.MESSAGE, message);
                 }
 
             }
-
-            //Command command= CommandProvider.getInstance().getCommand(CommandName.ALBUMS_PAGE.name());
-            //command.execute(req, resp);
 
             DispatchAssistant.redirectToCommand(req, resp, CommandName.ALBUMS_PAGE, message);
         } catch (ServiceException | IOException | ServletException e) {

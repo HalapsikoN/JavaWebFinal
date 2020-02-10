@@ -37,22 +37,22 @@
     <tbody>
     <c:forEach var="user" items="${userList}">
 
-            <tr>
-                <td>${user.name}</td>
-                <td>${user.login}</td>
-                <td>${user.role}</td>
-                <td>${user.wallet}</td>
-                <td>
-                    <form id="form${user.id}" method="post" action="atrack">
-                        <input type="hidden" name="command" value="edit_user_page">
-                        <input type="hidden" name="user_id" value="${user.id}">
-                        <a href="#">
-                            <img src="${pageContext.request.contextPath}/jsp/icons/editUser.png"
-                                 onclick="submitById('form${user.id}')">
-                        </a>
-                    </form>
-                </td>
-            </tr>
+        <tr>
+            <td>${user.name}</td>
+            <td>${user.login}</td>
+            <td>${user.role}</td>
+            <td>${user.wallet}</td>
+            <td>
+                <form id="form${user.id}" method="post" action="atrack">
+                    <input type="hidden" name="command" value="edit_user_page">
+                    <input type="hidden" name="user_id" value="${user.id}">
+                    <a href="#">
+                        <img src="${pageContext.request.contextPath}/jsp/icons/editUser.png"
+                             onclick="submitById('form${user.id}')">
+                    </a>
+                </form>
+            </td>
+        </tr>
 
     </c:forEach>
     </tbody>

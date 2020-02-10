@@ -1,10 +1,10 @@
 package by.epam.finalTask.dao.impl.util;
 
+import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.DAOFactory;
 import by.epam.finalTask.dao.impl.util.auxiliary.*;
 import by.epam.finalTask.entity.*;
 import by.epam.finalTask.entity.util.Role;
-import by.epam.finalTask.dao.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,14 +17,14 @@ import java.util.List;
 
 public class ConverterFromResultSet {
 
-    private static final Logger logger= LogManager.getLogger(ConverterFromResultSet.class);
+    private static final Logger logger = LogManager.getLogger(ConverterFromResultSet.class);
 
-    private static final ConverterFromResultSet instance =new ConverterFromResultSet();
+    private static final ConverterFromResultSet instance = new ConverterFromResultSet();
 
-    private ConverterFromResultSet(){
+    private ConverterFromResultSet() {
     }
 
-    public static ConverterFromResultSet getInstance(){
+    public static ConverterFromResultSet getInstance() {
         return instance;
     }
 
@@ -33,13 +33,13 @@ public class ConverterFromResultSet {
 
 
         try {
-                int id = resultSet.getInt(UserFields.ID.name());
-                String name = resultSet.getString(UserFields.NAME.name());
-                String login = resultSet.getString(UserFields.LOGIN.name());
-                Role role = Role.valueOf(resultSet.getString(UserFields.ROLE.name()).toUpperCase());
-                double wallet = resultSet.getDouble(UserFields.WALLET.name());
+            int id = resultSet.getInt(UserFields.ID.name());
+            String name = resultSet.getString(UserFields.NAME.name());
+            String login = resultSet.getString(UserFields.LOGIN.name());
+            Role role = Role.valueOf(resultSet.getString(UserFields.ROLE.name()).toUpperCase());
+            double wallet = resultSet.getDouble(UserFields.WALLET.name());
 
-                user = new User(id, name, login, role, wallet);
+            user = new User(id, name, login, role, wallet);
         } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
@@ -49,18 +49,18 @@ public class ConverterFromResultSet {
     }
 
     public Track getTrackFromResultSet(ResultSet resultSet) throws DAOException {
-        Track track=null;
+        Track track = null;
 
         try {
-                int id = resultSet.getInt(TrackFields.ID.name());
-                String name = resultSet.getString(TrackFields.NAME.name());
-                String artist = resultSet.getString(TrackFields.ARTIST.name());
-                java.sql.Date dateSql = resultSet.getDate(TrackFields.DATE.name());
-                Calendar date = new GregorianCalendar();
-                date.setTimeInMillis(dateSql.getTime());
-                double price = resultSet.getDouble(TrackFields.PRICE.name());
+            int id = resultSet.getInt(TrackFields.ID.name());
+            String name = resultSet.getString(TrackFields.NAME.name());
+            String artist = resultSet.getString(TrackFields.ARTIST.name());
+            java.sql.Date dateSql = resultSet.getDate(TrackFields.DATE.name());
+            Calendar date = new GregorianCalendar();
+            date.setTimeInMillis(dateSql.getTime());
+            double price = resultSet.getDouble(TrackFields.PRICE.name());
 
-                track = new Track(id, name, artist, date, price);
+            track = new Track(id, name, artist, date, price);
 
         } catch (SQLException e) {
             logger.error(e);
@@ -71,7 +71,7 @@ public class ConverterFromResultSet {
     }
 
     public Album getEmptyAlbumFromResultSet(ResultSet resultSet) throws DAOException {
-        Album album=null;
+        Album album = null;
 
         try {
             int id = resultSet.getInt(AlbomFields.ID.name());
@@ -80,7 +80,7 @@ public class ConverterFromResultSet {
             java.sql.Date dateSql = resultSet.getDate(AlbomFields.DATE.name());
             Calendar date = new GregorianCalendar();
             date.setTimeInMillis(dateSql.getTime());
-            List<Track> trackList=new ArrayList<>();
+            List<Track> trackList = new ArrayList<>();
 
             album = new Album(id, name, artist, date, trackList);
 
@@ -93,7 +93,7 @@ public class ConverterFromResultSet {
     }
 
     public Playlist getEmptyPlaylistFromResultSet(ResultSet resultSet) throws DAOException {
-        Playlist playlist=null;
+        Playlist playlist = null;
 
         try {
             int id = resultSet.getInt(PlaylistFields.ID.name());
@@ -101,7 +101,7 @@ public class ConverterFromResultSet {
             java.sql.Date dateSql = resultSet.getDate(PlaylistFields.DATE.name());
             Calendar date = new GregorianCalendar();
             date.setTimeInMillis(dateSql.getTime());
-            List<Track> trackList=new ArrayList<>();
+            List<Track> trackList = new ArrayList<>();
 
             playlist = new Playlist(id, name, date, trackList);
 
@@ -114,7 +114,7 @@ public class ConverterFromResultSet {
     }
 
     public Bonus getBonusFromResultSet(ResultSet resultSet) throws DAOException {
-        Bonus bonus=null;
+        Bonus bonus = null;
 
         try {
             int id = resultSet.getInt(BonusFields.ID.name());
@@ -126,7 +126,7 @@ public class ConverterFromResultSet {
             dateSql = resultSet.getDate(BonusFields.END_DATE.name());
             Calendar endDate = new GregorianCalendar();
             endDate.setTimeInMillis(dateSql.getTime());
-            int userId=resultSet.getInt(BonusFields.USER_ID.name());
+            int userId = resultSet.getInt(BonusFields.USER_ID.name());
 
             bonus = new Bonus(id, name, discount, startDate, endDate, userId);
 
@@ -139,17 +139,17 @@ public class ConverterFromResultSet {
     }
 
     public Comment getCommentFromResultSet(ResultSet resultSet) throws DAOException {
-        Comment comment=null;
+        Comment comment = null;
 
         try {
             int id = resultSet.getInt(CommentFields.ID.name());
             int userId = resultSet.getInt(CommentFields.USER_ID.name());
-            java.sql.Timestamp time=resultSet.getTimestamp(CommentFields.DATE.name());
+            java.sql.Timestamp time = resultSet.getTimestamp(CommentFields.DATE.name());
             Calendar date = new GregorianCalendar();
             date.setTimeInMillis(time.getTime());
             int trackId = resultSet.getInt(CommentFields.TRACK_ID.name());
             String text = resultSet.getString(CommentFields.TEXT.name());
-            String username= DAOFactory.getInstance().getSqlUserDAO().getUserById(userId).getName();
+            String username = DAOFactory.getInstance().getSqlUserDAO().getUserById(userId).getName();
 
             comment = new Comment(id, userId, username, date, trackId, text);
 
@@ -161,16 +161,16 @@ public class ConverterFromResultSet {
         return comment;
     }
 
-    public Credit getCreidtFromResultSet(ResultSet resultSet) throws DAOException {
-        Credit credit=null;
+    public Credit getCreditFromResultSet(ResultSet resultSet) throws DAOException {
+        Credit credit = null;
 
         try {
             int id = resultSet.getInt(CommentFields.ID.name());
             int userId = resultSet.getInt(CreditFields.USER_ID.name());
-            java.sql.Date sqlDate=resultSet.getDate(CreditFields.DATE_END.name());
+            java.sql.Date sqlDate = resultSet.getDate(CreditFields.DATE_END.name());
             Calendar date = new GregorianCalendar();
             date.setTimeInMillis(sqlDate.getTime());
-            double amount=resultSet.getDouble(CreditFields.CREDIT.name());
+            double amount = resultSet.getDouble(CreditFields.CREDIT.name());
 
             credit = new Credit(id, amount, date, userId);
 

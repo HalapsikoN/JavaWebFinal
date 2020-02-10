@@ -4,8 +4,6 @@ import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.util.DispatchAssistant;
 import by.epam.finalTask.controller.util.JspPageName;
-import by.epam.finalTask.service.ServiceFactory;
-import by.epam.finalTask.service.TrackService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +14,7 @@ import java.io.IOException;
 
 public class AddTrackPage implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddTrackPage.class);
+    private static final Logger logger = LogManager.getLogger(AddTrackPage.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

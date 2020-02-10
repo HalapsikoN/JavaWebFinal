@@ -7,7 +7,6 @@ import by.epam.finalTask.controller.util.SessionHelper;
 import by.epam.finalTask.entity.util.Role;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,11 +17,11 @@ import java.util.Set;
 
 public class CommandFilter implements Filter {
 
-    private final String REDIRECT_PATH="/atrack";
+    private final String REDIRECT_PATH = "/atrack";
 
-    private Set<String> userCommand= new HashSet<>();
-    private Set<String> adminCommand= new HashSet<>();
-    private Set<String> unregisterCommand= new HashSet<>();
+    private Set<String> userCommand = new HashSet<>();
+    private Set<String> adminCommand = new HashSet<>();
+    private Set<String> unregisterCommand = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -92,22 +91,22 @@ public class CommandFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        HttpServletRequest request= (HttpServletRequest) servletRequest;
-        HttpServletResponse response= (HttpServletResponse) servletResponse;
-        HttpSession session= SessionHelper.getExistingSession(request);
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpSession session = SessionHelper.getExistingSession(request);
 
-        String command=request.getParameter(RequestParameterName.COMMAND_NAME);
+        String command = request.getParameter(RequestParameterName.COMMAND_NAME);
 
         if ((command == null)) {
             filterChain.doFilter(request, response);
             return;
-        }else {
-            command=command.toUpperCase();
+        } else {
+            command = command.toUpperCase();
         }
 
 
-        if(session!=null && session.getAttribute(SessionAttributeName.ID) != null) {
-            Role role=(Role) session.getAttribute(SessionAttributeName.ROLE);
+        if (session != null && session.getAttribute(SessionAttributeName.ID) != null) {
+            Role role = (Role) session.getAttribute(SessionAttributeName.ROLE);
 
             if (role == Role.USER && userCommand.contains(command)) {
 
@@ -121,12 +120,12 @@ public class CommandFilter implements Filter {
                 return;
             }
 
-            response.sendRedirect(request.getContextPath()+REDIRECT_PATH);
-        }else{
-            if((adminCommand.contains(command) || userCommand.contains(command)) && (!unregisterCommand.contains(command))){
+            response.sendRedirect(request.getContextPath() + REDIRECT_PATH);
+        } else {
+            if ((adminCommand.contains(command) || userCommand.contains(command)) && (!unregisterCommand.contains(command))) {
 
-                response.sendRedirect(request.getContextPath()+REDIRECT_PATH);
-            }else{
+                response.sendRedirect(request.getContextPath() + REDIRECT_PATH);
+            } else {
 
                 filterChain.doFilter(request, response);
             }

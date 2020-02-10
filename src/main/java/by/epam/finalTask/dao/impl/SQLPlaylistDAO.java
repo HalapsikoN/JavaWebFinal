@@ -1,12 +1,12 @@
 package by.epam.finalTask.dao.impl;
 
+import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.PlaylistDAO;
 import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
+import by.epam.finalTask.dao.pool.ConnectionPool;
+import by.epam.finalTask.dao.pool.ConnectionPoolException;
 import by.epam.finalTask.entity.Playlist;
 import by.epam.finalTask.entity.Track;
-import by.epam.finalTask.dao.pool.ConnectionPoolException;
-import by.epam.finalTask.dao.DAOException;
-import by.epam.finalTask.dao.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,25 +18,25 @@ import java.util.Map;
 
 public class SQLPlaylistDAO implements PlaylistDAO {
 
-    private static final Logger logger= LogManager.getLogger(SQLUserDAO.class);
+    private static final Logger logger = LogManager.getLogger(SQLUserDAO.class);
 
-    private static final ConnectionPool connectionPool=ConnectionPool.getInstance();
-    private static final ConverterFromResultSet converterFromResultSet= ConverterFromResultSet.getInstance();
+    private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private static final ConverterFromResultSet converterFromResultSet = ConverterFromResultSet.getInstance();
 
-    private String sqlAddPlaylist ="INSERT INTO playlists (name, date) values (?,?)";
-    private String sqlAddTrackToPlaylist ="INSERT INTO track_playlist (track_id, playlist_id) values (?,?)";
-    private String sqlGetPlaylistById ="SELECT * FROM playlists WHERE id=?";
-    private String sqlGetAllPlaylistTracks="SELECT tracks.* FROM playlists INNER JOIN track_playlist ON playlists.id=track_playlist.playlist_id INNER JOIN tracks ON track_playlist.track_id=tracks.id WHERE playlists.id=?";
-    private String sqlUpdatePlaylistById ="UPDATE playlists SET name=?, date=? where id=?";
-    private String sqlDeletePlaylistById ="DELETE FROM playlists where id=?";
-    private String sqlGetAllPlaylists ="SELECT * FROM playlists";
-    private String sqlDeletePlaylistTracks ="DELETE FROM track_playlist where playlist_id=?";
+    private String sqlAddPlaylist = "INSERT INTO playlists (name, date) values (?,?)";
+    private String sqlAddTrackToPlaylist = "INSERT INTO track_playlist (track_id, playlist_id) values (?,?)";
+    private String sqlGetPlaylistById = "SELECT * FROM playlists WHERE id=?";
+    private String sqlGetAllPlaylistTracks = "SELECT tracks.* FROM playlists INNER JOIN track_playlist ON playlists.id=track_playlist.playlist_id INNER JOIN tracks ON track_playlist.track_id=tracks.id WHERE playlists.id=?";
+    private String sqlUpdatePlaylistById = "UPDATE playlists SET name=?, date=? where id=?";
+    private String sqlDeletePlaylistById = "DELETE FROM playlists where id=?";
+    private String sqlGetAllPlaylists = "SELECT * FROM playlists";
+    private String sqlDeletePlaylistTracks = "DELETE FROM track_playlist where playlist_id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
     public SQLPlaylistDAO() {
-        preparedStatementMap= new HashMap<>();
-        Connection connection= null;
+        preparedStatementMap = new HashMap<>();
+        Connection connection = null;
         try {
             connection = connectionPool.takeConnection();
         } catch (ConnectionPoolException e) {
@@ -51,13 +51,13 @@ public class SQLPlaylistDAO implements PlaylistDAO {
         prepareStatement(connection, sqlGetAllPlaylists);
         prepareStatement(connection, sqlDeletePlaylistTracks);
 
-        if(connection!=null) {
+        if (connection != null) {
             connectionPool.closeConnection(connection);
         }
     }
 
-    private void prepareStatement(Connection connection, String sql){
-        if(connection!=null) {
+    private void prepareStatement(Connection connection, String sql) {
+        if (connection != null) {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
                 preparedStatementMap.put(sql, preparedStatement);
@@ -76,11 +76,11 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             PreparedStatement preparedStatement = preparedStatementMap.get(sqlAddPlaylist);
 
             if (preparedStatement != null) {
-            preparedStatement.setString(1, playlist.getName());
-            java.sql.Date date=new Date(playlist.getDate().getTimeInMillis());
-            preparedStatement.setDate(2, date);
+                preparedStatement.setString(1, playlist.getName());
+                java.sql.Date date = new Date(playlist.getDate().getTimeInMillis());
+                preparedStatement.setDate(2, date);
 
-            resultRow = preparedStatement.executeUpdate();
+                resultRow = preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -104,10 +104,10 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             PreparedStatement preparedStatement = preparedStatementMap.get(sqlAddTrackToPlaylist);
 
             if (preparedStatement != null) {
-            preparedStatement.setInt(1, track.getId());
-            preparedStatement.setInt(2, playlist.getId());
+                preparedStatement.setInt(1, track.getId());
+                preparedStatement.setInt(2, playlist.getId());
 
-            resultRow = preparedStatement.executeUpdate();
+                resultRow = preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -131,10 +131,10 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             PreparedStatement preparedStatement = preparedStatementMap.get(sqlAddTrackToPlaylist);
 
             if (preparedStatement != null) {
-            preparedStatement.setInt(1, track_id);
-            preparedStatement.setInt(2, playlist_id);
+                preparedStatement.setInt(1, track_id);
+                preparedStatement.setInt(2, playlist_id);
 
-            resultRow = preparedStatement.executeUpdate();
+                resultRow = preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -151,27 +151,27 @@ public class SQLPlaylistDAO implements PlaylistDAO {
 
     @Override
     public Playlist getPlaylistById(int id) throws DAOException {
-        ResultSet resultSet=null;
-        Playlist playlist=null;
+        ResultSet resultSet = null;
+        Playlist playlist = null;
 
-        try{
-            PreparedStatement preparedStatement=preparedStatementMap.get(sqlGetPlaylistById);
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetPlaylistById);
 
             if (preparedStatement != null) {
-            preparedStatement.setInt(1,id);
-            resultSet=preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                playlist = converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    playlist = converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
 
-                List<Track> trackList=playlist.getTrackList();
-                preparedStatement=preparedStatementMap.get(sqlGetAllPlaylistTracks);
-                preparedStatement.setInt(1,id);
-                resultSet =preparedStatement.executeQuery();
-                while (resultSet.next()){
-                    Track track=converterFromResultSet.getTrackFromResultSet(resultSet);
-                    trackList.add(track);
+                    List<Track> trackList = playlist.getTrackList();
+                    preparedStatement = preparedStatementMap.get(sqlGetAllPlaylistTracks);
+                    preparedStatement.setInt(1, id);
+                    resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        Track track = converterFromResultSet.getTrackFromResultSet(resultSet);
+                        trackList.add(track);
+                    }
                 }
-            }
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -185,19 +185,19 @@ public class SQLPlaylistDAO implements PlaylistDAO {
 
     @Override
     public boolean updatePlaylistById(int id, Playlist playlist) throws DAOException {
-        boolean result=true;
+        boolean result = true;
         int resultRow;
 
         try {
-            PreparedStatement preparedStatement=preparedStatementMap.get(sqlUpdatePlaylistById);
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlUpdatePlaylistById);
 
             if (preparedStatement != null) {
-            preparedStatement.setString(1, playlist.getName());
-            java.sql.Date date=new Date(playlist.getDate().getTimeInMillis());
-            preparedStatement.setDate(2, date);
-            preparedStatement.setInt(3, id);
+                preparedStatement.setString(1, playlist.getName());
+                java.sql.Date date = new Date(playlist.getDate().getTimeInMillis());
+                preparedStatement.setDate(2, date);
+                preparedStatement.setInt(3, id);
 
-            resultRow=preparedStatement.executeUpdate();
+                resultRow = preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -206,24 +206,24 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             throw new DAOException(e);
         }
 
-        if(resultRow==0){
-            result=false;
+        if (resultRow == 0) {
+            result = false;
         }
         return result;
     }
 
     @Override
     public boolean deletePlaylistById(int id) throws DAOException {
-        boolean result=true;
+        boolean result = true;
         int resultRow;
 
         try {
-            PreparedStatement preparedStatement=preparedStatementMap.get(sqlDeletePlaylistById);
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlDeletePlaylistById);
 
             if (preparedStatement != null) {
-            preparedStatement.setInt(1, id);
+                preparedStatement.setInt(1, id);
 
-            resultRow=preparedStatement.executeUpdate();
+                resultRow = preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -232,24 +232,24 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             throw new DAOException(e);
         }
 
-        if(resultRow==0){
-            result=false;
+        if (resultRow == 0) {
+            result = false;
         }
         return result;
     }
 
     @Override
     public boolean deletePlaylistTracks(int id) throws DAOException {
-        boolean result=true;
+        boolean result = true;
         int resultRow;
 
         try {
-            PreparedStatement preparedStatement=preparedStatementMap.get(sqlDeletePlaylistTracks);
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlDeletePlaylistTracks);
 
             if (preparedStatement != null) {
                 preparedStatement.setInt(1, id);
 
-                resultRow=preparedStatement.executeUpdate();
+                resultRow = preparedStatement.executeUpdate();
             } else {
                 throw new DAOException("Couldn't find prepared statement");
             }
@@ -258,26 +258,26 @@ public class SQLPlaylistDAO implements PlaylistDAO {
             throw new DAOException(e);
         }
 
-        if(resultRow==0){
-            result=false;
+        if (resultRow == 0) {
+            result = false;
         }
         return result;
     }
 
     @Override
     public List<Playlist> getAllPlaylists() throws DAOException {
-        ResultSet resultSet=null;
-        List<Playlist> playlistList=new ArrayList<>();
+        ResultSet resultSet = null;
+        List<Playlist> playlistList = new ArrayList<>();
 
-        try{
-            PreparedStatement preparedStatement=preparedStatementMap.get(sqlGetAllPlaylists);
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllPlaylists);
 
             if (preparedStatement != null) {
 
-                resultSet=preparedStatement.executeQuery();
+                resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    Playlist playlist=converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
-                    if(playlist!=null) {
+                    Playlist playlist = converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
+                    if (playlist != null) {
                         playlistList.add(playlist);
                     }
 

@@ -25,37 +25,51 @@
 
 <div id="center_div">
     <br>
-    <h2><fmt:message key="locale.editTrack.title1" bundle="${bundle}"/> (${track.name}) <fmt:message key="locale.editTrack.title2" bundle="${bundle}"/></h2>
+    <h2><fmt:message key="locale.editTrack.title1" bundle="${bundle}"/> (${track.name}) <fmt:message
+            key="locale.editTrack.title2" bundle="${bundle}"/></h2>
     <br>
     <form action="atrack" method="post" id="input_form">
         <input type="hidden" name="command" value="edit_track">
         <input type="hidden" name="track_id" value="${track.id}">
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.name" bundle="${bundle}"/>: </label>
+            <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.name"
+                                                                           bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="<fmt:message key="locale.formTrack.namePlaceholder" bundle="${bundle}"/>" required value="${track.name}">
+                <input type="text" class="form-control" id="name" name="name"
+                       placeholder="<fmt:message key="locale.formTrack.namePlaceholder" bundle="${bundle}"/>" required
+                       value="${track.name}">
             </div>
         </div>
         <div class="form-group row">
-            <label for="artist" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.artist" bundle="${bundle}"/>: </label>
+            <label for="artist" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.artist"
+                                                                             bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="artist" name="artist" placeholder="<fmt:message key="locale.formTrack.artistPlaceholder" bundle="${bundle}"/>" required value="${track.artist}">
+                <input type="text" class="form-control" id="artist" name="artist"
+                       placeholder="<fmt:message key="locale.formTrack.artistPlaceholder" bundle="${bundle}"/>" required
+                       value="${track.artist}">
             </div>
         </div>
         <div class="form-group row">
-            <label for="date" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.date" bundle="${bundle}"/>: </label>
+            <label for="date" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.date"
+                                                                           bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="number" class="date-own form-control" id="date" name="date" placeholder="<fmt:message key="locale.formTrack.datePlaceholder" bundle="${bundle}"/>" required min="1900" max="2099" step="1" value="<outputTag:date format="yyyy" item="${track.date}"/>">
+                <input type="number" class="date-own form-control" id="date" name="date"
+                       placeholder="<fmt:message key="locale.formTrack.datePlaceholder" bundle="${bundle}"/>" required
+                       min="1900" max="2099" step="1" value="<outputTag:date format="yyyy" item="${track.date}"/>">
             </div>
         </div>
         <div class="form-group row">
-            <label for="price" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.price" bundle="${bundle}"/>: </label>
+            <label for="price" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.price"
+                                                                            bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="price" name="price" placeholder="<fmt:message key="locale.formTrack.pricePlaceholder" bundle="${bundle}"/>" required min="0" step="0.01" value="${track.price}">
+                <input type="number" class="form-control" id="price" name="price"
+                       placeholder="<fmt:message key="locale.formTrack.pricePlaceholder" bundle="${bundle}"/>" required
+                       min="0" step="0.01" value="${track.price}">
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary"><fmt:message key="locale.button.update" bundle="${bundle}"/></button>
+        <button type="submit" class="btn btn-primary"><fmt:message key="locale.button.update"
+                                                                   bundle="${bundle}"/></button>
 
     </form>
 
@@ -71,8 +85,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle"><fmt:message key="locale.editTrack.deleteTrackTitle1" bundle="${bundle}"/>
-                        (<strong>${track.name}</strong>) <fmt:message key="locale.editTrack.deleteTrackTitle2" bundle="${bundle}"/>?</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle"><fmt:message
+                            key="locale.editTrack.deleteTrackTitle1" bundle="${bundle}"/>
+                        (<strong>${track.name}</strong>) <fmt:message key="locale.editTrack.deleteTrackTitle2"
+                                                                      bundle="${bundle}"/>?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -81,9 +97,11 @@
                     <form action="atrack" method="post">
                         <input type="hidden" name="command" value="delete_track">
                         <input type="hidden" name="track_id" value="${track.id}">
-                        <button type="submit" class="btn btn-danger"><fmt:message key="locale.button.yes" bundle="${bundle}"/></button>
+                        <button type="submit" class="btn btn-danger"><fmt:message key="locale.button.yes"
+                                                                                  bundle="${bundle}"/></button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.no" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.no" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

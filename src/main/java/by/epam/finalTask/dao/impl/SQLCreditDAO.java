@@ -10,8 +10,8 @@ import by.epam.finalTask.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
 import java.sql.Date;
+import java.sql.*;
 import java.util.*;
 
 public class SQLCreditDAO implements CreditDAO {
@@ -25,11 +25,11 @@ public class SQLCreditDAO implements CreditDAO {
     private String sqlGetCredits = "SELECT * FROM credits";
     private String sqlGetUserCredit = "SELECT * FROM credits where user_id=?";
     private String sqlUpdateCreditAmountById = "UPDATE credits SET credit=? where id=?";
-    private String sqlDeleteCreditById="DELETE FROM credits where id=?";
-    private String sqlGetActualUserCredit="SELECT * FROM credits where user_id=? AND date_end>=?";
-    private String sqlGetOverdueCredit="SELECT * FROM credits where user_id=? AND date_end<?";
-    private String sqlGetAllBannedUsers="SELECT users.* FROM credits INNER JOIN users ON users.id=credits.user_id where date_end<?";
-    private String sqlUnbanUser="DELETE FROM credits where user_id=?";
+    private String sqlDeleteCreditById = "DELETE FROM credits where id=?";
+    private String sqlGetActualUserCredit = "SELECT * FROM credits where user_id=? AND date_end>=?";
+    private String sqlGetOverdueCredit = "SELECT * FROM credits where user_id=? AND date_end<?";
+    private String sqlGetAllBannedUsers = "SELECT users.* FROM credits INNER JOIN users ON users.id=credits.user_id where date_end<?";
+    private String sqlUnbanUser = "DELETE FROM credits where user_id=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -109,7 +109,7 @@ public class SQLCreditDAO implements CreditDAO {
                 preparedStatement.setInt(1, userId);
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    credit = converterFromResultSet.getCreidtFromResultSet(resultSet);
+                    credit = converterFromResultSet.getCreditFromResultSet(resultSet);
                 }
             } else {
                 throw new DAOException("Couldn't find prepared statement");
@@ -124,6 +124,10 @@ public class SQLCreditDAO implements CreditDAO {
 
     @Override
     public Credit getActualUserCredit(int userId) throws DAOException {
+        return getUserCredit(userId, sqlGetActualUserCredit);
+    }
+
+    private Credit getUserCredit(int userId, String sqlGetActualUserCredit) throws DAOException {
         ResultSet resultSet = null;
         Credit credit = null;
 
@@ -132,12 +136,12 @@ public class SQLCreditDAO implements CreditDAO {
 
             if (preparedStatement != null) {
                 preparedStatement.setInt(1, userId);
-                Calendar calendar=new GregorianCalendar();
-                java.sql.Date date=new java.sql.Date(calendar.getTimeInMillis());
+                Calendar calendar = new GregorianCalendar();
+                Date date = new Date(calendar.getTimeInMillis());
                 preparedStatement.setDate(2, date);
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    credit = converterFromResultSet.getCreidtFromResultSet(resultSet);
+                    credit = converterFromResultSet.getCreditFromResultSet(resultSet);
                 }
             } else {
                 throw new DAOException("Couldn't find prepared statement");
@@ -152,30 +156,7 @@ public class SQLCreditDAO implements CreditDAO {
 
     @Override
     public Credit getOverdueCredit(int userId) throws DAOException {
-        ResultSet resultSet = null;
-        Credit credit = null;
-
-        try {
-            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetOverdueCredit);
-
-            if (preparedStatement != null) {
-                preparedStatement.setInt(1, userId);
-                Calendar calendar=new GregorianCalendar();
-                java.sql.Date date=new java.sql.Date(calendar.getTimeInMillis());
-                preparedStatement.setDate(2, date);
-                resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    credit = converterFromResultSet.getCreidtFromResultSet(resultSet);
-                }
-            } else {
-                throw new DAOException("Couldn't find prepared statement");
-            }
-        } catch (SQLException e) {
-            logger.error(e);
-            throw new DAOException(e);
-        }
-
-        return credit;
+        return getUserCredit(userId, sqlGetOverdueCredit);
     }
 
     @Override
@@ -233,15 +214,15 @@ public class SQLCreditDAO implements CreditDAO {
 
     @Override
     public List<User> getAllBannedUsers() throws DAOException {
-        List<User> result=new ArrayList<>();
+        List<User> result = new ArrayList<>();
         ResultSet resultSet = null;
 
         try {
             PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetAllBannedUsers);
 
             if (preparedStatement != null) {
-                Calendar calendar=new GregorianCalendar();
-                java.sql.Date date=new java.sql.Date(calendar.getTimeInMillis());
+                Calendar calendar = new GregorianCalendar();
+                java.sql.Date date = new java.sql.Date(calendar.getTimeInMillis());
                 preparedStatement.setDate(1, date, calendar);
 
                 resultSet = preparedStatement.executeQuery();
@@ -252,7 +233,7 @@ public class SQLCreditDAO implements CreditDAO {
                 User user = converterFromResultSet.getUserFromResultSet(resultSet);
                 result.add(user);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
         }

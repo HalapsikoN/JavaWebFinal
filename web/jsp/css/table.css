@@ -1,19 +1,19 @@
-#table{
+#table {
     width: 70%;
     margin-right: auto;
     margin-left: auto;
 }
 
-th{
+th {
     text-align: center;
 }
 
-.table td{
+.table td {
     text-align: center;
     vertical-align: middle;
 }
 
-img{
-    border:none;
-    height:50px;
+img {
+    border: none;
+    height: 50px;
 }

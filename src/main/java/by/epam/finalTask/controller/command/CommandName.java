@@ -1,6 +1,6 @@
 package by.epam.finalTask.controller.command;
 
-public enum  CommandName {
+public enum CommandName {
     SIGN_IN,
     REGISTRATION,
     REGISTRATION_PAGE,

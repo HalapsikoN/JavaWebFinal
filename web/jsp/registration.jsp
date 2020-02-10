@@ -24,21 +24,32 @@
         <input type="hidden" name="command" value="registration">
         <section id="section" class="form-fields">
             <label for="username"><fmt:message key="locale.formUser.name" bundle="${bundle}"/>:</label>
-            <input type="text" name="username"  class="form-control" id="username" placeholder="<fmt:message key="locale.formUser.namePlaceholder" bundle="${bundle}"/>" required minlength="2"/>
+            <input type="text" name="username" class="form-control" id="username"
+                   placeholder="<fmt:message key="locale.formUser.namePlaceholder" bundle="${bundle}"/>" required
+                   minlength="2"/>
 
             <label for="login"><fmt:message key="locale.formUser.login" bundle="${bundle}"/>:</label>
-            <input type="text" name="login" id="login" class="form-control" placeholder="<fmt:message key="locale.formUser.loginPlaceholder" bundle="${bundle}"/>" required minlength="4"/>
+            <input type="text" name="login" id="login" class="form-control"
+                   placeholder="<fmt:message key="locale.formUser.loginPlaceholder" bundle="${bundle}"/>" required
+                   minlength="4"/>
 
             <label for="password"><fmt:message key="locale.formUser.password" bundle="${bundle}"/>:</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="<fmt:message key="locale.formUser.passwordPlaceholder" bundle="${bundle}"/>" required minlength="6"/>
+            <input type="password" name="password" id="password" class="form-control"
+                   placeholder="<fmt:message key="locale.formUser.passwordPlaceholder" bundle="${bundle}"/>" required
+                   minlength="6"/>
 
             <label for="re_pass"><fmt:message key="locale.formUser.repeatPassword" bundle="${bundle}"/>:</label>
-            <input type="password" name="re_pass" id="re_pass" class="form-control" placeholder="<fmt:message key="locale.formUser.repeatPasswordPlaceholder" bundle="${bundle}"/>" required minlength="6"/>
+            <input type="password" name="re_pass" id="re_pass" class="form-control"
+                   placeholder="<fmt:message key="locale.formUser.repeatPasswordPlaceholder" bundle="${bundle}"/>"
+                   required minlength="6"/>
 
         </section>
 
-        <input type="button" class="btn btn-primary" value="<fmt:message key="locale.formUser.registerBtn" bundle="${bundle}"/>" onclick="regForm(this)">
-        <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/atrack?command=main_page"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></a>
+        <input type="button" class="btn btn-primary"
+               value="<fmt:message key="locale.formUser.registerBtn" bundle="${bundle}"/>" onclick="regForm(this)">
+        <a type="button" class="btn btn-secondary"
+           href="${pageContext.request.contextPath}/atrack?command=main_page"><fmt:message key="locale.button.cancel"
+                                                                                           bundle="${bundle}"/></a>
     </div>
 </form>
 

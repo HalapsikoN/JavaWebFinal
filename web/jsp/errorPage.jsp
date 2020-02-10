@@ -30,7 +30,8 @@
         <c:if test="${not empty message}">
             <p><fmt:message key="locale.errorPage.reason" bundle="${bundle}"/>: ${message}.</p>
         </c:if>
-        <a href="${pageContext.request.contextPath}/atrack"><fmt:message key="locale.general.hrefMainPage" bundle="${bundle}"/>.</a>
+        <a href="${pageContext.request.contextPath}/atrack"><fmt:message key="locale.general.hrefMainPage"
+                                                                         bundle="${bundle}"/>.</a>
     </div>
 </div>
 <c:import url="footer/footer.jsp" charEncoding="utf-8"/>

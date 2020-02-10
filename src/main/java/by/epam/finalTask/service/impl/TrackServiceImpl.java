@@ -7,28 +7,23 @@ import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.TrackService;
 import by.epam.finalTask.service.validator.TrackDataValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrackServiceImpl implements TrackService {
 
-    public static final Logger logger= LogManager.getLogger(TrackServiceImpl.class);
-
-    private TrackDAO trackDAO= DAOFactory.getInstance().getSqlTrackDAO();
+    private TrackDAO trackDAO = DAOFactory.getInstance().getSqlTrackDAO();
 
     @Override
     public boolean addTrack(Track track) throws ServiceException {
         boolean result;
 
-        if(!TrackDataValidator.isValidTrack(track)){
+        if (!TrackDataValidator.isValidTrack(track)) {
             throw new ServiceException("Not valid data track");
         }
 
         try {
-            result=trackDAO.addTrack(track);
+            result = trackDAO.addTrack(track);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -41,7 +36,7 @@ public class TrackServiceImpl implements TrackService {
         Track track;
 
         try {
-            track=trackDAO.getTrackById(id);
+            track = trackDAO.getTrackById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -50,15 +45,15 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public boolean updateTrack(int id,Track track) throws ServiceException {
+    public boolean updateTrack(int id, Track track) throws ServiceException {
         boolean result;
 
-        if(!TrackDataValidator.isValidTrack(track)){
+        if (!TrackDataValidator.isValidTrack(track)) {
             throw new ServiceException("Not valid data track");
         }
 
         try {
-            result=trackDAO.updateTrackById(id, track);
+            result = trackDAO.updateTrackById(id, track);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -71,7 +66,7 @@ public class TrackServiceImpl implements TrackService {
         boolean result;
 
         try {
-            result=trackDAO.deleteTrackById(id);
+            result = trackDAO.deleteTrackById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -84,7 +79,7 @@ public class TrackServiceImpl implements TrackService {
         List<Track> trackList;
 
         try {
-            trackList=trackDAO.getAllTracks();
+            trackList = trackDAO.getAllTracks();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -97,7 +92,7 @@ public class TrackServiceImpl implements TrackService {
         List<Track> trackList;
 
         try {
-            trackList=trackDAO.getTracksWithArtist(artist);
+            trackList = trackDAO.getTracksWithArtist(artist);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

@@ -1,16 +1,16 @@
 package by.epam.finalTask.dao.impl;
 
 import by.epam.finalTask.dao.BonusDAO;
-import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
-import by.epam.finalTask.entity.Bonus;
-import by.epam.finalTask.dao.pool.ConnectionPoolException;
 import by.epam.finalTask.dao.DAOException;
+import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
 import by.epam.finalTask.dao.pool.ConnectionPool;
+import by.epam.finalTask.dao.pool.ConnectionPoolException;
+import by.epam.finalTask.entity.Bonus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
 import java.sql.Date;
+import java.sql.*;
 import java.util.*;
 
 public class SQLBonusDAO implements BonusDAO {
@@ -44,7 +44,7 @@ public class SQLBonusDAO implements BonusDAO {
         prepareStatement(connection, sqlGetBonusesByUserId);
         prepareStatement(connection, sqlGetActualBonusesByUserId);
 
-        if(connection!=null) {
+        if (connection != null) {
             connectionPool.closeConnection(connection);
         }
     }
@@ -211,8 +211,8 @@ public class SQLBonusDAO implements BonusDAO {
 
             if (preparedStatement != null) {
                 preparedStatement.setInt(1, id);
-                Calendar calendar=new GregorianCalendar();
-                java.sql.Date date=new java.sql.Date(calendar.getTimeInMillis());
+                Calendar calendar = new GregorianCalendar();
+                java.sql.Date date = new java.sql.Date(calendar.getTimeInMillis());
                 preparedStatement.setDate(2, date);
                 preparedStatement.setDate(3, date);
                 resultSet = preparedStatement.executeQuery();

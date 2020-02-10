@@ -25,7 +25,7 @@ public class SignIn implements Command {
 
     private static final UserService userService = ServiceFactory.getInstance().getUserService();
 
-    private static final String INVALID_DATA="locale.signIn.invalidData";
+    private static final String INVALID_DATA = "locale.signIn.invalidData";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -39,7 +39,7 @@ public class SignIn implements Command {
         String login = null;
         String password = null;
         try {
-            login=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.LOGIN);
+            login = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.LOGIN);
             password = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.PASSWORD);
         } catch (UnsupportedEncodingException e) {
             logger.error(e);
@@ -54,23 +54,18 @@ public class SignIn implements Command {
             throw new CommandException(e);
         }
         String message;
-        Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+        Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
         try {
-            //Command command;
             if (user == null) {
-                //req.setAttribute(RequestAttributeName.MESSAGE, INVALID_DATA);
-                message=ResourceManager.getString(INVALID_DATA, locale);
-                //command = CommandProvider.getInstance().getCommand(CommandName.SIGN_IN_PAGE.name());
+                message = ResourceManager.getString(INVALID_DATA, locale);
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.SIGN_IN_PAGE, message);
             } else {
                 SessionHelper.saveUserToSession(session, user);
-                //command = CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE);
             }
         } catch (ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }
-        // command.execute(req, resp);
     }
 }

@@ -24,15 +24,22 @@
         <input type="hidden" name="command" value="sign_in">
         <section id="section" class="form-fields">
             <label for="login"><fmt:message key="locale.formUser.login" bundle="${bundle}"/>:</label>
-            <input type="text" name="login" class="form-control" id="login" placeholder="<fmt:message key="locale.formUser.loginPlaceholder" bundle="${bundle}"/>" required minlength="4"/>
+            <input type="text" name="login" class="form-control" id="login"
+                   placeholder="<fmt:message key="locale.formUser.loginPlaceholder" bundle="${bundle}"/>" required
+                   minlength="4"/>
             <br>
             <label for="password"><fmt:message key="locale.formUser.password" bundle="${bundle}"/>:</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="<fmt:message key="locale.formUser.passwordPlaceholder" bundle="${bundle}"/>" required minlength="6"/>
+            <input type="password" name="password" class="form-control" id="password"
+                   placeholder="<fmt:message key="locale.formUser.passwordPlaceholder" bundle="${bundle}"/>" required
+                   minlength="6"/>
             <br>
         </section>
 
-        <input type="button" class="btn btn-primary" value="<fmt:message key="locale.formUser.signInBtn" bundle="${bundle}"/>" onclick="signInForm(this)">
-        <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/atrack?command=main_page"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></a>
+        <input type="button" class="btn btn-primary"
+               value="<fmt:message key="locale.formUser.signInBtn" bundle="${bundle}"/>" onclick="signInForm(this)">
+        <a type="button" class="btn btn-secondary"
+           href="${pageContext.request.contextPath}/atrack?command=main_page"><fmt:message key="locale.button.cancel"
+                                                                                           bundle="${bundle}"/></a>
     </div>
 </form>
 <br>

@@ -3,7 +3,6 @@ package by.epam.finalTask.controller.command.Impl;
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
-import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
@@ -24,7 +23,7 @@ public class DeleteTrack implements Command {
 
     private final static TrackService trackService = ServiceFactory.getInstance().getTrackService();
 
-    private final static String ERROR_MSG="locale.deleteTrack.errorMsg";
+    private final static String ERROR_MSG = "locale.deleteTrack.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -41,20 +40,15 @@ public class DeleteTrack implements Command {
 
             boolean isDeleted = trackService.deleteTrack(trackId);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-           // Command command;
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             if (isDeleted) {
-              //  command = CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE);
             } else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
-               // command = CommandProvider.getInstance().getCommand(CommandName.EDIT_TRACK_PAGE.name());
-                message=ResourceManager.getString(ERROR_MSG, locale);
+                message = ResourceManager.getString(ERROR_MSG, locale);
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.EDIT_TRACK_PAGE, message);
             }
 
-            //command.execute(req, resp);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

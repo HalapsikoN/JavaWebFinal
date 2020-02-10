@@ -3,7 +3,6 @@ package by.epam.finalTask.controller.command.Impl;
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
-import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.service.AlbumService;
 import by.epam.finalTask.service.ServiceException;
@@ -24,7 +23,7 @@ public class DeleteAlbum implements Command {
 
     private final static AlbumService albumService = ServiceFactory.getInstance().getAlbumService();
 
-    private final static String ERROR_MSG="locale.deleteAlbum.errorMsg";
+    private final static String ERROR_MSG = "locale.deleteAlbum.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -41,22 +40,15 @@ public class DeleteAlbum implements Command {
 
             boolean isDeleted = albumService.deleteAlbum(albumId);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-            //Command command;
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             if (isDeleted) {
-                //command = CommandProvider.getInstance().getCommand(CommandName.ALBUMS_PAGE.name());
-                //command.execute(req, resp);
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.ALBUMS_PAGE);
             } else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
-               //command = CommandProvider.getInstance().getCommand(CommandName.EDIT_ALBUM_PAGE.name());
-                //command.execute(req, resp);
-                message= ResourceManager.getString(ERROR_MSG, locale);
+                message = ResourceManager.getString(ERROR_MSG, locale);
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.EDIT_ALBUM_PAGE, message);
             }
 
-            //command.execute(req, resp);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

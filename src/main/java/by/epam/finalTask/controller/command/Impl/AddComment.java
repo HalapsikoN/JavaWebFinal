@@ -22,9 +22,9 @@ import java.util.GregorianCalendar;
 
 public class AddComment implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddComment.class);
+    private static final Logger logger = LogManager.getLogger(AddComment.class);
 
-    private static final CommentService commentService= ServiceFactory.getInstance().getCommentService();
+    private static final CommentService commentService = ServiceFactory.getInstance().getCommentService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -36,11 +36,11 @@ public class AddComment implements Command {
 
         int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-        int trackId=RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
+        int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
-        GregorianCalendar date=new GregorianCalendar();
+        GregorianCalendar date = new GregorianCalendar();
 
-        String text= null;
+        String text = null;
         try {
             text = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.TEXT);
         } catch (UnsupportedEncodingException e) {
@@ -48,9 +48,9 @@ public class AddComment implements Command {
             throw new CommandException(e);
         }
 
-        Comment comment=new Comment(userId, date, trackId, text);
+        Comment comment = new Comment(userId, date, trackId, text);
 
-        boolean isAdded= false;
+        boolean isAdded = false;
         try {
             isAdded = commentService.addComment(comment);
         } catch (ServiceException e) {
@@ -58,14 +58,11 @@ public class AddComment implements Command {
             throw new CommandException(e);
         }
 
-        if(!isAdded){
+        if (!isAdded) {
             throw new CommandException("Comment is not saved");
         }
 
-//        Command command= CommandProvider.getInstance().getCommand(CommandName.MAIN_PAGE.name());
-//        command.execute(req, resp);
-
-        String lastURL= (String) session.getAttribute(SessionAttributeName.LAST_URL);
+        String lastURL = (String) session.getAttribute(SessionAttributeName.LAST_URL);
         try {
             resp.sendRedirect(lastURL);
         } catch (IOException e) {

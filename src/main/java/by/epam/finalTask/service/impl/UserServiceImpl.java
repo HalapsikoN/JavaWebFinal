@@ -8,31 +8,26 @@ import by.epam.finalTask.entity.util.Role;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.UserService;
 import by.epam.finalTask.service.validator.UserDataValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    public static final Logger logger= LogManager.getLogger(UserServiceImpl.class);
-
-    private UserDAO userDAO= DAOFactory.getInstance().getSqlUserDAO();
+    private UserDAO userDAO = DAOFactory.getInstance().getSqlUserDAO();
 
     @Override
     public User signIn(String login, String password) throws ServiceException {
-        User user=null;
+        User user = null;
 
-        if(!isValidData(login, password)){
+        if (!isValidData(login, password)) {
             throw new ServiceException("Not valid data");
         }
 
         try {
-            String realPassword=userDAO.getUserPasswordByLogin(login);
-            if(realPassword!=null && BCrypt.checkpw(password, realPassword)){
-                user=userDAO.getUserByLogin(login);
+            String realPassword = userDAO.getUserPasswordByLogin(login);
+            if (realPassword != null && BCrypt.checkpw(password, realPassword)) {
+                user = userDAO.getUserByLogin(login);
             }
         } catch (DAOException e) {
             throw new ServiceException("Cannot perform action with data source", e);
@@ -43,20 +38,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean register(User user, String password) throws ServiceException {
-        boolean result=false;
+        boolean result = false;
 
-        if(!isValidData(user, password)){
+        if (!isValidData(user, password)) {
             throw new ServiceException("Not valid data");
         }
 
         try {
-            boolean isBusyLogin=(userDAO.getUserByLogin(user.getLogin())!=null);
+            boolean isBusyLogin = (userDAO.getUserByLogin(user.getLogin()) != null);
 
-            password=BCrypt.hashpw(password, BCrypt.gensalt());
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
 
-            if(!isBusyLogin){
+            if (!isBusyLogin) {
                 userDAO.addUser(user, password);
-                result=true;
+                result = true;
             }
 
         } catch (DAOException e) {
@@ -68,10 +63,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addTrackToUser(int userId, int trackId) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
         try {
-            result=userDAO.addTrackToUser(userId, trackId);
+            result = userDAO.addTrackToUser(userId, trackId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -81,10 +76,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addAlbumToUser(int userId, int albumId) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
         try {
-            result=userDAO.addAlbumToUser(userId, albumId);
+            result = userDAO.addAlbumToUser(userId, albumId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -94,10 +89,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addPlaylistToUser(int userId, int playlistId) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
         try {
-            result=userDAO.addPlaylistToUser(userId, playlistId);
+            result = userDAO.addPlaylistToUser(userId, playlistId);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -110,7 +105,7 @@ public class UserServiceImpl implements UserService {
         User user;
 
         try {
-            user=userDAO.getUserById(id);
+            user = userDAO.getUserById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -123,7 +118,7 @@ public class UserServiceImpl implements UserService {
         List<Track> trackList;
 
         try {
-            trackList=userDAO.getUserTracksById(id);
+            trackList = userDAO.getUserTracksById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -136,7 +131,7 @@ public class UserServiceImpl implements UserService {
         List<Album> albumList;
 
         try {
-            albumList=userDAO.getUserAlbumsById(id);
+            albumList = userDAO.getUserAlbumsById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -149,7 +144,7 @@ public class UserServiceImpl implements UserService {
         List<Playlist> playlistList;
 
         try {
-            playlistList=userDAO.getUserPlayListsById(id);
+            playlistList = userDAO.getUserPlayListsById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -162,7 +157,7 @@ public class UserServiceImpl implements UserService {
         List<Bonus> bonusList;
 
         try {
-            bonusList=userDAO.getUserBonusesById(id);
+            bonusList = userDAO.getUserBonusesById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -175,7 +170,7 @@ public class UserServiceImpl implements UserService {
         List<User> userList;
 
         try {
-            userList=userDAO.getAllUsers();
+            userList = userDAO.getAllUsers();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -185,14 +180,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUserWallet(int id, double wallet) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
-        if(!UserDataValidator.isWalletValid(wallet)){
+        if (!UserDataValidator.isWalletValid(wallet)) {
             throw new ServiceException("Not valid data user.wallet");
         }
 
         try {
-            result=userDAO.updateUserWalletById(id, wallet);
+            result = userDAO.updateUserWalletById(id, wallet);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -202,14 +197,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUserUsername(int id, String username) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
-        if(!UserDataValidator.isNameValid(username)){
+        if (!UserDataValidator.isNameValid(username)) {
             throw new ServiceException("Not valid data user.username");
         }
 
         try {
-            result=userDAO.updateUserNameById(id, username);
+            result = userDAO.updateUserNameById(id, username);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -219,17 +214,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUserPassword(int id, String password) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
-        if(!UserDataValidator.isValidPassword(password)){
+        if (!UserDataValidator.isValidPassword(password)) {
             throw new ServiceException("Not valid data user.password");
         }
 
         try {
 
-            password=BCrypt.hashpw(password, BCrypt.gensalt());
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
 
-            result=userDAO.updateUserPasswordById(id, password);
+            result = userDAO.updateUserPasswordById(id, password);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -239,10 +234,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUserRole(int id, Role role) throws ServiceException {
-        boolean result=true;
+        boolean result = true;
 
         try {
-            result=userDAO.updateUserRoleById(id, role);
+            result = userDAO.updateUserRoleById(id, role);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -255,7 +250,7 @@ public class UserServiceImpl implements UserService {
         boolean result;
 
         try {
-            result=userDAO.deleteUserById(id);
+            result = userDAO.deleteUserById(id);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
@@ -263,15 +258,15 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
-    private boolean isValidData(String login, String password){
-        boolean validLogin= UserDataValidator.isValidLogin(login);
-        boolean validPassword=UserDataValidator.isValidPassword(password);
-        return (validLogin&&validPassword);
+    private boolean isValidData(String login, String password) {
+        boolean validLogin = UserDataValidator.isValidLogin(login);
+        boolean validPassword = UserDataValidator.isValidPassword(password);
+        return (validLogin && validPassword);
     }
 
-    private boolean isValidData(User user, String password){
-        boolean validUser= UserDataValidator.isUserValid(user);
-        boolean validPassword=UserDataValidator.isValidPassword(password);
-        return (validUser&&validPassword);
+    private boolean isValidData(User user, String password) {
+        boolean validUser = UserDataValidator.isUserValid(user);
+        boolean validPassword = UserDataValidator.isValidPassword(password);
+        return (validUser && validPassword);
     }
 }

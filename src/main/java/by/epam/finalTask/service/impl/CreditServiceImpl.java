@@ -8,28 +8,24 @@ import by.epam.finalTask.entity.User;
 import by.epam.finalTask.service.CreditService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.validator.CreditDataValid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class CreditServiceImpl implements CreditService {
 
-    private static final Logger logger= LogManager.getLogger(CreditServiceImpl.class);
-
-    private static final CreditDAO creditDAO= DAOFactory.getInstance().getSqlCreditDAO();
+    private static final CreditDAO creditDAO = DAOFactory.getInstance().getSqlCreditDAO();
 
     @Override
     public boolean addCredit(Credit credit) throws ServiceException {
         boolean result;
 
-        if (!CreditDataValid.isCreditValid(credit)){
+        if (!CreditDataValid.isCreditValid(credit)) {
             throw new ServiceException("Not valid date credit");
         }
 
         try {
-            result=creditDAO.addCredit(credit);
-        }catch (DAOException e){
+            result = creditDAO.addCredit(credit);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -38,11 +34,11 @@ public class CreditServiceImpl implements CreditService {
 
     @Override
     public Credit getUserCredit(int userId) throws ServiceException {
-        Credit credit=null;
+        Credit credit = null;
 
         try {
-            credit=creditDAO.getUserCredit(userId);
-        }catch (DAOException e){
+            credit = creditDAO.getUserCredit(userId);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -51,11 +47,11 @@ public class CreditServiceImpl implements CreditService {
 
     @Override
     public Credit getActualCredit(int userId) throws ServiceException {
-        Credit credit=null;
+        Credit credit = null;
 
         try {
-            credit=creditDAO.getActualUserCredit(userId);
-        }catch (DAOException e){
+            credit = creditDAO.getActualUserCredit(userId);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -64,11 +60,11 @@ public class CreditServiceImpl implements CreditService {
 
     @Override
     public Credit getOverdueCredit(int userId) throws ServiceException {
-        Credit credit=null;
+        Credit credit = null;
 
         try {
-            credit=creditDAO.getOverdueCredit(userId);
-        }catch (DAOException e){
+            credit = creditDAO.getOverdueCredit(userId);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -79,13 +75,13 @@ public class CreditServiceImpl implements CreditService {
     public boolean updateCreditAmount(int id, double amount) throws ServiceException {
         boolean result;
 
-        if(!CreditDataValid.isAmountValid(amount)){
+        if (!CreditDataValid.isAmountValid(amount)) {
             throw new ServiceException("Not valid date credit.amount");
         }
 
         try {
-            result=creditDAO.updateCreditAmount(id, amount);
-        }catch (DAOException e){
+            result = creditDAO.updateCreditAmount(id, amount);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -97,8 +93,8 @@ public class CreditServiceImpl implements CreditService {
         boolean result;
 
         try {
-            result=creditDAO.deleteCredit(id);
-        }catch (DAOException e){
+            result = creditDAO.deleteCredit(id);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -110,8 +106,8 @@ public class CreditServiceImpl implements CreditService {
         List<User> userList;
 
         try {
-            userList=creditDAO.getAllBannedUsers();
-        }catch (DAOException e){
+            userList = creditDAO.getAllBannedUsers();
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -123,8 +119,8 @@ public class CreditServiceImpl implements CreditService {
         boolean result;
 
         try {
-            result=creditDAO.unbanUser(userId);
-        }catch (DAOException e){
+            result = creditDAO.unbanUser(userId);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 

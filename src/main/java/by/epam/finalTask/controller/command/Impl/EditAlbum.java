@@ -22,12 +22,12 @@ import java.util.Locale;
 
 public class EditAlbum implements Command {
 
-    private static final Logger logger= LogManager.getLogger(EditAlbum.class);
+    private static final Logger logger = LogManager.getLogger(EditAlbum.class);
 
     private static final AlbumService albumService = ServiceFactory.getInstance().getAlbumService();
 
-    private static final String SUCCESS_MSG="locale.editAlbum.successMsg";
-    private static final String ERROR_MSG="locale.editAlbum.errorMsg";
+    private static final String SUCCESS_MSG = "locale.editAlbum.successMsg";
+    private static final String ERROR_MSG = "locale.editAlbum.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -40,29 +40,25 @@ public class EditAlbum implements Command {
                 throw new CommandException("no session");
             }
 
-            int albumId=RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
-            String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
-            String artist=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
-            GregorianCalendar calendar=new GregorianCalendar();
-            int year=RequestDataExecutor.getIntegerByName(RequestParameterName.DATE, req);
+            int albumId = RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
+            String name = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
+            String artist = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
+            GregorianCalendar calendar = new GregorianCalendar();
+            int year = RequestDataExecutor.getIntegerByName(RequestParameterName.DATE, req);
             calendar.set(Calendar.YEAR, year);
 
-            Album album=new Album(name, artist, calendar);
+            Album album = new Album(name, artist, calendar);
 
-            boolean isUpdated= albumService.updateAlbum(albumId, album);
+            boolean isUpdated = albumService.updateAlbum(albumId, album);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-            if(isUpdated){
-                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
-            }else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            if (isUpdated) {
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
-//            Command command= CommandProvider.getInstance().getCommand(CommandName.EDIT_ALBUM_PAGE.name());
-//            command.execute(req, resp);
             DispatchAssistant.redirectToCommand(req, resp, CommandName.ALBUMS_PAGE, message);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

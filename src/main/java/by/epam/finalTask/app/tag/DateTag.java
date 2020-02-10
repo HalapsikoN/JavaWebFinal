@@ -11,8 +11,8 @@ import java.util.Calendar;
 
 public class DateTag extends TagSupport {
 
-    private static final Logger logger= LogManager.getLogger(DateTag.class);
-    
+    private static final Logger logger = LogManager.getLogger(DateTag.class);
+
     private final static String TIME_DELIMITER = ":";
     private final static String DATE_DELIMITER = ".";
 
@@ -40,16 +40,16 @@ public class DateTag extends TagSupport {
         try {
             DateTagFormats dateTagFormats = DateTagFormats.valueOf(format.toUpperCase());
 
-            if(item==null){
+            if (item == null) {
                 return SKIP_BODY;
             }
 
-            String year= String.valueOf(item.get(Calendar.YEAR));
-            String month= ((item.get(Calendar.MONTH)+1)<10)?"0"+(item.get(Calendar.MONTH)+1):""+(item.get(Calendar.MONTH)+1);
-            String date= (item.get(Calendar.DATE)<10)?"0"+item.get(Calendar.DATE):""+item.get(Calendar.DATE);
-            String second= (item.get(Calendar.SECOND)<10)?"0"+item.get(Calendar.SECOND):""+item.get(Calendar.SECOND);
-            String minute= (item.get(Calendar.MINUTE)<10)?"0"+item.get(Calendar.MINUTE):""+item.get(Calendar.MINUTE);
-            String hour= (item.get(Calendar.HOUR_OF_DAY)<10)?"0"+item.get(Calendar.HOUR_OF_DAY):""+item.get(Calendar.HOUR_OF_DAY);
+            String year = String.valueOf(item.get(Calendar.YEAR));
+            String month = ((item.get(Calendar.MONTH) + 1) < 10) ? "0" + (item.get(Calendar.MONTH) + 1) : "" + (item.get(Calendar.MONTH) + 1);
+            String date = (item.get(Calendar.DATE) < 10) ? "0" + item.get(Calendar.DATE) : "" + item.get(Calendar.DATE);
+            String second = (item.get(Calendar.SECOND) < 10) ? "0" + item.get(Calendar.SECOND) : "" + item.get(Calendar.SECOND);
+            String minute = (item.get(Calendar.MINUTE) < 10) ? "0" + item.get(Calendar.MINUTE) : "" + item.get(Calendar.MINUTE);
+            String hour = (item.get(Calendar.HOUR_OF_DAY) < 10) ? "0" + item.get(Calendar.HOUR_OF_DAY) : "" + item.get(Calendar.HOUR_OF_DAY);
 
             switch (dateTagFormats) {
                 case YYYY:

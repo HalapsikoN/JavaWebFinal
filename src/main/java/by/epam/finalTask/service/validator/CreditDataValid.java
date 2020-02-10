@@ -7,29 +7,29 @@ import java.util.GregorianCalendar;
 
 public class CreditDataValid {
 
-    private CreditDataValid(){
+    private CreditDataValid() {
     }
 
-    public static boolean isAmountValid(double amount){
-        return amount>0;
+    public static boolean isAmountValid(double amount) {
+        return amount > 0;
     }
 
-    public static boolean isEndDateValid(Calendar calendar){
-        boolean result=true;
+    public static boolean isEndDateValid(Calendar calendar) {
+        boolean result = true;
 
-        if(calendar==null){
-            result=false;
-        }else {
-            Calendar today=new GregorianCalendar();
-            if(today.compareTo(calendar)>=0){
-                result=false;
+        if (calendar == null) {
+            result = false;
+        } else {
+            Calendar today = new GregorianCalendar();
+            if (today.compareTo(calendar) >= 0) {
+                result = false;
             }
         }
 
         return result;
     }
 
-    public static boolean isCreditValid(Credit credit){
-        return credit!=null && isAmountValid(credit.getAmount()) && isEndDateValid(credit.getDate());
+    public static boolean isCreditValid(Credit credit) {
+        return credit != null && isAmountValid(credit.getAmount()) && isEndDateValid(credit.getDate());
     }
 }

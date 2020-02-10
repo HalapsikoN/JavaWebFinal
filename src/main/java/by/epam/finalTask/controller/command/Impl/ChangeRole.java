@@ -25,8 +25,8 @@ public class ChangeRole implements Command {
 
     private final static UserService userService = ServiceFactory.getInstance().getUserService();
 
-    private final static String SUCCESS_MSG="locale.changeRole.successMsg";
-        private final static String ERROR_MSG="locale.changeRole.errorMsg";
+    private final static String SUCCESS_MSG = "locale.changeRole.successMsg";
+    private final static String ERROR_MSG = "locale.changeRole.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -39,32 +39,28 @@ public class ChangeRole implements Command {
                 throw new CommandException("no session");
             }
 
-            int userId=RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
+            int userId = RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
-            Role newRole=Role.valueOf(req.getParameter(RequestParameterName.ROLE));
+            Role newRole = Role.valueOf(req.getParameter(RequestParameterName.ROLE));
 
-            boolean isChanged=userService.updateUserRole(userId, newRole);
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            boolean isChanged = userService.updateUserRole(userId, newRole);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             String message;
-            if(isChanged){
-                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESSFUL_MSG);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
-            }else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, FAILED_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            if (isChanged) {
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
 
-            int id=(int) session.getAttribute(SessionAttributeName.ID);
+            int id = (int) session.getAttribute(SessionAttributeName.ID);
 
-            if(id==userId && newRole==Role.USER && isChanged){
-                Command command= CommandProvider.getInstance().getCommand(CommandName.SIGN_OUT.name());
+            if (id == userId && newRole == Role.USER && isChanged) {
+                Command command = CommandProvider.getInstance().getCommand(CommandName.SIGN_OUT.name());
                 command.execute(req, resp);
-            }else {
-//                Command command = CommandProvider.getInstance().getCommand(CommandName.EDIT_USER_PAGE.name());
-//                command.execute(req, resp);
+            } else {
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.EDIT_USER_PAGE, message);
             }
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

@@ -21,26 +21,26 @@ import java.util.List;
 
 public class PlaylistInfo implements Command {
 
-    private final static Logger logger= LogManager.getLogger(AlbumInfo.class);
+    private final static Logger logger = LogManager.getLogger(AlbumInfo.class);
 
     private final static PlaylistService playlistService = ServiceFactory.getInstance().getPlaylistService();
-    private static final CommentService commentService= ServiceFactory.getInstance().getCommentService();
+    private static final CommentService commentService = ServiceFactory.getInstance().getCommentService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
-            int playlistId= RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
+            int playlistId = RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
 
-            Playlist playlist= playlistService.getPlaylist(playlistId);
+            Playlist playlist = playlistService.getPlaylist(playlistId);
 
             req.setAttribute(RequestAttributeName.PLAYLIST, playlist);
 
-            double playlistPrice= PlaylistLogic.getAlbumPrice(playlist);
+            double playlistPrice = PlaylistLogic.getAlbumPrice(playlist);
 
             req.setAttribute(RequestAttributeName.PLAYLIST_PRICE, playlistPrice);
 
-            List<Comment> commentList=commentService.getAllComments();
+            List<Comment> commentList = commentService.getAllComments();
 
             req.setAttribute(RequestAttributeName.COMMENT_LIST, commentList);
 

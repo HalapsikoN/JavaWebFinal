@@ -16,8 +16,6 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 
 </head>
@@ -27,14 +25,15 @@
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
     <br>
-<p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
-<c:if test="${sessionScope.role eq 'ADMIN'}">
-    <br>
+    <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
+    <c:if test="${sessionScope.role eq 'ADMIN'}">
+        <br>
 
-        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary"><fmt:message key="locale.albums.addNewAlbumBtn" bundle="${bundle}"/></a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary"><fmt:message
+                key="locale.albums.addNewAlbumBtn" bundle="${bundle}"/></a>
 
-</c:if>
-    </div>
+    </c:if>
+</div>
 <br>
 <c:if test="${!requestScope.get('albumList').isEmpty()}">
     <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">

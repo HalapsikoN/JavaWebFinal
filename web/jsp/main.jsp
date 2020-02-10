@@ -14,14 +14,10 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale" var="bundle"/>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page pageEncoding="UTF-8" %>
 
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-
     <c:import url="head/head.jsp" charEncoding="UTF-8"/>
 
 </head>
@@ -32,15 +28,16 @@
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
-        <a href="${pageContext.request.contextPath}/atrack?command=add_track_page" class="btn btn-primary"><fmt:message key="locale.main.addNewTrackBtn" bundle="${bundle}"/></a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_track_page" class="btn btn-primary"><fmt:message
+                key="locale.main.addNewTrackBtn" bundle="${bundle}"/></a>
     </div>
 </c:if>
 
-    <br>
-    <div id="center_div">
-        <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
-    </div>
-    <br>
+<br>
+<div id="center_div">
+    <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
+</div>
+<br>
 
 <div>
     <br>
@@ -124,11 +121,13 @@
                                     <div class="form-group">
                                         <input type="hidden" name="command" value="add_comment">
                                         <input type="hidden" name="track_id" value="${song.id}">
-                                        <label for="textComment${song.id}"><fmt:message key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
+                                        <label for="textComment${song.id}"><fmt:message
+                                                key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
                                         <textarea class="form-control" name="text" id="textComment${song.id}"
                                                   rows="1" required></textarea>
                                         <br>
-                                        <button type="submit" class="btn btn-primary"><fmt:message key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
+                                        <button type="submit" class="btn btn-primary"><fmt:message
+                                                key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
                                     </div>
                                 </form>
                             </c:if>

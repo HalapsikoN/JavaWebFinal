@@ -20,11 +20,11 @@ nav > * {
     font-size: 20pt;
 }
 
-#starts{
+#starts {
     align-content: flex-start;
 }
 
-#ends{
+#ends {
     margin-left: auto;
     align-content: flex-end;
 }
@@ -42,7 +42,7 @@ nav > a:hover {
     background: rgba(250, 250, 250, 0.3);
 }
 
-#dropdownMenu1{
+#dropdownMenu1 {
     right: 0;
     margin-right: 20px;
     left: auto;

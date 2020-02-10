@@ -41,7 +41,8 @@
                 <option value="ADMIN"><fmt:message key="locale.editUser.admin" bundle="${bundle}"/></option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary mb-2"><fmt:message key="locale.button.change" bundle="${bundle}"/></button>
+        <button type="submit" class="btn btn-primary mb-2"><fmt:message key="locale.button.change"
+                                                                        bundle="${bundle}"/></button>
     </form>
 
     <!-- Button trigger modal -->
@@ -55,7 +56,9 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle1"><fmt:message key="locale.editUser.addBonusTitle" bundle="${bundle}"/> (${user.name})?</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle1"><fmt:message key="locale.editUser.addBonusTitle"
+                                                                                bundle="${bundle}"/>
+                        (${user.name})?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -66,14 +69,17 @@
                             <input type="hidden" name="command" value="add_bonus">
                             <input type="hidden" name="user_id" value="${user.id}">
                             <div class="form-group row">
-                                <label for="name" class="col-sm-3 col-form-label"><fmt:message key="locale.editUser.nameBonus" bundle="${bundle}"/>: </label>
+                                <label for="name" class="col-sm-3 col-form-label"><fmt:message
+                                        key="locale.editUser.nameBonus" bundle="${bundle}"/>: </label>
                                 <div class="col-sm">
                                     <input type="text" class="form-control" id="name" name="name"
-                                           placeholder="<fmt:message key="locale.editUser.nameBonusPlaceholder" bundle="${bundle}"/>" required>
+                                           placeholder="<fmt:message key="locale.editUser.nameBonusPlaceholder" bundle="${bundle}"/>"
+                                           required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="discount" class="col-sm-4 col-form-label"><fmt:message key="locale.editUser.discount" bundle="${bundle}"/>: </label>
+                                <label for="discount" class="col-sm-4 col-form-label"><fmt:message
+                                        key="locale.editUser.discount" bundle="${bundle}"/>: </label>
 
                                 <input type="number" class="col-sm-6 form-control" id="discount" name="discount"
                                        placeholder="<fmt:message key="locale.editUser.discountPlaceholder" bundle="${bundle}"/>"
@@ -84,17 +90,21 @@
 
                             </div>
                             <div class="form-group row">
-                                <label for="start_date" class="col-sm-3 col-form-label"><fmt:message key="locale.editUser.startDate" bundle="${bundle}"/>: </label>
+                                <label for="start_date" class="col-sm-3 col-form-label"><fmt:message
+                                        key="locale.editUser.startDate" bundle="${bundle}"/>: </label>
                                 <div class="col-sm">
                                     <input type="date" class="form-control" id="start_date" name="start_date"
-                                           placeholder="<fmt:message key="locale.editUser.startDatePlaceholder" bundle="${bundle}"/>" required>
+                                           placeholder="<fmt:message key="locale.editUser.startDatePlaceholder" bundle="${bundle}"/>"
+                                           required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="start_date" class="col-sm-3 col-form-label"><fmt:message key="locale.editUser.endDate" bundle="${bundle}"/>: </label>
+                                <label for="start_date" class="col-sm-3 col-form-label"><fmt:message
+                                        key="locale.editUser.endDate" bundle="${bundle}"/>: </label>
                                 <div class="col-sm">
                                     <input type="date" class="form-control" id="end_date" name="end_date"
-                                           placeholder="<fmt:message key="locale.editUser.endDatePlaceholder" bundle="${bundle}"/>" required>
+                                           placeholder="<fmt:message key="locale.editUser.endDatePlaceholder" bundle="${bundle}"/>"
+                                           required>
                                 </div>
                             </div>
                         </div>
@@ -102,8 +112,10 @@
                 </div>
                 <div class="modal-footer">
 
-                    <button type="submit" class="btn btn-danger" onclick="bonusAddForm('add_bonus')"><fmt:message key="locale.button.add" bundle="${bundle}"/></button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.cancel" bundle="${bundle}"/></button>
+                    <button type="submit" class="btn btn-danger" onclick="bonusAddForm('add_bonus')"><fmt:message
+                            key="locale.button.add" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.cancel" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>
@@ -120,8 +132,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle2"><fmt:message key="locale.editUser.deleteUserTitle1" bundle="${bundle}"/>
-                        (<strong>${user.name}</strong>) <fmt:message key="locale.editUser.deleteUserTitle2" bundle="${bundle}"/>?</h5>
+                    <h5 class="modal-title" id="ModalCenterTitle2"><fmt:message key="locale.editUser.deleteUserTitle1"
+                                                                                bundle="${bundle}"/>
+                        (<strong>${user.name}</strong>) <fmt:message key="locale.editUser.deleteUserTitle2"
+                                                                     bundle="${bundle}"/>?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -130,9 +144,11 @@
                     <form action="atrack" method="post">
                         <input type="hidden" name="command" value="delete_user">
                         <input type="hidden" name="user_id" value="${user.id}">
-                        <button type="submit" class="btn btn-danger"><fmt:message key="locale.button.yes" bundle="${bundle}"/></button>
+                        <button type="submit" class="btn btn-danger"><fmt:message key="locale.button.yes"
+                                                                                  bundle="${bundle}"/></button>
                     </form>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="locale.button.no" bundle="${bundle}"/></button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message
+                            key="locale.button.no" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

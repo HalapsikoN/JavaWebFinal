@@ -4,18 +4,13 @@ import by.epam.finalTask.dao.AlbumDAO;
 import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.DAOFactory;
 import by.epam.finalTask.entity.Album;
-import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.AlbumService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.validator.AlbumDataValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class AlbumServiceImpl implements AlbumService {
-
-    public static final Logger logger = LogManager.getLogger(TrackServiceImpl.class);
 
     private AlbumDAO albumDAO = DAOFactory.getInstance().getSqlAlbumDAO();
 
@@ -23,7 +18,7 @@ public class AlbumServiceImpl implements AlbumService {
     public boolean addAlbum(Album album) throws ServiceException {
         boolean result;
 
-        if (!AlbumDataValidator.isValidAlbum(album)){
+        if (!AlbumDataValidator.isValidAlbum(album)) {
             throw new ServiceException("Not valid date album");
         }
 
@@ -53,7 +48,7 @@ public class AlbumServiceImpl implements AlbumService {
     public boolean updateAlbum(int albumId, Album album) throws ServiceException {
         boolean result;
 
-        if (!AlbumDataValidator.isValidAlbum(album)){
+        if (!AlbumDataValidator.isValidAlbum(album)) {
             throw new ServiceException("Not valid date album");
         }
 

@@ -25,7 +25,7 @@ public class BanFilter implements Filter {
     private final static Logger logger = LogManager.getLogger(BanFilter.class);
 
     private final static CreditService creditService = ServiceFactory.getInstance().getCreditService();
-    private final String REDIRECT_PATH="/atrack?command=ban_page";
+    private final String REDIRECT_PATH = "/atrack?command=ban_page";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -39,7 +39,7 @@ public class BanFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = SessionHelper.getExistingSession(request);
 
-        if (session!=null && session.getAttribute(SessionAttributeName.ID) != null) {
+        if (session != null && session.getAttribute(SessionAttributeName.ID) != null) {
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
             Credit credit = null;
@@ -49,20 +49,20 @@ public class BanFilter implements Filter {
                 logger.error(e);
             }
 
-            if(credit!=null){
+            if (credit != null) {
                 request.setAttribute(RequestAttributeName.CREDIT, credit);
 
-                Command command= CommandProvider.getInstance().getCommand(CommandName.BAN_PAGE.name());
+                Command command = CommandProvider.getInstance().getCommand(CommandName.BAN_PAGE.name());
                 try {
                     command.execute(request, response);
                 } catch (CommandException e) {
                     logger.error(e);
                 }
-            }else {
+            } else {
                 filterChain.doFilter(request, response);
             }
 
-        }else {
+        } else {
             filterChain.doFilter(request, response);
         }
     }

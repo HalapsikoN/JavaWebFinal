@@ -22,12 +22,12 @@ import java.util.Locale;
 
 public class EditTrack implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddTrack.class);
+    private static final Logger logger = LogManager.getLogger(AddTrack.class);
 
-    private static final TrackService trackService= ServiceFactory.getInstance().getTrackService();
+    private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
 
-    private static final String SUCCESS_MSG="locale.editTrack.successMsg";
-    private static final String ERROR_MSG="locale.editTrack.errorMsg";
+    private static final String SUCCESS_MSG = "locale.editTrack.successMsg";
+    private static final String ERROR_MSG = "locale.editTrack.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -40,30 +40,26 @@ public class EditTrack implements Command {
                 throw new CommandException("no session");
             }
 
-            int trackId=RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
-            String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
-            String artist=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
-            GregorianCalendar calendar=new GregorianCalendar();
-            int year=Integer.valueOf(req.getParameter(RequestParameterName.DATE));
+            int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
+            String name = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
+            String artist = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
+            GregorianCalendar calendar = new GregorianCalendar();
+            int year = Integer.valueOf(req.getParameter(RequestParameterName.DATE));
             calendar.set(Calendar.YEAR, year);
-            double price=RequestDataExecutor.getDoubleByName(RequestParameterName.PRICE, req);
+            double price = RequestDataExecutor.getDoubleByName(RequestParameterName.PRICE, req);
 
-            Track track=new Track(name, artist, calendar, price);
+            Track track = new Track(name, artist, calendar, price);
 
-            boolean isUpdated=trackService.updateTrack(trackId, track);
+            boolean isUpdated = trackService.updateTrack(trackId, track);
             String message;
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
-            if(isUpdated){
-                //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG);
-                message=ResourceManager.getString(SUCCESS_MSG, locale);
-            }else {
-                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
-                message=ResourceManager.getString(ERROR_MSG, locale);
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            if (isUpdated) {
+                message = ResourceManager.getString(SUCCESS_MSG, locale);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
             }
-//            Command command= CommandProvider.getInstance().getCommand(CommandName.EDIT_TRACK_PAGE.name());
-//            command.execute(req, resp);
             DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE, message);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

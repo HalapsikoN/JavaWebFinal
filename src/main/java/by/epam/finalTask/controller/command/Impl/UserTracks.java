@@ -21,29 +21,29 @@ import java.util.List;
 
 public class UserTracks implements Command {
 
-    private final static Logger logger= LogManager.getLogger(UserTracks.class);
+    private final static Logger logger = LogManager.getLogger(UserTracks.class);
 
-    private final static UserService userService= ServiceFactory.getInstance().getUserService();
-    private static final CommentService commentService= ServiceFactory.getInstance().getCommentService();
+    private final static UserService userService = ServiceFactory.getInstance().getUserService();
+    private static final CommentService commentService = ServiceFactory.getInstance().getCommentService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
 
-            HttpSession session=SessionHelper.getExistingSession(req);
+            HttpSession session = SessionHelper.getExistingSession(req);
 
-            if(session==null){
+            if (session == null) {
                 throw new CommandException("no session");
             }
 
-            int userId= (int) session.getAttribute(SessionAttributeName.ID);
+            int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-            List<Track> trackList=userService.getUserTracks(userId);
+            List<Track> trackList = userService.getUserTracks(userId);
 
             req.setAttribute(RequestAttributeName.SONG_LIST, trackList);
 
-            List<Comment> commentList=commentService.getAllComments();
+            List<Comment> commentList = commentService.getAllComments();
 
             req.setAttribute(RequestAttributeName.COMMENT_LIST, commentList);
 

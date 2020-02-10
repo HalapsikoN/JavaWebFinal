@@ -7,14 +7,10 @@ import by.epam.finalTask.entity.Playlist;
 import by.epam.finalTask.service.PlaylistService;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.validator.PlaylistDataValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class PlaylistServiceImpl implements PlaylistService {
-
-    public static final Logger logger= LogManager.getLogger(PlaylistServiceImpl.class);
 
     private PlaylistDAO playlistDAO = DAOFactory.getInstance().getSqlPlaylistDAO();
 
@@ -22,13 +18,13 @@ public class PlaylistServiceImpl implements PlaylistService {
     public boolean addPlaylist(Playlist playlist) throws ServiceException {
         boolean result;
 
-        if (!PlaylistDataValidator.isValidPlaylist(playlist)){
+        if (!PlaylistDataValidator.isValidPlaylist(playlist)) {
             throw new ServiceException("Not valid date playlist");
         }
 
-        try{
-            result=playlistDAO.addPlaylistWithOutTracks(playlist);
-        }catch (DAOException e) {
+        try {
+            result = playlistDAO.addPlaylistWithOutTracks(playlist);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -39,9 +35,9 @@ public class PlaylistServiceImpl implements PlaylistService {
     public Playlist getPlaylist(int id) throws ServiceException {
         Playlist playlist;
 
-        try{
-            playlist=playlistDAO.getPlaylistById(id);
-        }catch (DAOException e) {
+        try {
+            playlist = playlistDAO.getPlaylistById(id);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -52,13 +48,13 @@ public class PlaylistServiceImpl implements PlaylistService {
     public boolean updatePlaylist(int id, Playlist playlist) throws ServiceException {
         boolean result;
 
-        if (!PlaylistDataValidator.isValidPlaylist(playlist)){
+        if (!PlaylistDataValidator.isValidPlaylist(playlist)) {
             throw new ServiceException("Not valid date playlist");
         }
 
-        try{
-            result=playlistDAO.updatePlaylistById(id, playlist);
-        }catch (DAOException e) {
+        try {
+            result = playlistDAO.updatePlaylistById(id, playlist);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -89,9 +85,9 @@ public class PlaylistServiceImpl implements PlaylistService {
     public boolean deletePlaylist(int id) throws ServiceException {
         boolean result;
 
-        try{
-            result=playlistDAO.deletePlaylistById(id);
-        }catch (DAOException e) {
+        try {
+            result = playlistDAO.deletePlaylistById(id);
+        } catch (DAOException e) {
             throw new ServiceException(e);
         }
 
@@ -103,7 +99,7 @@ public class PlaylistServiceImpl implements PlaylistService {
         List<Playlist> playlistList;
 
         try {
-            playlistList= playlistDAO.getAllPlaylists();
+            playlistList = playlistDAO.getAllPlaylists();
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

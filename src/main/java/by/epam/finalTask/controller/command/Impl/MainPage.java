@@ -24,25 +24,24 @@ public class MainPage implements Command {
 
     private static final Logger logger = LogManager.getLogger(MainPage.class);
 
-    private static final TrackService trackService= ServiceFactory.getInstance().getTrackService();
-    private static final CommentService commentService= ServiceFactory.getInstance().getCommentService();
+    private static final TrackService trackService = ServiceFactory.getInstance().getTrackService();
+    private static final CommentService commentService = ServiceFactory.getInstance().getCommentService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
         try {
 
-            List<Track> trackList=trackService.getAllTracks();
+            List<Track> trackList = trackService.getAllTracks();
 
             req.setAttribute(RequestAttributeName.SONG_LIST, trackList);
 
-            List<Comment> commentList=commentService.getAllComments();
+            List<Comment> commentList = commentService.getAllComments();
 
             req.setAttribute(RequestAttributeName.COMMENT_LIST, commentList);
 
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.MAIN_PAGE);
         } catch (ServletException | IOException | ServiceException e) {
             logger.error(e);
-            //что-то ещё
             throw new CommandException(e);
         }
     }

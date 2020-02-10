@@ -28,7 +28,8 @@
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>
     <div id="center_div">
-        <a href="${pageContext.request.contextPath}/atrack?command=add_playlist_page" class="btn btn-primary"><fmt:message key="locale.playlists.title" bundle="${bundle}"/></a>
+        <a href="${pageContext.request.contextPath}/atrack?command=add_playlist_page"
+           class="btn btn-primary"><fmt:message key="locale.playlists.title" bundle="${bundle}"/></a>
     </div>
 </c:if>
 <br>
@@ -47,7 +48,7 @@
         <tbody>
         <c:forEach var="playlist" items="${playlistList}">
             <tr>
-                <td >${playlist.name}</td>
+                <td>${playlist.name}</td>
                 <td><outputTag:date format="dd_mm_yyyy" item="${playlist.date}"/></td>
                 <td>
                     <form id="info_playlist${playlist.id}" method="post" action="atrack">

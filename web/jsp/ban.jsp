@@ -24,10 +24,13 @@
     <div class="alert alert-danger" role="alert">
         <p><fmt:message key="locale.ban.title" bundle="${bundle}"/>:</p>
         <p><fmt:message key="locale.ban.amountToPay" bundle="${bundle}"/>: <strong>${credit.amount}</strong></p>
-        <p><fmt:message key="locale.ban.endDate" bundle="${bundle}"/>: <strong><outputTag:date format="dd_mm_yyyy" item="${credit.date}"/></strong></p>
+        <p><fmt:message key="locale.ban.endDate" bundle="${bundle}"/>: <strong><outputTag:date format="dd_mm_yyyy"
+                                                                                               item="${credit.date}"/></strong>
+        </p>
         <br>
         <p><fmt:message key="locale.ban.advice" bundle="${bundle}"/>.</p>
-        <a href="${pageContext.request.contextPath}/atrack"><fmt:message key="locale.general.hrefMainPage" bundle="${bundle}"/>.</a>
+        <a href="${pageContext.request.contextPath}/atrack"><fmt:message key="locale.general.hrefMainPage"
+                                                                         bundle="${bundle}"/>.</a>
     </div>
 </div>
 

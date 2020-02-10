@@ -17,9 +17,9 @@ import java.io.IOException;
 
 public class EditUserPage implements Command {
 
-    private final static Logger logger= LogManager.getLogger(EditUserPage.class);
+    private final static Logger logger = LogManager.getLogger(EditUserPage.class);
 
-    private final static UserService userService= ServiceFactory.getInstance().getUserService();
+    private final static UserService userService = ServiceFactory.getInstance().getUserService();
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {

@@ -1,13 +1,13 @@
 package by.epam.finalTask.dao.impl;
 
+import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.UserDAO;
-import by.epam.finalTask.dao.impl.util.auxiliary.UserFields;
 import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
+import by.epam.finalTask.dao.impl.util.auxiliary.UserFields;
+import by.epam.finalTask.dao.pool.ConnectionPool;
+import by.epam.finalTask.dao.pool.ConnectionPoolException;
 import by.epam.finalTask.entity.*;
 import by.epam.finalTask.entity.util.Role;
-import by.epam.finalTask.dao.pool.ConnectionPoolException;
-import by.epam.finalTask.dao.DAOException;
-import by.epam.finalTask.dao.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -73,7 +73,7 @@ public class SQLUserDAO implements UserDAO {
         prepareStatement(connection, sqlAddAlbumToUser);
         prepareStatement(connection, sqlAddPlaylistToUser);
 
-        if(connection!=null) {
+        if (connection != null) {
             connectionPool.closeConnection(connection);
         }
     }
@@ -422,7 +422,7 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public List<Album> getUserAlbumsById(int id) throws DAOException {
-        List<Album> result=new ArrayList<>();
+        List<Album> result = new ArrayList<>();
         ResultSet resultSet = null;
 
         try {
@@ -439,7 +439,7 @@ public class SQLUserDAO implements UserDAO {
                 Album album = converterFromResultSet.getEmptyAlbumFromResultSet(resultSet);
                 result.add(album);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
         }
@@ -449,7 +449,7 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public List<Playlist> getUserPlayListsById(int id) throws DAOException {
-        List<Playlist> result=new ArrayList<>();
+        List<Playlist> result = new ArrayList<>();
         ResultSet resultSet = null;
 
         try {
@@ -466,7 +466,7 @@ public class SQLUserDAO implements UserDAO {
                 Playlist album = converterFromResultSet.getEmptyPlaylistFromResultSet(resultSet);
                 result.add(album);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
         }
@@ -476,7 +476,7 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public List<Bonus> getUserBonusesById(int id) throws DAOException {
-        List<Bonus> result=new ArrayList<>();
+        List<Bonus> result = new ArrayList<>();
         ResultSet resultSet = null;
 
         try {
@@ -493,7 +493,7 @@ public class SQLUserDAO implements UserDAO {
                 Bonus bonus = converterFromResultSet.getBonusFromResultSet(resultSet);
                 result.add(bonus);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
         }
@@ -503,7 +503,7 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public List<User> getAllUsers() throws DAOException {
-        List<User> result=new ArrayList<>();
+        List<User> result = new ArrayList<>();
         ResultSet resultSet = null;
 
         try {
@@ -518,7 +518,7 @@ public class SQLUserDAO implements UserDAO {
                 User user = converterFromResultSet.getUserFromResultSet(resultSet);
                 result.add(user);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error(e);
             throw new DAOException(e);
         }

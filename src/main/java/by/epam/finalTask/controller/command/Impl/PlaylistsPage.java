@@ -28,7 +28,7 @@ public class PlaylistsPage implements Command {
         try {
             List<Playlist> albumsList;
 
-            albumsList= playlistService.getAllPlaylists();
+            albumsList = playlistService.getAllPlaylists();
 
             req.setAttribute(RequestAttributeName.PLAYLIST_LIST, albumsList);
 
@@ -36,7 +36,6 @@ public class PlaylistsPage implements Command {
             DispatchAssistant.forwardToJsp(req, resp, JspPageName.PLAYLISTS_PAGE);
         } catch (ServiceException | IOException | ServletException e) {
             logger.error(e);
-            //что-то ещё
             throw new CommandException(e);
         }
     }

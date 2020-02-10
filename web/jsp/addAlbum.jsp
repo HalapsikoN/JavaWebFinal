@@ -28,21 +28,29 @@
     <form action="atrack" method="post" id="input_form">
         <input type="hidden" name="command" value="add_album">
         <div class="form-group row">
-            <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.name" bundle="${bundle}"/>: </label>
+            <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.name"
+                                                                           bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="<fmt:message key="locale.formAlbum.namePlaceholder" bundle="${bundle}"/>" required>
+                <input type="text" class="form-control" id="name" name="name"
+                       placeholder="<fmt:message key="locale.formAlbum.namePlaceholder" bundle="${bundle}"/>" required>
             </div>
         </div>
         <div class="form-group row">
-            <label for="artist" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.artist" bundle="${bundle}"/>: </label>
+            <label for="artist" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.artist"
+                                                                             bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="artist" name="artist" placeholder="<fmt:message key="locale.formAlbum.artistPlaceholder" bundle="${bundle}"/>" required>
+                <input type="text" class="form-control" id="artist" name="artist"
+                       placeholder="<fmt:message key="locale.formAlbum.artistPlaceholder" bundle="${bundle}"/>"
+                       required>
             </div>
         </div>
         <div class="form-group row">
-            <label for="date" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.date" bundle="${bundle}"/>: </label>
+            <label for="date" class="col-sm-2 col-form-label"><fmt:message key="locale.formAlbum.date"
+                                                                           bundle="${bundle}"/>: </label>
             <div class="col-sm-10">
-                <input type="number" class="date-own form-control" id="date" name="date" placeholder="<fmt:message key="locale.formAlbum.datePlaceholder" bundle="${bundle}"/>" required min="1900" max="2099" step="1">
+                <input type="number" class="date-own form-control" id="date" name="date"
+                       placeholder="<fmt:message key="locale.formAlbum.datePlaceholder" bundle="${bundle}"/>" required
+                       min="1900" max="2099" step="1">
             </div>
         </div>
 

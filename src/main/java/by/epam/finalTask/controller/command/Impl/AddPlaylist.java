@@ -21,11 +21,11 @@ import java.util.Locale;
 
 public class AddPlaylist implements Command {
 
-    private static final Logger logger= LogManager.getLogger(AddPlaylist.class);
+    private static final Logger logger = LogManager.getLogger(AddPlaylist.class);
 
     private static final PlaylistService playlistService = ServiceFactory.getInstance().getPlaylistService();
 
-    private static final String ERROR_MSG="locale.addPlaylist.errorMsg";
+    private static final String ERROR_MSG = "locale.addPlaylist.errorMsg";
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
@@ -38,27 +38,24 @@ public class AddPlaylist implements Command {
                 throw new CommandException("no session");
             }
 
-            String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
-            GregorianCalendar calendar=new GregorianCalendar();
+            String name = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
+            GregorianCalendar calendar = new GregorianCalendar();
 
-            Playlist playlist=new Playlist(name, calendar);
+            Playlist playlist = new Playlist(name, calendar);
 
-            boolean isAdded= playlistService.addPlaylist(playlist);
-            Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
+            boolean isAdded = playlistService.addPlaylist(playlist);
+
+            Locale locale = new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             String message;
-            //Command command;
-            if(isAdded){
-                //command= CommandProvider.getInstance().getCommand(CommandName.PLAYLISTS_PAGE.name());
+
+            if (isAdded) {
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.PLAYLISTS_PAGE);
-            }else {
-                //command= CommandProvider.getInstance().getCommand(CommandName.ADD_PLAYLIST_PAGE.name());
-                message=ResourceManager.getString(ERROR_MSG, locale);
-                //req.setAttribute(RequestAttributeName.MESSAGE, ERROR_MSG);
+            } else {
+                message = ResourceManager.getString(ERROR_MSG, locale);
                 DispatchAssistant.redirectToCommand(req, resp, CommandName.PLAYLISTS_PAGE, message);
             }
 
-            //command.execute(req, resp);
-        } catch (ServiceException| ServletException | IOException e) {
+        } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);
         }

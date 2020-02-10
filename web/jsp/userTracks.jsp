@@ -78,11 +78,13 @@
                                     <div class="form-group">
                                         <input type="hidden" name="command" value="add_comment">
                                         <input type="hidden" name="track_id" value="${song.id}">
-                                        <label for="textComment${song.id}"><fmt:message key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
+                                        <label for="textComment${song.id}"><fmt:message
+                                                key="locale.general.tableAddYourComment" bundle="${bundle}"/></label>
                                         <textarea class="form-control" name="text" id="textComment${song.id}"
                                                   rows="1" required></textarea>
                                         <br>
-                                        <button type="submit" class="btn btn-primary"><fmt:message key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
+                                        <button type="submit" class="btn btn-primary"><fmt:message
+                                                key="locale.general.tableAddBtn" bundle="${bundle}"/></button>
                                     </div>
                                 </form>
                             </c:if>
