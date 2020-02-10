@@ -26,7 +26,7 @@
     <br>
     <c:if test="${requestScope.get('songList').isEmpty()}">
         <div id="center_div">
-            <p><fmt:message key="locale.userTracks.title" bundle="${bundle}"/>There are not any songs yet. You can correct this: </p>
+            <p><fmt:message key="locale.userTracks.title" bundle="${bundle}"/>: </p>
             <a href="${pageContext.request.contextPath}/atrack?command=main_page">
                 <fmt:message key="locale.general.hrefClickHere" bundle="${bundle}"/>.
             </a>

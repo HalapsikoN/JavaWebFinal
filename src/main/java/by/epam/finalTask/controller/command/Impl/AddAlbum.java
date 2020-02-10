@@ -38,7 +38,6 @@ public class AddAlbum implements Command {
                 throw new CommandException("no session");
             }
 
-            System.out.println(req.getParameter(RequestParameterName.NAME));
             String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
             String artist=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
             GregorianCalendar calendar=new GregorianCalendar();

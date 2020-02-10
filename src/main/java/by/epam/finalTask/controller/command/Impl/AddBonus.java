@@ -44,14 +44,14 @@ public class AddBonus implements Command {
             }
 
             String name = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
-            int discount = Integer.valueOf(req.getParameter(RequestParameterName.DISCOUNT));
+            int discount =RequestDataExecutor.getIntegerByName(RequestParameterName.DISCOUNT, req);
             GregorianCalendar start = new GregorianCalendar();
             Date start_date = format.parse(req.getParameter(RequestParameterName.START_DATE));
             start.setTimeInMillis(start_date.getTime());
             GregorianCalendar end = new GregorianCalendar();
             Date end_date = format.parse(req.getParameter(RequestParameterName.END_DATE));
             end.setTimeInMillis(end_date.getTime());
-            int userId=Integer.valueOf(req.getParameter(RequestParameterName.USER_ID));
+            int userId=RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
             Bonus bonus = new Bonus(name, discount, start, end, userId);
 

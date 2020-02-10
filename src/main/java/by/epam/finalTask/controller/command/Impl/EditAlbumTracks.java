@@ -40,7 +40,7 @@ public class EditAlbumTracks implements Command {
                 throw new CommandException("no session");
             }
 
-            int albumId = Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int albumId = RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
 
             String[] tracksUpdate = req.getParameterValues(RequestParameterName.TRACKS_UPDATE);
 

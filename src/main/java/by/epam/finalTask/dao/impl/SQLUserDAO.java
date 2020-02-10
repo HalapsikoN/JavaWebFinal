@@ -43,7 +43,7 @@ public class SQLUserDAO implements UserDAO {
     private String sqlGetAllUsers = "SELECT * FROM users";
     private String sqlAddTrackToUser = "INSERT INTO user_track (user_id, track_id) values (?,?)";
     private String sqlAddAlbumToUser = "INSERT INTO user_album (user_id, album_id) values (?,?)";
-    private String sqlAddPlaylistToUser = "INSERT INTO us_playlist (user_id, playlist_id) values (?,?)";
+    private String sqlAddPlaylistToUser = "INSERT INTO user_playlist (user_id, playlist_id) values (?,?)";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 

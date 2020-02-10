@@ -5,6 +5,7 @@ import by.epam.finalTask.controller.command.CommandException;
 import by.epam.finalTask.controller.command.CommandName;
 import by.epam.finalTask.controller.command.CommandProvider;
 import by.epam.finalTask.controller.util.DispatchAssistant;
+import by.epam.finalTask.controller.util.RequestDataExecutor;
 import by.epam.finalTask.controller.util.RequestParameterName;
 import by.epam.finalTask.service.CreditService;
 import by.epam.finalTask.service.ServiceException;
@@ -29,7 +30,7 @@ public class UnbanUser implements Command {
 
         try {
 
-            int userId=Integer.valueOf(req.getParameter(RequestParameterName.USER_ID));
+            int userId= RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
             creditService.unbanUser(userId);
 

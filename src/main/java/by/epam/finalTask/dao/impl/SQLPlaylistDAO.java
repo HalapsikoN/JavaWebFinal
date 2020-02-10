@@ -26,7 +26,7 @@ public class SQLPlaylistDAO implements PlaylistDAO {
     private String sqlAddPlaylist ="INSERT INTO playlists (name, date) values (?,?)";
     private String sqlAddTrackToPlaylist ="INSERT INTO track_playlist (track_id, playlist_id) values (?,?)";
     private String sqlGetPlaylistById ="SELECT * FROM playlists WHERE id=?";
-    private String sqlGetAllPlaylistTracks="SELECT tracks.* FROM playlists INNER JOIN track_playlist ON playlists.id=track_playlist.playlist_id INNER JOIN tracks ON tr_pl.track_id=tracks.id WHERE playlists.id=?";
+    private String sqlGetAllPlaylistTracks="SELECT tracks.* FROM playlists INNER JOIN track_playlist ON playlists.id=track_playlist.playlist_id INNER JOIN tracks ON track_playlist.track_id=tracks.id WHERE playlists.id=?";
     private String sqlUpdatePlaylistById ="UPDATE playlists SET name=?, date=? where id=?";
     private String sqlDeletePlaylistById ="DELETE FROM playlists where id=?";
     private String sqlGetAllPlaylists ="SELECT * FROM playlists";

@@ -39,7 +39,7 @@ public class ChangeRole implements Command {
                 throw new CommandException("no session");
             }
 
-            int userId=Integer.valueOf(req.getParameter(RequestParameterName.USER_ID));
+            int userId=RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
             Role newRole=Role.valueOf(req.getParameter(RequestParameterName.ROLE));
 

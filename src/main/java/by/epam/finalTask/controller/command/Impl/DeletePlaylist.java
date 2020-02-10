@@ -37,7 +37,7 @@ public class DeletePlaylist implements Command {
                 throw new CommandException("no session");
             }
 
-            int playlistId = Integer.valueOf(req.getParameter(RequestParameterName.PLAYLIST_ID));
+            int playlistId = RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
 
             boolean isDeleted = playlistService.deletePlaylist(playlistId);
             String message;

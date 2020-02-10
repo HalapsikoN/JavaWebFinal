@@ -40,13 +40,13 @@ public class EditTrack implements Command {
                 throw new CommandException("no session");
             }
 
-            int trackId=Integer.valueOf(req.getParameter(RequestParameterName.TRACK_ID));
+            int trackId=RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
             String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
             String artist=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
             GregorianCalendar calendar=new GregorianCalendar();
             int year=Integer.valueOf(req.getParameter(RequestParameterName.DATE));
             calendar.set(Calendar.YEAR, year);
-            double price=Double.valueOf(req.getParameter(RequestParameterName.PRICE));
+            double price=RequestDataExecutor.getDoubleByName(RequestParameterName.PRICE, req);
 
             Track track=new Track(name, artist, calendar, price);
 

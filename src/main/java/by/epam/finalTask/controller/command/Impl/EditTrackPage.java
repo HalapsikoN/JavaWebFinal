@@ -2,10 +2,7 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
-import by.epam.finalTask.controller.util.DispatchAssistant;
-import by.epam.finalTask.controller.util.JspPageName;
-import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.controller.util.RequestParameterName;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
@@ -29,7 +26,7 @@ public class EditTrackPage implements Command {
 
         try {
 
-            int trackId=Integer.valueOf(req.getParameter(RequestParameterName.TRACK_ID));
+            int trackId= RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
             Track track=trackService.getTrack(trackId);
 

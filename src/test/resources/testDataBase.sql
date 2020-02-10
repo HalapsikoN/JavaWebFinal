@@ -60,12 +60,12 @@ CREATE TABLE comments
 
 CREATE TABLE bonuses
 (
-    id        INT         NOT NULL AUTO_INCREMENT,
-    name     VARCHAR(45) NOT NULL,
-    discount  INT         NOT NULL,
+    id         INT         NOT NULL AUTO_INCREMENT,
+    name       VARCHAR(45) NOT NULL,
+    discount   INT         NOT NULL,
     start_date DATE        NOT NULL,
-    endDate   DATE        NOT NULL,
-    user_id   INT         NOT NULL,
+    end_date   DATE        NOT NULL,
+    user_id    INT         NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT FOREIGN KEY (user_id)
         REFERENCES users (id) ON DELETE CASCADE
@@ -86,7 +86,7 @@ create table user_track
 
 create table user_album
 (
-    user_id   INT NOT NULL,
+    user_id  INT NOT NULL,
     album_id INT NOT NULL,
     PRIMARY KEY (user_id, album_id),
     CONSTRAINT FOREIGN KEY (user_id)
@@ -98,7 +98,7 @@ create table user_album
 
 create table user_playlist
 (
-    user_id      INT NOT NULL,
+    user_id     INT NOT NULL,
     playlist_id INT NOT NULL,
     PRIMARY KEY (user_id, playlist_id),
     CONSTRAINT FOREIGN KEY (user_id)
@@ -110,7 +110,7 @@ create table user_playlist
 
 create table track_album
 (
-    track_id  INT NOT NULL,
+    track_id INT NOT NULL,
     album_id INT NOT NULL,
     PRIMARY KEY (track_id, album_id),
     CONSTRAINT FOREIGN KEY (track_id)
@@ -120,22 +120,10 @@ create table track_album
 )
     ENGINE = InnoDB;
 
-create table track_comment
-(
-    track_id    INT NOT NULL,
-    comment_id INT NOT NULL,
-    PRIMARY KEY (track_id, comment_id),
-    CONSTRAINT FOREIGN KEY (track_id)
-        REFERENCES tracks (id) ON DELETE CASCADE,
-    CONSTRAINT FOREIGN KEY (comment_id)
-        REFERENCES comments (id) ON DELETE CASCADE
-)
-    ENGINE = InnoDB;
-
 create table track_playlist
 (
     playlist_id INT NOT NULL,
-    track_id     INT NOT NULL,
+    track_id    INT NOT NULL,
     PRIMARY KEY (playlist_id, track_id),
     CONSTRAINT FOREIGN KEY (playlist_id)
         REFERENCES playlists (id) ON DELETE CASCADE,
@@ -152,6 +140,6 @@ CREATE TABLE credits
     `user_id`  INT    NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT FOREIGN KEY (user_id)
-            REFERENCES users (id) ON DELETE CASCADE
+        REFERENCES users (id) ON DELETE CASCADE
 )
     ENGINE = InnoDB;

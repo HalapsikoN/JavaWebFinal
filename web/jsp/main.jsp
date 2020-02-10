@@ -35,13 +35,13 @@
         <a href="${pageContext.request.contextPath}/atrack?command=add_track_page" class="btn btn-primary"><fmt:message key="locale.main.addNewTrackBtn" bundle="${bundle}"/></a>
     </div>
 </c:if>
-<c:if test="${sessionScope.role eq 'USER'}">
+
     <br>
     <div id="center_div">
         <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
     </div>
     <br>
-</c:if>
+
 <div>
     <br>
     <c:if test="${!requestScope.get('songList').isEmpty()}">

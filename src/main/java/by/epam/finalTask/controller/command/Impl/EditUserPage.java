@@ -2,10 +2,7 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
-import by.epam.finalTask.controller.util.DispatchAssistant;
-import by.epam.finalTask.controller.util.JspPageName;
-import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.controller.util.RequestParameterName;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.User;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
@@ -28,7 +25,7 @@ public class EditUserPage implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
-            int userId = Integer.valueOf(req.getParameter(RequestParameterName.USER_ID));
+            int userId = RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
             User user = userService.getUser(userId);
 

@@ -37,7 +37,7 @@ public class DeleteTrack implements Command {
                 throw new CommandException("no session");
             }
 
-            int trackId = Integer.valueOf(req.getParameter(RequestParameterName.TRACK_ID));
+            int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
             boolean isDeleted = trackService.deleteTrack(trackId);
             String message;

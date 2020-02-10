@@ -37,7 +37,7 @@ public class DeleteAlbum implements Command {
                 throw new CommandException("no session");
             }
 
-            int albumId = Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int albumId = RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
 
             boolean isDeleted = albumService.deleteAlbum(albumId);
             String message;

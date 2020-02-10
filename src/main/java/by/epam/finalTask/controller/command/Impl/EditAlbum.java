@@ -40,11 +40,11 @@ public class EditAlbum implements Command {
                 throw new CommandException("no session");
             }
 
-            int albumId=Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int albumId=RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
             String name= RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.NAME);
             String artist=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.ARTIST);
             GregorianCalendar calendar=new GregorianCalendar();
-            int year=Integer.valueOf(req.getParameter(RequestParameterName.DATE));
+            int year=RequestDataExecutor.getIntegerByName(RequestParameterName.DATE, req);
             calendar.set(Calendar.YEAR, year);
 
             Album album=new Album(name, artist, calendar);

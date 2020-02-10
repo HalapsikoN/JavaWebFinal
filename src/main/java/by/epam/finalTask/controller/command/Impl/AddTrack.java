@@ -44,7 +44,7 @@ public class AddTrack implements Command {
             GregorianCalendar calendar=new GregorianCalendar();
             int year=Integer.valueOf(req.getParameter(RequestParameterName.DATE));
             calendar.set(Calendar.YEAR, year);
-            double price=Double.valueOf(req.getParameter(RequestParameterName.PRICE));
+            double price=RequestDataExecutor.getDoubleByName(RequestParameterName.PRICE, req);
 
             Track track=new Track(name, artist, calendar, price);
 

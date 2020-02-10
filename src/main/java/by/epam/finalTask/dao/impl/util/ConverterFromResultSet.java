@@ -119,7 +119,7 @@ public class ConverterFromResultSet {
         try {
             int id = resultSet.getInt(BonusFields.ID.name());
             String name = resultSet.getString(BonusFields.NAME.name());
-            int discount = resultSet.getInt(BonusFields.DESCRIPTION.name());
+            int discount = resultSet.getInt(BonusFields.DISCOUNT.name());
             java.sql.Date dateSql = resultSet.getDate(BonusFields.START_DATE.name());
             Calendar startDate = new GregorianCalendar();
             startDate.setTimeInMillis(dateSql.getTime());

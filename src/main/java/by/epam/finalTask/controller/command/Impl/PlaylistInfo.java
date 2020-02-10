@@ -2,10 +2,7 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
-import by.epam.finalTask.controller.util.DispatchAssistant;
-import by.epam.finalTask.controller.util.JspPageName;
-import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.controller.util.RequestParameterName;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Comment;
 import by.epam.finalTask.entity.Playlist;
 import by.epam.finalTask.entity.logic.PlaylistLogic;
@@ -33,9 +30,9 @@ public class PlaylistInfo implements Command {
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
         try {
-            int albumId=Integer.valueOf(req.getParameter(RequestParameterName.PLAYLIST_ID));
+            int playlistId= RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
 
-            Playlist playlist= playlistService.getPlaylist(albumId);
+            Playlist playlist= playlistService.getPlaylist(playlistId);
 
             req.setAttribute(RequestAttributeName.PLAYLIST, playlist);
 

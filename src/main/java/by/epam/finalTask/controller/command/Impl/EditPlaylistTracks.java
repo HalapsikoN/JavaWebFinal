@@ -39,7 +39,7 @@ public class EditPlaylistTracks implements Command {
                 throw new CommandException("no session");
             }
 
-            int playlistId = Integer.valueOf(req.getParameter(RequestParameterName.PLAYLIST_ID));
+            int playlistId = RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
 
             String[] tracksUpdate = req.getParameterValues(RequestParameterName.TRACKS_UPDATE);
 

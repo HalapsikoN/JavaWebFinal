@@ -36,7 +36,7 @@ public class AddComment implements Command {
 
         int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-        int trackId=Integer.valueOf(req.getParameter(RequestParameterName.TRACK_ID));
+        int trackId=RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
         GregorianCalendar date=new GregorianCalendar();
 

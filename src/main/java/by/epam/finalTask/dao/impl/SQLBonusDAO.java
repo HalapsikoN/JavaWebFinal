@@ -20,9 +20,9 @@ public class SQLBonusDAO implements BonusDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final ConverterFromResultSet converterFromResultSet = ConverterFromResultSet.getInstance();
 
-    private String sqlAddBonus = "INSERT INTO bonuses (name, description, start_date, end_date, user_id) values (?,?,?,?,?)";
+    private String sqlAddBonus = "INSERT INTO bonuses (name, discount, start_date, end_date, user_id) values (?,?,?,?,?)";
     private String sqlGetBonusById = "SELECT * FROM bonuses WHERE id=?";
-    private String sqlUpdateBonusById = "UPDATE bonuses SET name=?, description=?, start_date=?, end_date=?  where id=?";
+    private String sqlUpdateBonusById = "UPDATE bonuses SET name=?, discount=?, start_date=?, end_date=?  where id=?";
     private String sqlDeleteBonusById = "DELETE FROM bonuses where id=?";
     private String sqlGetBonusesByUserId = "SELECT * FROM bonuses WHERE user_id=?";
     private String sqlGetActualBonusesByUserId = "SELECT * FROM bonuses WHERE user_id=? AND start_date<=? AND end_date>=?";
@@ -72,9 +72,9 @@ public class SQLBonusDAO implements BonusDAO {
                 preparedStatement.setString(1, bonus.getName());
                 preparedStatement.setInt(2, bonus.getDiscount());
                 java.sql.Date date = new Date(bonus.getStartDate().getTimeInMillis());
-                preparedStatement.setDate(3, date);
+                preparedStatement.setDate(3, date, bonus.getStartDate());
                 date = new Date(bonus.getEndDate().getTimeInMillis());
-                preparedStatement.setDate(4, date);
+                preparedStatement.setDate(4, date, bonus.getEndDate());
                 preparedStatement.setInt(5, bonus.getUserId());
 
                 resultRow = preparedStatement.executeUpdate();

@@ -22,6 +22,7 @@
 <c:import url="header/header.jsp" charEncoding="utf-8"/>
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <div id="center_div">
+    <br>
     <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
 </div>
 <c:if test="${sessionScope.role eq 'ADMIN'}">

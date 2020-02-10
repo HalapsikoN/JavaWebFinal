@@ -45,7 +45,7 @@ public class BuyTrack implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
             double wallet=(double) session.getAttribute(SessionAttributeName.WALLET);
-            int trackId = Integer.valueOf(req.getParameter(RequestParameterName.TRACK_ID));
+            int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
 
             List<Track> trackList=userService.getUserTracks(userId);
 
@@ -71,7 +71,7 @@ public class BuyTrack implements Command {
                     wallet -= price;
                     if (userService.addTrackToUser(userId, trackId) && userService.updateUserWallet(userId, wallet)) {
                         session.setAttribute(SessionAttributeName.WALLET, wallet);
-                        message=ResourceManager.getString(SUCCESS_MSG1+ price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3, locale);
+                        message=ResourceManager.getString(SUCCESS_MSG1, locale)+ price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale) ;
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
                         //req.setAttribute(RequestAttributeName.MESSAGE, resourceManager.getString("locale.buyTrack.successMsg1", locale) + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
                     } else {

@@ -25,7 +25,7 @@
 <br>
 <c:if test="${requestScope.get('albumList').isEmpty()}">
     <div id="center_div">
-        <p><fmt:message key="locale.userAlbums.title" bundle="${bundle}"/>There are not any albums yet. You can correct this: </p>
+        <p><fmt:message key="locale.userAlbums.title" bundle="${bundle}"/>: </p>
         <a href="${pageContext.request.contextPath}/atrack?command=albums_page">
             <fmt:message key="locale.general.hrefClickHere" bundle="${bundle}"/>.
         </a>

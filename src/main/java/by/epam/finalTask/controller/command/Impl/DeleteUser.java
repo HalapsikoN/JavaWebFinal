@@ -38,7 +38,7 @@ public class DeleteUser implements Command {
                 throw new CommandException("no session");
             }
 
-            int userId=Integer.valueOf(req.getParameter(RequestParameterName.USER_ID));
+            int userId=RequestDataExecutor.getIntegerByName(RequestParameterName.USER_ID, req);
 
             boolean isDeleted=userService.deleteUser(userId);
             String message;

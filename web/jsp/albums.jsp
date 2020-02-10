@@ -26,6 +26,7 @@
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
+    <br>
 <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
 <c:if test="${sessionScope.role eq 'ADMIN'}">
     <br>

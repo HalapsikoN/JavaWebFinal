@@ -52,7 +52,7 @@ public class AddCredit implements Command {
             Locale locale= new Locale((String) session.getAttribute(SessionAttributeName.LOCALE));
             String message;
             if(actualCredit==null) {
-                double amount = Double.valueOf(req.getParameter(RequestParameterName.AMOUNT));
+                double amount = RequestDataExecutor.getDoubleByName(RequestParameterName.AMOUNT, req);
                 GregorianCalendar date = new GregorianCalendar();
                 Date date_end = format.parse(req.getParameter(RequestParameterName.DATE));
                 date.setTimeInMillis(date_end.getTime());

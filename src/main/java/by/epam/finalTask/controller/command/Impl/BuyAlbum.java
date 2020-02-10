@@ -49,7 +49,7 @@ public class BuyAlbum implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
             double wallet=(double) session.getAttribute(SessionAttributeName.WALLET);
-            int albumId=Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int albumId=RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
 
             List<Track> userTrackList=userService.getUserTracks(userId);
 
@@ -87,7 +87,7 @@ public class BuyAlbum implements Command {
                     boolean isWalletUpdated=userService.updateUserWallet(userId, wallet);
                     if (isAddedAlbum && isAddedTracks && isWalletUpdated) {
                         session.setAttribute(SessionAttributeName.WALLET, wallet);
-                        message=ResourceManager.getString(SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3, locale);
+                        message=ResourceManager.getString(SUCCESS_MSG1, locale)+ price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale);
                         //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
                     } else {
@@ -103,12 +103,13 @@ public class BuyAlbum implements Command {
 
             }
 
-            Command command= CommandProvider.getInstance().getCommand(CommandName.ALBUM_INFO.name());
-            command.execute(req, resp);
+            //Command command= CommandProvider.getInstance().getCommand(CommandName.ALBUMS_PAGE.name());
+            //command.execute(req, resp);
 
-            //DispatchAssistant.redirectToCommand(req, resp, CommandName.ALBUM_INFO, message);
-        } catch (ServiceException e) {
-            e.printStackTrace();
+            DispatchAssistant.redirectToCommand(req, resp, CommandName.ALBUMS_PAGE, message);
+        } catch (ServiceException | IOException | ServletException e) {
+            logger.error(e);
+            throw new CommandException(e);
         }
     }
 }

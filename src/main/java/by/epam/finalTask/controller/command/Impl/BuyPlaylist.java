@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class BuyPlaylist implements Command {
 
-    private final static Logger logger= LogManager.getLogger(BuyAlbum.class);
+    private final static Logger logger= LogManager.getLogger(BuyPlaylist.class);
 
     private final static UserService userService= ServiceFactory.getInstance().getUserService();
     private final static BonusService bonusService=ServiceFactory.getInstance().getBonusService();
@@ -49,7 +49,7 @@ public class BuyPlaylist implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
             double wallet=(double) session.getAttribute(SessionAttributeName.WALLET);
-            int playlistId=Integer.valueOf(req.getParameter(RequestParameterName.PLAYLIST_ID));
+            int playlistId=RequestDataExecutor.getIntegerByName(RequestParameterName.PLAYLIST_ID, req);
 
             List<Track> userTrackList=userService.getUserTracks(userId);
 
@@ -87,7 +87,7 @@ public class BuyPlaylist implements Command {
                     boolean isWalletUpdated=userService.updateUserWallet(userId, wallet);
                     if (isAddedPlaylist && isAddedTracks && isWalletUpdated) {
                         session.setAttribute(SessionAttributeName.WALLET, wallet);
-                        message=ResourceManager.getString(SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3, locale);
+                        message=ResourceManager.getString(SUCCESS_MSG1, locale)+ price + ResourceManager.getString(SUCCESS_MSG2, locale) + discountAmount + ResourceManager.getString(SUCCESS_MSG3, locale);
                         req.setAttribute(RequestAttributeName.MESSAGE, message);
                         //req.setAttribute(RequestAttributeName.MESSAGE, SUCCESS_MSG1 + price + SUCCESS_MSG2 + discountAmount + SUCCESS_MSG3);
                     } else {
@@ -103,11 +103,12 @@ public class BuyPlaylist implements Command {
 
             }
 
-            Command command= CommandProvider.getInstance().getCommand(CommandName.PLAYLIST_INFO.name());
-            command.execute(req, resp);
-          //  DispatchAssistant.redirectToCommand(req, resp, CommandName.PLAYLIST_INFO, message);
-        } catch (ServiceException e) {
-            e.printStackTrace();
+            //Command command= CommandProvider.getInstance().getCommand(CommandName.PLAYLISTS_PAGE.name());
+            //command.execute(req, resp);
+           DispatchAssistant.redirectToCommand(req, resp, CommandName.PLAYLISTS_PAGE, message);
+        } catch (ServiceException|ServletException | IOException e) {
+            logger.error(e);
+            throw new CommandException(e);
         }
     }
 

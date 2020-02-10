@@ -2,10 +2,7 @@ package by.epam.finalTask.controller.command.Impl;
 
 import by.epam.finalTask.controller.command.Command;
 import by.epam.finalTask.controller.command.CommandException;
-import by.epam.finalTask.controller.util.DispatchAssistant;
-import by.epam.finalTask.controller.util.JspPageName;
-import by.epam.finalTask.controller.util.RequestAttributeName;
-import by.epam.finalTask.controller.util.RequestParameterName;
+import by.epam.finalTask.controller.util.*;
 import by.epam.finalTask.entity.Album;
 import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.AlbumService;
@@ -33,7 +30,7 @@ public class EditAlbumPage implements Command {
 
         try {
 
-            int albumId=Integer.valueOf(req.getParameter(RequestParameterName.ALBUM_ID));
+            int albumId= RequestDataExecutor.getIntegerByName(RequestParameterName.ALBUM_ID, req);
 
             Album album= albumService.getAlbum(albumId);
 
