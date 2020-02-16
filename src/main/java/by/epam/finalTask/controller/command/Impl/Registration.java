@@ -61,7 +61,7 @@ public class Registration implements Command {
                 message = ResourceManager.getString(LOGIN_TAKEN, locale);
             }
 
-            DispatchAssistant.redirectToCommand(req, resp, CommandName.MAIN_PAGE, message);
+            DispatchAssistant.redirectToCommand(req, resp, CommandName.REGISTRATION_PAGE, message);
         } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);
             throw new CommandException(e);

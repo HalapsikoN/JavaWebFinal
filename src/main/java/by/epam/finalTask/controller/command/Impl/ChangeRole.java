@@ -58,7 +58,7 @@ public class ChangeRole implements Command {
                 Command command = CommandProvider.getInstance().getCommand(CommandName.SIGN_OUT.name());
                 command.execute(req, resp);
             } else {
-                DispatchAssistant.redirectToCommand(req, resp, CommandName.EDIT_USER_PAGE, message);
+                DispatchAssistant.redirectToCommand(req, resp, CommandName.USER_LIST, message);
             }
         } catch (ServiceException | ServletException | IOException e) {
             logger.error(e);

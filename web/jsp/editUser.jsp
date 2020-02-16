@@ -23,7 +23,7 @@
 
 <div id="center_div">
     <br>
-    <h2>${user.name} <fmt:message key="locale.editUser.title" bundle="${bundle}"/>editor</h2>
+    <h2>${user.name} <fmt:message key="locale.editUser.title" bundle="${bundle}"/></h2>
     <br>
     <p><fmt:message key="locale.editUser.name" bundle="${bundle}"/>: <strong>${user.name}</strong></p>
     <p><fmt:message key="locale.editUser.login" bundle="${bundle}"/>: <strong>${user.login}</strong></p>
