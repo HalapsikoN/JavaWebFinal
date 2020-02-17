@@ -45,6 +45,7 @@ public class CommandFilter implements Filter {
         userCommand.add(CommandName.BUY_PLAYLIST.name());
         userCommand.add(CommandName.ADD_CREDIT.name());
         userCommand.add(CommandName.BAN_PAGE.name());
+        userCommand.add(CommandName.GET_TRACK.name());
 
 
         adminCommand.add(CommandName.USER_PROFILE.name());
@@ -80,6 +81,7 @@ public class CommandFilter implements Filter {
         adminCommand.add(CommandName.PLAYLIST_INFO.name());
         adminCommand.add(CommandName.USER_BAN_LIST.name());
         adminCommand.add(CommandName.UNBAN_USER.name());
+        adminCommand.add(CommandName.GET_TRACK.name());
 
         unregisterCommand.add(CommandName.MAIN_PAGE.name());
         unregisterCommand.add(CommandName.ALBUMS_PAGE.name());

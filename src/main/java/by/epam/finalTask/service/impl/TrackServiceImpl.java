@@ -99,4 +99,21 @@ public class TrackServiceImpl implements TrackService {
 
         return trackList;
     }
+
+    @Override
+    public boolean isAlreadyHaveFilename(String filename) throws ServiceException {
+        boolean result;
+
+        if (!TrackDataValidator.isValidFilename(filename)) {
+            throw new ServiceException("Not valid data track");
+        }
+
+        try {
+            result = trackDAO.isAlreadyHaveFilename(filename);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return result;
+    }
 }

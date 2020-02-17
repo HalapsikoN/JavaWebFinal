@@ -22,13 +22,14 @@ public class SQLTrackDAO implements TrackDAO {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private static final ConverterFromResultSet converterFromResultSet = ConverterFromResultSet.getInstance();
 
-    private String sqlAddTrack = "INSERT INTO tracks (name, artist, date, price) values (?,?,?,?)";
+    private String sqlAddTrack = "INSERT INTO tracks (name, artist, date, price, filename) values (?,?,?,?,?)";
     private String sqlGetTrackById = "SELECT * FROM tracks WHERE id=?";
     private String sqlGetTrackByName = "SELECT * FROM tracks WHERE name=?";
     private String sqlUpdateTrackById = "UPDATE tracks SET name=?, artist=?, date=?, price=? where id=?";
     private String sqlDeleteTrackById = "DELETE FROM tracks where id=?";
     private String sqlGetAllTracks = "SELECT * FROM tracks";
     private String sqlGetAllTracksWithArtist = "SELECT * FROM tracks WHERE artist=?";
+    private String sqlIsAlreadyHaveFilename = "SELECT * FROM tracks WHERE filename=?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -47,6 +48,7 @@ public class SQLTrackDAO implements TrackDAO {
         prepareStatement(connection, sqlDeleteTrackById);
         prepareStatement(connection, sqlGetAllTracks);
         prepareStatement(connection, sqlGetAllTracksWithArtist);
+        prepareStatement(connection, sqlIsAlreadyHaveFilename);
 
         if (connection != null) {
             connectionPool.closeConnection(connection);
@@ -78,6 +80,7 @@ public class SQLTrackDAO implements TrackDAO {
                 java.sql.Date date = new Date(track.getDate().getTimeInMillis());
                 preparedStatement.setDate(3, date);
                 preparedStatement.setDouble(4, track.getPrice());
+                preparedStatement.setString(5, track.getFilename());
 
                 resultRow = preparedStatement.executeUpdate();
             } else {
@@ -246,6 +249,33 @@ public class SQLTrackDAO implements TrackDAO {
             while (resultSet.next()) {
                 Track track = converterFromResultSet.getTrackFromResultSet(resultSet);
                 result.add(track);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean isAlreadyHaveFilename(String filename) throws DAOException {
+        boolean result = true;
+        ResultSet resultSet;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlIsAlreadyHaveFilename);
+
+            if (preparedStatement != null) {
+                preparedStatement.setString(1, filename);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+
+            if (!resultSet.next()) {
+                result = false;
             }
         } catch (SQLException e) {
             logger.error(e);

@@ -10,6 +10,7 @@ public class Track {
     private String artist;
     private Calendar date;
     private double price;
+    private String filename;
 
     public Track() {
     }
@@ -29,13 +30,22 @@ public class Track {
         this.price = price;
     }
 
-    public Track(int id, String name, String artist, int date, double price) {
+    public Track(String name, String artist, Calendar date, double price, String filename) {
+        this.name = name;
+        this.artist = artist;
+        this.date = date;
+        this.price = price;
+        this.filename = filename;
+    }
+
+    public Track(int id, String name, String artist, int date, double price, String filename) {
         this.id = id;
         this.name = name;
         this.artist = artist;
         this.date = new GregorianCalendar();
         this.date.set(Calendar.YEAR, date);
         this.price = price;
+        this.filename = filename;
     }
 
     public Track(int id, String name, String artist, Calendar date, double price) {
@@ -44,6 +54,15 @@ public class Track {
         this.artist = artist;
         this.date = date;
         this.price = price;
+    }
+
+    public Track(int id, String name, String artist, Calendar date, double price, String filename) {
+        this.id = id;
+        this.name = name;
+        this.artist = artist;
+        this.date = date;
+        this.price = price;
+        this.filename = filename;
     }
 
     public int getId() {
@@ -86,6 +105,14 @@ public class Track {
         this.price = price;
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,7 +124,8 @@ public class Track {
         if (Double.compare(track.price, price) != 0) return false;
         if (!name.equals(track.name)) return false;
         if (!artist.equals(track.artist)) return false;
-        return date.equals(track.date);
+        if (!date.equals(track.date)) return false;
+        return filename.equals(track.filename);
 
     }
 
@@ -111,6 +139,7 @@ public class Track {
         result = 31 * result + date.hashCode();
         temp = Double.doubleToLongBits(price);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + filename.hashCode();
         return result;
     }
 
@@ -120,8 +149,9 @@ public class Track {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", artist='" + artist + '\'' +
-                ", date=" + date.get(Calendar.YEAR) +
+                ", date=" + date +
                 ", price=" + price +
+                ", filename='" + filename + '\'' +
                 '}';
     }
 }

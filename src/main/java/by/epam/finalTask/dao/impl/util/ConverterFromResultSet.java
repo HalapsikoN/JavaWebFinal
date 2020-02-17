@@ -59,8 +59,9 @@ public class ConverterFromResultSet {
             Calendar date = new GregorianCalendar();
             date.setTimeInMillis(dateSql.getTime());
             double price = resultSet.getDouble(TrackFields.PRICE.name());
+            String filename = resultSet.getString(TrackFields.FILENAME.name());
 
-            track = new Track(id, name, artist, date, price);
+            track = new Track(id, name, artist, date, price, filename);
 
         } catch (SQLException e) {
             logger.error(e);

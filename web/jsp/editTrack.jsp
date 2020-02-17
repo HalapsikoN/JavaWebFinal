@@ -97,6 +97,7 @@
                     <form action="atrack" method="post">
                         <input type="hidden" name="command" value="delete_track">
                         <input type="hidden" name="track_id" value="${track.id}">
+                        <input type="hidden" name="filename" value="${track.filename}">
                         <button type="submit" class="btn btn-danger"><fmt:message key="locale.button.yes"
                                                                                   bundle="${bundle}"/></button>
                     </form>

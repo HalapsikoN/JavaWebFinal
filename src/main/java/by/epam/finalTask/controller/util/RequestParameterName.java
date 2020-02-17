@@ -24,6 +24,7 @@ public class RequestParameterName {
     public static final String START_DATE = "start_date";
     public static final String END_DATE = "end_date";
     public static final String LOCALE = "locale";
+    public static final String FILENAME = "filename";
 
     private RequestParameterName() {
     }

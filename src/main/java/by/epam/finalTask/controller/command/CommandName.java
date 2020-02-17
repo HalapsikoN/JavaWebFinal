@@ -48,5 +48,6 @@ public enum CommandName {
     ADD_CREDIT,
     BAN_PAGE,
     USER_BAN_LIST,
-    UNBAN_USER
+    UNBAN_USER,
+    GET_TRACK
 }

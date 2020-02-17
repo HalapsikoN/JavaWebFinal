@@ -65,6 +65,7 @@ public class CommandProvider {
         repository.put(CommandName.BAN_PAGE, new BanPage());
         repository.put(CommandName.USER_BAN_LIST, new UserBanListPage());
         repository.put(CommandName.UNBAN_USER, new UnbanUser());
+        repository.put(CommandName.GET_TRACK, new GetTrack());
     }
 
     public static CommandProvider getInstance() {

@@ -25,8 +25,12 @@ public class TrackDataValidator {
         return price >= 0;
     }
 
+    public static boolean isValidFilename(String filename) {
+        return ((filename != null) && (!filename.isEmpty()));
+    }
+
     public static boolean isValidTrack(Track track) {
-        return track != null && isValidName(track.getName()) && isValidArtist(track.getArtist()) && isValidDate(track.getDate()) && isValidPrice(track.getPrice());
+        return track != null && isValidName(track.getName()) && isValidArtist(track.getArtist()) && isValidDate(track.getDate()) && isValidPrice(track.getPrice()) && isValidFilename(track.getFilename());
     }
 
 }

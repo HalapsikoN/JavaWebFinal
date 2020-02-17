@@ -15,11 +15,12 @@ CREATE TABLE users
 
 CREATE TABLE tracks
 (
-    `id`     INT         NOT NULL AUTO_INCREMENT,
-    `name`   VARCHAR(45) NOT NULL,
-    `artist` VARCHAR(45) NOT NULL,
-    `date`   DATE        NOT NULL,
-    `price`  DOUBLE      NULL DEFAULT 0,
+    `id`       INT         NOT NULL AUTO_INCREMENT,
+    `name`     VARCHAR(45) NOT NULL,
+    `artist`   VARCHAR(45) NOT NULL,
+    `date`     DATE        NOT NULL,
+    `price`    DOUBLE      NULL DEFAULT 0,
+    `filename` VARCHAR(90) NOT NULL,
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB;

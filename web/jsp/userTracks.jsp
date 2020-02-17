@@ -36,6 +36,7 @@
         <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
             <thead class="thead-dark">
             <tr>
+                <th><fmt:message key="locale.general.tableTrackPlay" bundle="${bundle}"/></th>
                 <th><fmt:message key="locale.general.tableTrack" bundle="${bundle}"/></th>
                 <th><fmt:message key="locale.general.tableArtist" bundle="${bundle}"/></th>
                 <th><fmt:message key="locale.general.tableDate" bundle="${bundle}"/></th>
@@ -44,6 +45,12 @@
             <tbody>
             <c:forEach var="song" items="${songList}">
                 <tr>
+                    <td onclick="hideAndSick('hiddenRow${song.id}')">
+                        <audio controls>
+                            <source src="${pageContext.request.contextPath}/atrack?command=get_track&filename=${song.filename}" type="audio/mp3">
+                            <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>
+                        </audio>
+                    </td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')"><outputTag:date format="yyyy"

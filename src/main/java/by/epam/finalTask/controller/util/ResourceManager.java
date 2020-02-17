@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 public class ResourceManager {
 
+    public final static String UPLOAD_DIRECTORY = "track\\";
+
     private final static String resourceFile = "locale";
 
     private ResourceManager() {

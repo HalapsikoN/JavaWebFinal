@@ -25,7 +25,7 @@
     <br>
     <h2><fmt:message key="locale.addTrack.title" bundle="${bundle}"/></h2>
     <br>
-    <form action="atrack" method="post" id="input_form">
+    <form action="atrack" method="post" id="input_form" enctype="multipart/form-data">
         <input type="hidden" name="command" value="add_track">
         <div class="form-group row">
             <label for="name" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.name"
@@ -60,6 +60,15 @@
                 <input type="number" class="form-control" id="price" name="price"
                        placeholder="<fmt:message key="locale.formTrack.pricePlaceholder" bundle="${bundle}"/>" required
                        min="0" step="0.01">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="price" class="col-sm-2 col-form-label"><fmt:message key="locale.formTrack.file"
+                                                                            bundle="${bundle}"/>: </label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="file" name="file"
+                       placeholder="<fmt:message key="locale.formTrack.filePlaceholder" bundle="${bundle}"/>" required>
             </div>
         </div>
 

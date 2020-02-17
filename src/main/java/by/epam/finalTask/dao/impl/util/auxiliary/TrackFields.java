@@ -5,5 +5,6 @@ public enum TrackFields {
     NAME,
     ARTIST,
     DATE,
-    PRICE;
+    PRICE,
+    FILENAME
 }
