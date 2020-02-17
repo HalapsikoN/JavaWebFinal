@@ -39,14 +39,9 @@
             <td>${user.role}</td>
             <td>${user.wallet}</td>
             <td>
-                <form id="form${user.id}" method="post" action="atrack">
-                    <input type="hidden" name="command" value="unban_user">
-                    <input type="hidden" name="user_id" value="${user.id}">
-                    <a href="#">
-                        <img src="${pageContext.request.contextPath}/jsp/icons/unban.png"
-                             onclick="submitById('form${user.id}')">
-                    </a>
-                </form>
+                <a href="atrack?command=unban_user&user_id=${user.id}">
+                    <img src="${pageContext.request.contextPath}/jsp/icons/unban.png">
+                </a>
             </td>
         </tr>
 

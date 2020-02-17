@@ -42,7 +42,6 @@ public class Controller extends HttpServlet {
         if (command == null) {
             command = new NoSuchCommand();
         }
-
         try {
             command.execute(req, resp);
         } catch (CommandException e) {

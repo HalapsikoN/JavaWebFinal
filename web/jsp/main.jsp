@@ -68,26 +68,16 @@
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.price}</td>
                     <c:if test="${sessionScope.role eq 'USER'}">
                         <td>
-                            <form id="form1${song.id}" method="post" action="atrack">
-                                <input type="hidden" name="command" value="buy_track">
-                                <input type="hidden" name="track_id" value="${song.id}">
-                                <a href="#">
-                                    <img src="${pageContext.request.contextPath}/jsp/icons/buy.png"
-                                         onclick="submitById('form1${song.id}')">
-                                </a>
-                            </form>
+                            <a href="atrack?command=buy_track&track_id=${song.id}">
+                                <img src="${pageContext.request.contextPath}/jsp/icons/buy.png">
+                            </a>
                         </td>
                     </c:if>
                     <c:if test="${sessionScope.role eq 'ADMIN'}">
                         <td>
-                            <form id="form2${song.id}" method="post" action="atrack">
-                                <input type="hidden" name="command" value="edit_track_page">
-                                <input type="hidden" name="track_id" value="${song.id}">
-                                <a href="#">
-                                    <img src="${pageContext.request.contextPath}/jsp/icons/edit.png"
-                                         onclick="submitById('form2${song.id}')">
-                                </a>
-                            </form>
+                            <a href="atrack?command=edit_track_page&track_id=${song.id}">
+                                <img src="${pageContext.request.contextPath}/jsp/icons/edit.png">
+                            </a>
                         </td>
                     </c:if>
                 </tr>

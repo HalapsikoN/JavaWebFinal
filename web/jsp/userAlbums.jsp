@@ -46,14 +46,9 @@
                 <td>${album.artist}</td>
                 <td><outputTag:date format="yyyy" item="${album.date}"/></td>
                 <td>
-                    <form id="info_album${album.id}" method="post" action="atrack">
-                        <input type="hidden" name="command" value="album_info">
-                        <input type="hidden" name="album_id" value="${album.id}">
-                        <a href="#">
-                            <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png"
-                                 onclick="submitById('info_album${album.id}')">
-                        </a>
-                    </form>
+                    <a href="atrack?command=album_info&album_id=${album.id}">
+                        <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png">
+                    </a>
                 </td>
             </tr>
         </c:forEach>

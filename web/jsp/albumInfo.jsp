@@ -38,14 +38,11 @@
     </p>
     <p><fmt:message key="locale.albumInfo.price" bundle="${bundle}"/>: <strong>${albumPrice}</strong></p>
     <c:if test="${sessionScope.role eq 'USER'}">
-        <form id="form${album.id}" method="post" action="atrack">
-            <input type="hidden" name="command" value="buy_album">
-            <input type="hidden" name="album_id" value="${album.id}">
-            <a href="#">
-                <img src="${pageContext.request.contextPath}/jsp/icons/buy.png"
-                     onclick="submitById('form${album.id}')">
-            </a>
-        </form>
+        <a href="atrack?command=buy_album&album_id=${album.id}">
+            <img src="${pageContext.request.contextPath}/jsp/icons/buy.png">
+        </a>
+        <br>
+        <br>
     </c:if>
 </div>
 <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">

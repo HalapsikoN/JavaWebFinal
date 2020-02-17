@@ -11,6 +11,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class GetTrack implements Command {
 
@@ -38,8 +40,8 @@ public class GetTrack implements Command {
             resp.setContentLength((int) file.length());
 
             try {
-                FileInputStream inputStream = new FileInputStream(file);
                 OutputStream outputStream = resp.getOutputStream();
+                FileInputStream inputStream = new FileInputStream(file);
 
                 byte[] buf = new byte[1024 * 1024 * 20];
                 int count = 0;
@@ -49,9 +51,11 @@ public class GetTrack implements Command {
                 outputStream.close();
                 inputStream.close();
             } catch (IOException e) {
+
                 logger.error(e);
                 throw new CommandException(e);
             }
+
         }
     }
 }

@@ -51,25 +51,15 @@
                 <td>${playlist.name}</td>
                 <td><outputTag:date format="dd_mm_yyyy" item="${playlist.date}"/></td>
                 <td>
-                    <form id="info_playlist${playlist.id}" method="post" action="atrack">
-                        <input type="hidden" name="command" value="playlist_info">
-                        <input type="hidden" name="playlist_id" value="${playlist.id}">
-                        <a href="#">
-                            <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png"
-                                 onclick="submitById('info_playlist${playlist.id}')">
-                        </a>
-                    </form>
+                    <a href="atrack?command=playlist_info&playlist_id=${playlist.id}">
+                        <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png">
+                    </a>
                 </td>
                 <c:if test="${sessionScope.role eq 'ADMIN'}">
                     <td>
-                        <form id="info_playlist2${playlist.id}" method="post" action="atrack">
-                            <input type="hidden" name="command" value="edit_playlist_page">
-                            <input type="hidden" name="playlist_id" value="${playlist.id}">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/jsp/icons/edit.png"
-                                     onclick="submitById('info_playlist2${playlist.id}')">
-                            </a>
-                        </form>
+                        <a href="atrack?command=edit_playlist_page&playlist_id=${playlist.id}">
+                            <img src="${pageContext.request.contextPath}/jsp/icons/edit.png">
+                        </a>
                     </td>
                 </c:if>
             </tr>

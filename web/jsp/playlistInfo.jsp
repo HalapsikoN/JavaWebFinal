@@ -36,14 +36,10 @@
             format="dd_mm_yyyy" item="${playlist.date}"/></strong></p>
     <p><fmt:message key="locale.playlistInfo.playlistPrice" bundle="${bundle}"/>: <strong>${playlistPrice}</strong></p>
     <c:if test="${sessionScope.role eq 'USER'}">
-        <form id="form${playlist.id}" method="post" action="atrack">
-            <input type="hidden" name="command" value="buy_playlist">
-            <input type="hidden" name="playlist_id" value="${playlist.id}">
-            <a href="#">
-                <img src="${pageContext.request.contextPath}/jsp/icons/buy.png"
-                     onclick="submitById('form${playlist.id}')">
-            </a>
-        </form>
+        <a href="atrack?command=buy_playlist&playlist_id=${playlist.id}">
+            <img src="${pageContext.request.contextPath}/jsp/icons/buy.png">
+        </a>
+        <br>
     </c:if>
 </div>
 <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">

@@ -46,10 +46,17 @@
             <c:forEach var="song" items="${songList}">
                 <tr>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">
-                        <audio controls>
-                            <source src="${pageContext.request.contextPath}/atrack?command=get_track&filename=${song.filename}" type="audio/mp3">
-                            <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>
-                        </audio>
+                            <%--                        <audio controls>--%>
+                            <%--                            <source src="${pageContext.request.contextPath}/track/${song.filename}" type="audio/mp3">--%>
+                            <%--                            <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>--%>
+                            <%--                        </audio>--%>
+                            <%--                                                    <audio controls>--%>
+                            <%--                                                        <source src="atrack?command=get_track&filename=${song.filename}" type="audio/mp3">--%>
+                            <%--                                                        <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>--%>
+                            <%--                                                    </audio>--%>
+                        <a href="atrack?command=get_track&filename=${song.filename}">
+                            <img src="${pageContext.request.contextPath}/jsp/icons/play.png">
+                        </a>
                     </td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>

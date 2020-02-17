@@ -45,14 +45,9 @@
                 <td>${playlist.name}</td>
                 <td><outputTag:date format="dd_mm_yyyy" item="${playlist.date}"/></td>
                 <td>
-                    <form id="info_playlist${playlist.id}" method="post" action="atrack">
-                        <input type="hidden" name="command" value="playlist_info">
-                        <input type="hidden" name="playlist_id" value="${playlist.id}">
-                        <a href="#">
-                            <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png"
-                                 onclick="submitById('info_playlist${playlist.id}')">
-                        </a>
-                    </form>
+                    <a href="atrack?command=playlist_info&playlist_id=${playlist.id}">
+                        <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png">
+                    </a>
                 </td>
             </tr>
         </c:forEach>

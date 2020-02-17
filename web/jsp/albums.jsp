@@ -55,25 +55,15 @@
                 <td>${album.artist}</td>
                 <td><outputTag:date format="yyyy" item="${album.date}"/></td>
                 <td>
-                    <form id="info_album1${album.id}" method="post" action="atrack">
-                        <input type="hidden" name="command" value="album_info">
-                        <input type="hidden" name="album_id" value="${album.id}">
-                        <a href="#">
-                            <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png"
-                                 onclick="submitById('info_album1${album.id}')">
-                        </a>
-                    </form>
+                    <a href="atrack?command=album_info&album_id=${album.id}">
+                        <img src="${pageContext.request.contextPath}/jsp/icons/trackList.png">
+                    </a>
                 </td>
                 <c:if test="${sessionScope.role eq 'ADMIN'}">
                     <td>
-                        <form id="info_album2${album.id}" method="post" action="atrack">
-                            <input type="hidden" name="command" value="edit_album_page">
-                            <input type="hidden" name="album_id" value="${album.id}">
-                            <a href="#">
-                                <img src="${pageContext.request.contextPath}/jsp/icons/edit.png"
-                                     onclick="submitById('info_album2${album.id}')">
-                            </a>
-                        </form>
+                        <a href="atrack?command=edit_album_page&album_id=${album.id}">
+                            <img src="${pageContext.request.contextPath}/jsp/icons/edit.png">
+                        </a>
                     </td>
                 </c:if>
             </tr>
