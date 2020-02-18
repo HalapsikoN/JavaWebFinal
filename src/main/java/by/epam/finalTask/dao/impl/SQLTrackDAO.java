@@ -304,7 +304,7 @@ public class SQLTrackDAO implements TrackDAO {
                 throw new DAOException("Couldn't find prepared statement");
             }
             while (resultSet.next()) {
-                result=resultSet.getInt(TrackFields.NUMBER_OF_ELEMENTS.name());
+                result = resultSet.getInt(TrackFields.NUMBER_OF_ELEMENTS.name());
             }
         } catch (SQLException e) {
             logger.error(e);

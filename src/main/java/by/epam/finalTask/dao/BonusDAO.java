@@ -14,6 +14,5 @@ public interface BonusDAO {
     boolean deleteBonusBId(int id) throws DAOException;
 
     List<Bonus> getBonusesByUserId(int id) throws DAOException;
-
     List<Bonus> getActualBonusesByUserId(int id) throws DAOException;
 }

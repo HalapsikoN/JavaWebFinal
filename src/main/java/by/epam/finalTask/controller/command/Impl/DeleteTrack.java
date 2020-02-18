@@ -38,13 +38,13 @@ public class DeleteTrack implements Command {
             }
 
             int trackId = RequestDataExecutor.getIntegerByName(RequestParameterName.TRACK_ID, req);
-            String filename=RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.FILENAME);
+            String filename = RequestDataExecutor.getStringWithWriteEncoding(req, RequestParameterName.FILENAME);
 
             boolean isDeleted = trackService.deleteTrack(trackId);
 
-            String filePath = req.getServletContext().getRealPath("\\..\\..") + File.separator + ResourceManager.UPLOAD_DIRECTORY+filename;
-            File file=new File(filePath);
-            if(!file.delete()){
+            String filePath = req.getServletContext().getRealPath("\\..\\..") + File.separator + ResourceManager.UPLOAD_DIRECTORY + filename;
+            File file = new File(filePath);
+            if (!file.delete()) {
                 logger.error("Cannot delete file");
                 throw new CommandException("Cannot delete file");
             }

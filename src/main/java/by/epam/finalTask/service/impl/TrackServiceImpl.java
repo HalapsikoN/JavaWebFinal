@@ -120,7 +120,7 @@ public class TrackServiceImpl implements TrackService {
 
     @Override
     public List<Integer> getPageArray(int numberAtOnePage) throws ServiceException {
-        List<Integer> list=new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
         int numberOfElements;
         try {
@@ -129,9 +129,9 @@ public class TrackServiceImpl implements TrackService {
             throw new ServiceException(e);
         }
 
-        int numberOfPage=(numberOfElements%numberAtOnePage==0)?(numberOfElements/numberAtOnePage):(numberOfElements/numberAtOnePage+1);
+        int numberOfPage = (numberOfElements % numberAtOnePage == 0) ? (numberOfElements / numberAtOnePage) : (numberOfElements / numberAtOnePage + 1);
 
-        for(int i=1; i<=(numberOfPage);++i){
+        for (int i = 1; i <= (numberOfPage); ++i) {
             list.add(i);
         }
 
@@ -142,7 +142,7 @@ public class TrackServiceImpl implements TrackService {
     public List<Track> getTracksOfPage(int page, int numberOfElements) throws ServiceException {
         List<Track> trackList;
 
-        int offset=(page-1)*numberOfElements;
+        int offset = (page - 1) * numberOfElements;
 
         try {
             trackList = trackDAO.getTracksFromOffset(offset, numberOfElements);

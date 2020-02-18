@@ -8,7 +8,6 @@ import by.epam.finalTask.entity.Track;
 import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.ServiceFactory;
 import by.epam.finalTask.service.TrackService;
-import com.sun.org.apache.bcel.internal.classfile.Constant;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,8 +21,6 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
-import static org.apache.logging.log4j.web.WebLoggerContextUtils.getServletContext;
 
 public class AddTrack implements Command {
 
@@ -46,13 +43,13 @@ public class AddTrack implements Command {
                 uploadDir.mkdir();
             }
 
-            String fileName=null;
+            String fileName = null;
             for (Part part : req.getParts()) {
                 fileName = getFileName(part);
-                if(!fileName.equals(DEFAULT_FILENAME)) {
+                if (!fileName.equals(DEFAULT_FILENAME)) {
 
-                    while (trackService.isAlreadyHaveFilename(fileName)){
-                        fileName=ALREADY_HAVE_TRACK_PREFIX+fileName;
+                    while (trackService.isAlreadyHaveFilename(fileName)) {
+                        fileName = ALREADY_HAVE_TRACK_PREFIX + fileName;
                     }
 
                     part.write(uploadPath + File.separator + fileName);

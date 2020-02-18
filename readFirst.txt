@@ -3,6 +3,7 @@ How to use project:
 1. Deploy DB:
     *Projects uses MYSQL dialect
     *Use ./sql-scripts/ to get db schema and some test data
+      **For test data work create directory ./track/ and copy there all files from ./src/test/resources/testTrack/
     *Find db properties in ./src/main/resources/database.properties
 
 2. Build WAR file:

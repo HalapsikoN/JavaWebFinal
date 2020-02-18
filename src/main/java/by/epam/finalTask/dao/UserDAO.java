@@ -28,4 +28,7 @@ public interface UserDAO {
     List<Playlist> getUserPlayListsById(int id) throws DAOException;
     List<Bonus> getUserBonusesById(int id) throws DAOException;
     List<User> getAllUsers() throws DAOException;
+
+    int getNumberOfUserTracks(int id) throws DAOException;
+    List<Track> getUserTracksFromOffset(int offset, int numberOfElementsAtPage, int userID) throws DAOException;
 }

@@ -10,6 +10,7 @@ import by.epam.finalTask.service.UserService;
 import by.epam.finalTask.service.validator.UserDataValidator;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -256,6 +257,41 @@ public class UserServiceImpl implements UserService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Integer> getUserPageArray(int numberOfElementsAtPage, int userId) throws ServiceException {
+        List<Integer> list = new ArrayList<>();
+
+        int numberOfElements;
+        try {
+            numberOfElements = userDAO.getNumberOfUserTracks(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        int numberOfPage = (numberOfElements % numberOfElementsAtPage == 0) ? (numberOfElements / numberOfElementsAtPage) : (numberOfElements / numberOfElementsAtPage + 1);
+
+        for (int i = 1; i <= (numberOfPage); ++i) {
+            list.add(i);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Track> getUserTracksOfPage(int page, int numberOfElementsAtPage, int userID) throws ServiceException {
+        List<Track> trackList;
+
+        int offset = (page - 1) * numberOfElementsAtPage;
+
+        try {
+            trackList = userDAO.getUserTracksFromOffset(offset, numberOfElementsAtPage, userID);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return trackList;
     }
 
     private boolean isValidData(String login, String password) {

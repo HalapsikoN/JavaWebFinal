@@ -15,12 +15,10 @@ public interface TrackService {
     boolean deleteTrack(int id) throws ServiceException;
 
     List<Track> getAllTracks() throws ServiceException;
-
     List<Track> getTracksWithArtist(String artist) throws ServiceException;
 
     boolean isAlreadyHaveFilename(String filename) throws ServiceException;
 
     List<Integer> getPageArray(int numberAtOnePage) throws ServiceException;
-
     List<Track> getTracksOfPage(int page, int numberOfElements) throws ServiceException;
 }

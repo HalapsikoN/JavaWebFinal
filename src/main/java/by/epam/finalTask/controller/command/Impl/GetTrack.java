@@ -10,28 +10,29 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class GetTrack implements Command {
 
-    private final static Logger logger= LogManager.getLogger(GetTrack.class);
+    private final static Logger logger = LogManager.getLogger(GetTrack.class);
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
-        String filename=req.getParameter(RequestParameterName.FILENAME);
+        String filename = req.getParameter(RequestParameterName.FILENAME);
 
-        if(filename!=null && !filename.isEmpty()){
+        if (filename != null && !filename.isEmpty()) {
 
-            ServletContext servletContext=req.getServletContext();
-            String filePath=servletContext.getRealPath("\\..\\..")+ File.separator+ ResourceManager.UPLOAD_DIRECTORY+filename;
-            String mime=servletContext.getMimeType(filePath);
+            ServletContext servletContext = req.getServletContext();
+            String filePath = servletContext.getRealPath("\\..\\..") + File.separator + ResourceManager.UPLOAD_DIRECTORY + filename;
+            String mime = servletContext.getMimeType(filePath);
 
             if (mime == null) {
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                logger.warn("mime of ("+filePath+") is null");
+                logger.warn("mime of (" + filePath + ") is null");
                 return;
             }
 

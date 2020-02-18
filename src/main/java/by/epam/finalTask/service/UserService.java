@@ -29,4 +29,7 @@ public interface UserService {
     boolean updateUserRole(int id, Role role) throws ServiceException;
 
     boolean deleteUser(int id) throws ServiceException;
+
+    List<Integer> getUserPageArray(int numberOfElementsAtPage,int userId) throws ServiceException;
+    List<Track> getUserTracksOfPage(int page, int numberOfElementsAtPage, int userID) throws ServiceException;
 }

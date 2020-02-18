@@ -3,6 +3,7 @@ package by.epam.finalTask.dao.impl;
 import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.UserDAO;
 import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
+import by.epam.finalTask.dao.impl.util.auxiliary.TrackFields;
 import by.epam.finalTask.dao.impl.util.auxiliary.UserFields;
 import by.epam.finalTask.dao.pool.ConnectionPool;
 import by.epam.finalTask.dao.pool.ConnectionPoolException;
@@ -44,6 +45,8 @@ public class SQLUserDAO implements UserDAO {
     private String sqlAddTrackToUser = "INSERT INTO user_track (user_id, track_id) values (?,?)";
     private String sqlAddAlbumToUser = "INSERT INTO user_album (user_id, album_id) values (?,?)";
     private String sqlAddPlaylistToUser = "INSERT INTO user_playlist (user_id, playlist_id) values (?,?)";
+    private String sqlGetNumberOfUserTracks = "SELECT COUNT(*) AS number_of_elements FROM users INNER JOIN user_track ON users.id=user_track.user_id INNER JOIN tracks ON user_track.track_id=tracks.id WHERE users.id=?";
+    private String sqlGetUserTracksFromOffset = "SELECT tracks.* FROM users INNER JOIN user_track ON users.id=user_track.user_id INNER JOIN tracks ON user_track.track_id=tracks.id WHERE users.id=? LIMIT ?,?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -72,6 +75,8 @@ public class SQLUserDAO implements UserDAO {
         prepareStatement(connection, sqlAddTrackToUser);
         prepareStatement(connection, sqlAddAlbumToUser);
         prepareStatement(connection, sqlAddPlaylistToUser);
+        prepareStatement(connection, sqlGetNumberOfUserTracks);
+        prepareStatement(connection, sqlGetUserTracksFromOffset);
 
         if (connection != null) {
             connectionPool.closeConnection(connection);
@@ -517,6 +522,61 @@ public class SQLUserDAO implements UserDAO {
             while (resultSet.next()) {
                 User user = converterFromResultSet.getUserFromResultSet(resultSet);
                 result.add(user);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public int getNumberOfUserTracks(int id) throws DAOException {
+        int result = 0;
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetNumberOfUserTracks);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, id);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                result = resultSet.getInt(TrackFields.NUMBER_OF_ELEMENTS.name());
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Track> getUserTracksFromOffset(int offset, int numberOfElementsAtPage, int userID) throws DAOException {
+        List<Track> result = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetUserTracksFromOffset);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, userID);
+                preparedStatement.setInt(2, offset);
+                preparedStatement.setInt(3, numberOfElementsAtPage);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Track track = converterFromResultSet.getTrackFromResultSet(resultSet);
+                result.add(track);
             }
         } catch (SQLException e) {
             logger.error(e);

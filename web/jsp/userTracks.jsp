@@ -10,6 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="pageArray" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale" var="bundle"/>
@@ -50,13 +51,13 @@
                             <%--                            <source src="${pageContext.request.contextPath}/track/${song.filename}" type="audio/mp3">--%>
                             <%--                            <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>--%>
                             <%--                        </audio>--%>
-                            <%--                                                    <audio controls>--%>
-                            <%--                                                        <source src="atrack?command=get_track&filename=${song.filename}" type="audio/mp3">--%>
-                            <%--                                                        <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>--%>
-                            <%--                                                    </audio>--%>
-                        <a href="atrack?command=get_track&filename=${song.filename}">
-                            <img src="${pageContext.request.contextPath}/jsp/icons/play.png">
-                        </a>
+                        <audio controls>
+                            <source src="atrack?command=get_track&filename=${song.filename}" type="audio/mp3">
+                            <fmt:message key="locale.general.tableTrackCannotPlay" bundle="${bundle}"/>
+                        </audio>
+                            <%--                        <a href="atrack?command=get_track&filename=${song.filename}">--%>
+                            <%--                            <img src="${pageContext.request.contextPath}/jsp/icons/play.png">--%>
+                            <%--                        </a>--%>
                     </td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.name}</td>
                     <td onclick="hideAndSick('hiddenRow${song.id}')">${song.artist}</td>
@@ -108,6 +109,25 @@
             </c:forEach>
             </tbody>
         </table>
+
+        <br>
+        <ul class="pagination pagination-sm" style="place-content: center">
+            <c:forEach var="page" items="${pageArray}">
+                <c:if test="${currentPage eq page}">
+                    <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+        ${page}
+        <span class="sr-only">(current)</span>
+      </span>
+
+                    </li>
+                </c:if>
+                <c:if test="${currentPage ne page}">
+                    <li class="page-item"><a class="page-link"
+                                             href="atrack?command=user_tracks&page=${page}">${page}</a></li>
+                </c:if>
+            </c:forEach>
+        </ul>
     </c:if>
 </div>
 

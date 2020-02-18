@@ -26,6 +26,8 @@ public class UserTracks implements Command {
     private final static UserService userService = ServiceFactory.getInstance().getUserService();
     private static final CommentService commentService = ServiceFactory.getInstance().getCommentService();
 
+    private static final int NUMBER_ELEMENTS_AT_ONE_PAGE=4;
+
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws CommandException {
 
@@ -39,7 +41,21 @@ public class UserTracks implements Command {
 
             int userId = (int) session.getAttribute(SessionAttributeName.ID);
 
-            List<Track> trackList = userService.getUserTracks(userId);
+            Integer page= RequestDataExecutor.getIntegerByName(RequestParameterName.PAGE, req);
+
+            List<Integer> pageArray=userService.getUserPageArray(NUMBER_ELEMENTS_AT_ONE_PAGE, userId);
+
+            req.setAttribute(RequestAttributeName.PAGE_ARRAY, pageArray);
+
+            if(page==null || !pageArray.contains(page)){
+                page=1;
+            }
+
+            req.setAttribute(RequestAttributeName.CURRENT_PAGE, page);
+
+            List<Track> trackList = userService.getUserTracksOfPage(page, NUMBER_ELEMENTS_AT_ONE_PAGE, userId);
+
+            //List<Track> trackList = userService.getUserTracks(userId);
 
             req.setAttribute(RequestAttributeName.SONG_LIST, trackList);
 
