@@ -8,6 +8,7 @@ import by.epam.finalTask.service.ServiceException;
 import by.epam.finalTask.service.TrackService;
 import by.epam.finalTask.service.validator.TrackDataValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrackServiceImpl implements TrackService {
@@ -115,5 +116,40 @@ public class TrackServiceImpl implements TrackService {
         }
 
         return result;
+    }
+
+    @Override
+    public List<Integer> getPageArray(int numberAtOnePage) throws ServiceException {
+        List<Integer> list=new ArrayList<>();
+
+        int numberOfElements;
+        try {
+            numberOfElements = trackDAO.getNumberOfTracks();
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        int numberOfPage=(numberOfElements%numberAtOnePage==0)?(numberOfElements/numberAtOnePage):(numberOfElements/numberAtOnePage+1);
+
+        for(int i=1; i<=(numberOfPage);++i){
+            list.add(i);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Track> getTracksOfPage(int page, int numberOfElements) throws ServiceException {
+        List<Track> trackList;
+
+        int offset=(page-1)*numberOfElements;
+
+        try {
+            trackList = trackDAO.getTracksFromOffset(offset, numberOfElements);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+
+        return trackList;
     }
 }

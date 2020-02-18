@@ -19,4 +19,8 @@ public interface TrackService {
     List<Track> getTracksWithArtist(String artist) throws ServiceException;
 
     boolean isAlreadyHaveFilename(String filename) throws ServiceException;
+
+    List<Integer> getPageArray(int numberAtOnePage) throws ServiceException;
+
+    List<Track> getTracksOfPage(int page, int numberOfElements) throws ServiceException;
 }

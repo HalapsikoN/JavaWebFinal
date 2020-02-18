@@ -20,4 +20,8 @@ public interface TrackDAO {
     List<Track> getTracksWithArtist(String artist) throws DAOException;
 
     boolean isAlreadyHaveFilename(String filename) throws DAOException;
+
+    int getNumberOfTracks() throws DAOException;
+
+    List<Track> getTracksFromOffset(int offset, int numberOfElements) throws DAOException;
 }

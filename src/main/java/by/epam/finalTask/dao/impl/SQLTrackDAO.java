@@ -3,6 +3,7 @@ package by.epam.finalTask.dao.impl;
 import by.epam.finalTask.dao.DAOException;
 import by.epam.finalTask.dao.TrackDAO;
 import by.epam.finalTask.dao.impl.util.ConverterFromResultSet;
+import by.epam.finalTask.dao.impl.util.auxiliary.TrackFields;
 import by.epam.finalTask.dao.pool.ConnectionPool;
 import by.epam.finalTask.dao.pool.ConnectionPoolException;
 import by.epam.finalTask.entity.Track;
@@ -28,8 +29,10 @@ public class SQLTrackDAO implements TrackDAO {
     private String sqlUpdateTrackById = "UPDATE tracks SET name=?, artist=?, date=?, price=? where id=?";
     private String sqlDeleteTrackById = "DELETE FROM tracks where id=?";
     private String sqlGetAllTracks = "SELECT * FROM tracks";
+    private String sqlGetNumberOfTracks = "SELECT COUNT(*) AS number_of_elements FROM tracks";
     private String sqlGetAllTracksWithArtist = "SELECT * FROM tracks WHERE artist=?";
     private String sqlIsAlreadyHaveFilename = "SELECT * FROM tracks WHERE filename=?";
+    private String sqlGetTracksFromOffset = "SELECT * FROM tracks ORDER BY id LIMIT ?,?";
 
     private Map<String, PreparedStatement> preparedStatementMap;
 
@@ -49,6 +52,8 @@ public class SQLTrackDAO implements TrackDAO {
         prepareStatement(connection, sqlGetAllTracks);
         prepareStatement(connection, sqlGetAllTracksWithArtist);
         prepareStatement(connection, sqlIsAlreadyHaveFilename);
+        prepareStatement(connection, sqlGetNumberOfTracks);
+        prepareStatement(connection, sqlGetTracksFromOffset);
 
         if (connection != null) {
             connectionPool.closeConnection(connection);
@@ -276,6 +281,58 @@ public class SQLTrackDAO implements TrackDAO {
 
             if (!resultSet.next()) {
                 result = false;
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public int getNumberOfTracks() throws DAOException {
+        int result = 0;
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetNumberOfTracks);
+
+            if (preparedStatement != null) {
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                result=resultSet.getInt(TrackFields.NUMBER_OF_ELEMENTS.name());
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+            throw new DAOException(e);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<Track> getTracksFromOffset(int offset, int numberOfElements) throws DAOException {
+        List<Track> result = new ArrayList<>();
+        ResultSet resultSet = null;
+
+        try {
+            PreparedStatement preparedStatement = preparedStatementMap.get(sqlGetTracksFromOffset);
+
+            if (preparedStatement != null) {
+                preparedStatement.setInt(1, offset);
+                preparedStatement.setInt(2, numberOfElements);
+
+                resultSet = preparedStatement.executeQuery();
+            } else {
+                throw new DAOException("Couldn't find prepared statement");
+            }
+            while (resultSet.next()) {
+                Track track = converterFromResultSet.getTrackFromResultSet(resultSet);
+                result.add(track);
             }
         } catch (SQLException e) {
             logger.error(e);

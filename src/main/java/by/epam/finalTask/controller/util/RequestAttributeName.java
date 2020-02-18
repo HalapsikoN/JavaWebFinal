@@ -17,6 +17,8 @@ public class RequestAttributeName {
     public static final String USER = "user";
     public static final String TRACK = "track";
     public static final String CREDIT = "credit";
+    public static final String CURENT_PAGE = "currentPage";
+    public static final String PAGE_ARRAY = "pageArray";
 
     private RequestAttributeName() {
     }

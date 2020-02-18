@@ -11,6 +11,7 @@
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
 <jsp:useBean id="songList" class="java.util.ArrayList" scope="request"/>
 <jsp:useBean id="commentList" class="java.util.ArrayList" scope="request"/>
+<jsp:useBean id="pageArray" class="java.util.ArrayList" scope="request"/>
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale" var="bundle"/>
@@ -129,6 +130,24 @@
             </c:forEach>
             </tbody>
         </table>
+
+        <br>
+        <ul class="pagination pagination-sm" style="place-content: center">
+            <c:forEach var="page" items="${pageArray}">
+                <c:if test="${currentPage eq page}">
+                    <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+        ${page}
+        <span class="sr-only">(current)</span>
+      </span>
+
+                    </li>
+                </c:if>
+                <c:if test="${currentPage ne page}">
+                <li class="page-item"><a class="page-link" href="atrack?command=main_page&page=${page}">${page}</a></li>
+                </c:if>
+            </c:forEach>
+        </ul>
     </c:if>
 </div>
 <br>
