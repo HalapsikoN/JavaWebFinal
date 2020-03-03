@@ -23,7 +23,7 @@
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
     <br>
-    <h2>${sessionScope.username} <fmt:message key="locale.userProfile.title" bundle="${bundle}"/>profile</h2>
+    <h2>${sessionScope.username} <fmt:message key="locale.userProfile.title" bundle="${bundle}"/></h2>
     <br>
     <p><fmt:message key="locale.userProfile.name" bundle="${bundle}"/>: <strong>${sessionScope.username}</strong></p>
     <!-- Button trigger modal -->

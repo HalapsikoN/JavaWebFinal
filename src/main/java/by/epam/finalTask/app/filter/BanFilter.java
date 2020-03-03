@@ -25,7 +25,6 @@ public class BanFilter implements Filter {
     private final static Logger logger = LogManager.getLogger(BanFilter.class);
 
     private final static CreditService creditService = ServiceFactory.getInstance().getCreditService();
-    private final String REDIRECT_PATH = "/atrack?command=ban_page";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

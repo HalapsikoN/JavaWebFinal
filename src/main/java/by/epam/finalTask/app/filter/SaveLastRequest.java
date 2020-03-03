@@ -1,5 +1,7 @@
 package by.epam.finalTask.app.filter;
 
+import by.epam.finalTask.controller.command.CommandName;
+import by.epam.finalTask.controller.util.RequestParameterName;
 import by.epam.finalTask.controller.util.SessionAttributeName;
 import by.epam.finalTask.controller.util.SessionHelper;
 
@@ -27,7 +29,7 @@ public class SaveLastRequest implements Filter {
 
         StringBuffer requestURL = request.getRequestURL();
 
-        if (!requestURL.toString().contains(LOCALE_REQUEST)) {
+        if (!requestURL.toString().contains(LOCALE_REQUEST) && (request.getParameter(RequestParameterName.COMMAND_NAME)!=null && !request.getParameter(RequestParameterName.COMMAND_NAME).toUpperCase().equals(CommandName.GET_TRACK.name()))) {
 
             session.setAttribute(SessionAttributeName.LAST_URL, requestURL.toString() + QUESTION_MARK + request.getQueryString());
 

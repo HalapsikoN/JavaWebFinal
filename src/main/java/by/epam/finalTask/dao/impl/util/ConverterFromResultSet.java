@@ -75,10 +75,10 @@ public class ConverterFromResultSet {
         Album album = null;
 
         try {
-            int id = resultSet.getInt(AlbomFields.ID.name());
-            String name = resultSet.getString(AlbomFields.NAME.name());
-            String artist = resultSet.getString(AlbomFields.ARTIST.name());
-            java.sql.Date dateSql = resultSet.getDate(AlbomFields.DATE.name());
+            int id = resultSet.getInt(AlbumFields.ID.name());
+            String name = resultSet.getString(AlbumFields.NAME.name());
+            String artist = resultSet.getString(AlbumFields.ARTIST.name());
+            java.sql.Date dateSql = resultSet.getDate(AlbumFields.DATE.name());
             Calendar date = new GregorianCalendar();
             date.setTimeInMillis(dateSql.getTime());
             List<Track> trackList = new ArrayList<>();

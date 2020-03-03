@@ -5,7 +5,7 @@
   Time: 20:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/dateTag" prefix="outputTag" %>
@@ -15,7 +15,6 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale" var="bundle"/>
-<%@ page pageEncoding="UTF-8" %>
 
 <html>
 <head>
@@ -41,7 +40,6 @@
 <br>
 
 <div>
-    <br>
     <c:if test="${!requestScope.get('songList').isEmpty()}">
         <table id="table" class="table table-secondary table-striped table-bordered table-hover justify-content-center">
             <thead class="thead-dark">

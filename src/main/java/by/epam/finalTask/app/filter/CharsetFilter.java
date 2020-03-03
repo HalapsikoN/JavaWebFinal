@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class CharsetFilter implements Filter {
 
-    private static final String ENCODING = "utf-8";
+    private static final String ENCODING = "UTF-8";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

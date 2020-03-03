@@ -6,5 +6,5 @@ public enum UserFields {
     LOGIN,
     PASSWORD,
     ROLE,
-    WALLET;
+    WALLET
 }

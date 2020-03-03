@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class DeleteTrack implements Command {
 
-    private final static Logger logger = LogManager.getLogger(DeleteUser.class);
+    private final static Logger logger = LogManager.getLogger(DeleteTrack.class);
 
     private final static TrackService trackService = ServiceFactory.getInstance().getTrackService();
 

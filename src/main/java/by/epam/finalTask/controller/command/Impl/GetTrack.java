@@ -52,9 +52,7 @@ public class GetTrack implements Command {
                 outputStream.close();
                 inputStream.close();
             } catch (IOException e) {
-
                 logger.error(e);
-                throw new CommandException(e);
             }
 
         }

@@ -25,7 +25,7 @@
         crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${path}/jsp/css/header.css">
 
-<nav class="navbar">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
     <a href="${path}/atrack?command=main_page"> <fmt:message key="locale.header.tracks" bundle="${bundle}"/> </a>
     <a href="${path}/atrack?command=albums_page"> <fmt:message key="locale.header.albums" bundle="${bundle}"/> </a>

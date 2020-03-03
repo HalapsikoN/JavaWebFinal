@@ -27,7 +27,6 @@
     <br>
     <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
     <c:if test="${sessionScope.role eq 'ADMIN'}">
-        <br>
 
         <a href="${pageContext.request.contextPath}/atrack?command=add_album_page" class="btn btn-primary"><fmt:message
                 key="locale.albums.addNewAlbumBtn" bundle="${bundle}"/></a>

@@ -24,6 +24,7 @@
 <link href="${pageContext.request.contextPath}/jsp/css/table.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/jsp/css/center_info.css" rel="stylesheet">
 <div id="center_div">
+    <br>
     <h2>${sessionScope.username} <fmt:message key="locale.userWallet.title" bundle="${bundle}"/></h2>
     <c:if test="${credit.amount!=0}">
         <br>

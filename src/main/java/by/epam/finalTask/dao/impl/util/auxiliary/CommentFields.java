@@ -5,5 +5,5 @@ public enum CommentFields {
     USER_ID,
     DATE,
     TRACK_ID,
-    TEXT;
+    TEXT
 }

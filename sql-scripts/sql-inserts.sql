@@ -35,7 +35,7 @@ INSERT INTO playlists (name, date)
 values ("Good mood", "2020-02-10");
 
 INSERT INTO credits (credit, date_end, user_id)
-values ("9", "2020-02-21", "1");
+values ("9", "2020-03-21", "1");
 INSERT INTO credits (credit, date_end, user_id)
 values ("89.3", "2020-01-22", "3");
 
@@ -49,7 +49,7 @@ INSERT INTO comments (user_id, date, track_id, text)
 values ("1", "2020-02-10 18:17:47", "5", "Wow");
 
 INSERT INTO bonuses (name, discount, start_date, end_date, user_id)
-values ("Birthday sale", "7", "2020-02-09", "2020-02-15", "1");
+values ("Birthday sale", "7", "2020-02-28", "2020-03-15", "1");
 
 INSERT INTO user_track (user_id, track_id)
 values ("1", "3");

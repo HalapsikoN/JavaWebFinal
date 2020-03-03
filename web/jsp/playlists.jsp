@@ -26,7 +26,6 @@
     <p class="badge badge-info" style="font-size: 20px">${param.get("message")}</p>
 </div>
 <c:if test="${sessionScope.role eq 'ADMIN'}">
-    <br>
     <div id="center_div">
         <a href="${pageContext.request.contextPath}/atrack?command=add_playlist_page"
            class="btn btn-primary"><fmt:message key="locale.playlists.title" bundle="${bundle}"/></a>
